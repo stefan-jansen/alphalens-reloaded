@@ -1,4 +1,0 @@
-- :mod:`alphalens.tears`
-- :mod:`alphalens.performance`
-- :mod:`alphalens.plotting`
-- :mod:`alphalens.utils`
