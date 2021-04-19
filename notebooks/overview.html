@@ -1,0 +1,3392 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Overview &#8212; Alphalens 0.4.1post1+8.g3348e92 documentation</title>
+
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+
+
+
+
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Intraday Factor" href="intraday_factor.html" />
+    <link rel="prev" title="Getting started" href="../index.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+      <link rel="icon" sizes="16x16" href="../_static/assets/favicon16x16.ico">
+
+
+
+      <link rel="icon" sizes="32x32" href="../_static/assets/favicon32x32.ico">
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+
+    <div class="container-fluid" id="banner"></div>
+
+
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+
+
+<a class="navbar-brand" href="../index.html">
+<p class="title">Alphalens</p>
+</a>
+
+
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 current active nav-item">
+ <a class="current reference internal nav-link" href="#">
+  Overview
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="intraday_factor.html">
+  Intraday Factor
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="event_study.html">
+  Event Study
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="pyfolio_integration.html">
+  Pyfolio Integration
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../api-reference.html">
+  API
+ </a>
+</li>
+
+
+    <li class="nav-item">
+        <a class="nav-link nav-external" href="https://ml4trading.io">ML for Trading<i class="fas fa-external-link-alt"></i></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link nav-external" href="https://exchange.ml4trading.io">Community<i class="fas fa-external-link-alt"></i></a>
+    </li>
+
+</ul>
+      </div>
+
+    </div>
+
+    <div id="navbar-end">
+
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/stefan-jansen/alphalens-reloaded" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://twitter.com/ml4trading" rel="noopener" target="_blank" title="Twitter">
+            <span><i class="fab fa-twitter-square"></i></span>
+            <label class="sr-only">Twitter</label>
+          </a>
+        </li>
+      </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+    </nav>
+
+
+    <div class="container-xl">
+      <div class="row">
+
+
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+
+  </div>
+</nav>
+            </div>
+
+
+
+
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+
+
+              <div class="toc-item">
+
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Overview
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#Imports-&amp;-Settings">
+     Imports &amp; Settings
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#Load-&amp;-Transform-Data">
+     Load &amp; Transform Data
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#Compute-Factor">
+     Compute Factor
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#Get-pricing-info">
+     Get pricing info
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#Format-tearsheet-input-data">
+     Format tearsheet input data
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#Returns-Analysis">
+   Returns Analysis
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#Performance-Metrics-&amp;-Plotting-Functions">
+     Performance Metrics &amp; Plotting Functions
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#Returns-Tear-Sheet">
+     Returns Tear Sheet
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#Information-Analysis">
+   Information Analysis
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Performance Metrics &amp; Plotting Functions
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#Information-Tear-Sheet">
+     Information Tear Sheet
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#Turnover-Analysis">
+   Turnover Analysis
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     Performance Metrics &amp; Plotting Functions
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#Turnover-Tear-Sheet">
+     Turnover Tear Sheet
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#Event-Style-Returns-Analysis">
+   Event Style Returns Analysis
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#Groupwise-Performance">
+   Groupwise Performance
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#Summary-Tear-Sheet">
+   Summary Tear Sheet
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#The-Whole-Thing">
+   The Whole Thing
+  </a>
+ </li>
+</ul>
+
+</nav>
+              </div>
+
+              <div class="toc-item">
+
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/stefan-jansen/alphalens-reloaded/edit/main/docs/source/notebooks/overview.ipynb">
+        <i class="fas fa-pencil-alt"></i> Edit this page
+    </a>
+</div>
+
+              </div>
+
+
+          </div>
+
+
+
+
+
+
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+
+              <div>
+
+
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="Overview">
+<h1>Overview<a class="headerlink" href="#Overview" title="Permalink to this headline">¶</a></h1>
+<p>Alphalens is designed to aid in the analysis of “alpha factors,” data transformations that are used to predict future price movements of financial instruments. Alpha factors take the form of a single value for each asset on each day. The dimension of these values is not necessarily important. We evaluate an alpha factor by considering daily factor values relative to one another.</p>
+<p>It is important to note the difference between an alpha factor and a trading algorithm. A trading algorithm uses an alpha factor, or combination of alpha factors to generate trades. Trading algorithms cover execution and risk constraints: the business of turning predictions into profits. Alpha factors, on the other hand, are focused soley on making predictions. This difference in scope lends itself to a difference in the methodologies used to evaluate alpha factors and trading algorithms.</p>
+<p>Alphalens does not contain analyses of things like transaction costs, capacity, or portfolio construction. Those interested in more implementation specific analyses are encouaged to check out <a class="reference external" href="https://github.com/stefan-jansen/pyfolio-reloaded">pyfolio</a>, a library specifically geared towards the evaluation of trading algorithms.</p>
+<div class="section" id="Imports-&amp;-Settings">
+<h2>Imports &amp; Settings<a class="headerlink" href="#Imports-&-Settings" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">alphalens</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s1">&#39;white&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Load-&amp;-Transform-Data">
+<h2>Load &amp; Transform Data<a class="headerlink" href="#Load-&-Transform-Data" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ticker_sector</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;ACN&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;ATVI&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;ADBE&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;AMD&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;AKAM&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;ADS&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;GOOGL&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;GOOG&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;APH&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;ADI&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;ANSS&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;AAPL&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;AMAT&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;ADSK&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;ADP&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;AVGO&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;AMG&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;AFL&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;ALL&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;AXP&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;AIG&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;AMP&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;AON&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;AJG&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;AIZ&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;BAC&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;BK&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;BBT&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;BRK.B&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;BLK&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;HRB&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;BHF&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;COF&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;CBOE&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;SCHW&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;CB&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;ABT&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;ABBV&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;AET&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;ALXN&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;ALGN&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;AGN&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;ABC&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;AMGN&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;ANTM&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;BCR&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;BAX&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;BDX&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;BIIB&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;BSX&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;BMY&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;CAH&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;CELG&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;CNC&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;CERN&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;MMM&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;AYI&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;ALK&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;ALLE&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;AAL&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;AME&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;AOS&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;ARNC&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;BA&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;CHRW&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s2">&quot;CAT&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;CTAS&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;CSX&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;CMI&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;DE&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;DAL&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;DOV&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;ETN&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;EMR&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;EFX&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s2">&quot;AES&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;LNT&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;AEE&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;AEP&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;AWK&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;CNP&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;CMS&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;ED&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;DTE&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s2">&quot;DUK&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;EIX&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;ETR&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;ES&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;EXC&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;FE&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;NEE&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;NI&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;NRG&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;PCG&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s2">&quot;ARE&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;AMT&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;AIV&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;AVB&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;BXP&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;CBG&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;CCI&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;DLR&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;DRE&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="s2">&quot;EQIX&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;EQR&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;ESS&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;EXR&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;FRT&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;GGP&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;HCP&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;HST&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;IRM&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;KIM&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="s2">&quot;APD&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;ALB&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;AVY&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;BLL&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;CF&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;DWDP&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;EMN&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;ECL&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;FMC&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;FCX&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+    <span class="s2">&quot;IP&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;IFF&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;LYB&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;MLM&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;MON&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;MOS&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;NEM&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;NUE&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;PKG&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;PPG&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+    <span class="s2">&quot;T&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;CTL&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;VZ&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+    <span class="s2">&quot;MO&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;ADM&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;BF.B&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;CPB&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;CHD&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;CLX&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;KO&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;CL&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;CAG&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="s2">&quot;STZ&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;COST&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;COTY&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;CVS&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;DPS&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;EL&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;GIS&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;HSY&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;HRL&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="s2">&quot;AAP&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;AMZN&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;APTV&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;AZO&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;BBY&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;BWA&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;KMX&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;CCL&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span>
+    <span class="s2">&quot;APC&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;ANDV&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;APA&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;BHGE&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;COG&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;CHK&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;CVX&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;XEC&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;CXO&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="s2">&quot;COP&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;DVN&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;EOG&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;EQT&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;XOM&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;HAL&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;HP&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;HES&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;KMI&quot;</span><span class="p">:</span> <span class="mi">10</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p>See <a class="reference external" href="https://github.com/ranaroussi/yfinance">yfinance</a> for details.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
+<span class="kn">import</span> <span class="nn">pandas_datareader.data</span> <span class="k">as</span> <span class="nn">web</span>
+<span class="n">yf</span><span class="o">.</span><span class="n">pdr_override</span><span class="p">()</span>
+
+<span class="n">tickers</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ticker_sector</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">web</span><span class="o">.</span><span class="n">get_data_yahoo</span><span class="p">(</span><span class="n">tickers</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;2014-12-01&#39;</span><span class="p">,</span>  <span class="n">end</span><span class="o">=</span><span class="s1">&#39;2017-01-01&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">utc</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[*********************100%***********************]  182 of 182 completed
+
+19 Failed downloads:
+- DPS: No data found for this date range, symbol may be delisted
+- CBG: No data found for this date range, symbol may be delisted
+- CHK: Data doesn&#39;t exist for startDate = 1417413600, endDate = 1483250400
+- CELG: No data found, symbol may be delisted
+- ARNC: Data doesn&#39;t exist for startDate = 1417413600, endDate = 1483250400
+- BRK.B: No data found, symbol may be delisted
+- AGN: No data found, symbol may be delisted
+- CXO: No data found, symbol may be delisted
+- MON: Data doesn&#39;t exist for startDate = 1417413600, endDate = 1483250400
+- BCR: No data found for this date range, symbol may be delisted
+- DWDP: No data found, symbol may be delisted
+- CTL: No data found, symbol may be delisted
+- APC: No data found, symbol may be delisted
+- GGP: No data found for this date range, symbol may be delisted
+- HCP: No data found, symbol may be delisted
+- BHF: Data doesn&#39;t exist for startDate = 1417413600, endDate = 1483250400
+- BHGE: No data found, symbol may be delisted
+- BF.B: No data found for this date range, symbol may be delisted
+- BBT: No data found, symbol may be delisted
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">stack</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="s1">&#39;asset&#39;</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+MultiIndex: 85738 entries, (Timestamp(&#39;2014-12-01 00:00:00+0000&#39;, tz=&#39;UTC&#39;), &#39;A&#39;) to (Timestamp(&#39;2016-12-30 00:00:00+0000&#39;, tz=&#39;UTC&#39;), &#39;XOM&#39;)
+Data columns (total 6 columns):
+ #   Column     Non-Null Count  Dtype
+---  ------     --------------  -----
+ 0   Adj Close  85738 non-null  float64
+ 1   Close      85738 non-null  float64
+ 2   High       85738 non-null  float64
+ 3   Low        85738 non-null  float64
+ 4   Open       85738 non-null  float64
+ 5   Volume     85738 non-null  float64
+dtypes: float64(6)
+memory usage: 4.3+ MB
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Compute-Factor">
+<h2>Compute Factor<a class="headerlink" href="#Compute-Factor" title="Permalink to this headline">¶</a></h2>
+<p>For demonstration purposes we will create a predictive factor. To cheat we will look at future prices to make sure we’ll rank high stoks that will perform well and vice versa.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">lookahead_bias_days</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">predictive_factor</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Open&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="s1">&#39;asset&#39;</span><span class="p">)</span>
+<span class="n">predictive_factor</span> <span class="o">=</span> <span class="n">predictive_factor</span><span class="o">.</span><span class="n">pct_change</span><span class="p">(</span><span class="n">lookahead_bias_days</span><span class="p">)</span>
+<span class="c1"># introduce look-ahead bias and make the factor predictive</span>
+<span class="n">predictive_factor</span> <span class="o">=</span> <span class="n">predictive_factor</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="o">-</span><span class="n">lookahead_bias_days</span><span class="p">)</span>
+
+<span class="n">predictive_factor</span> <span class="o">=</span> <span class="n">predictive_factor</span><span class="o">.</span><span class="n">stack</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">predictive_factor</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+date                       asset
+2014-12-01 00:00:00+00:00  A       -0.010775
+                           AAL      0.029388
+                           AAP      0.057920
+                           AAPL    -0.039643
+                           ABBV     0.010567
+dtype: float64
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Get-pricing-info">
+<h2>Get pricing info<a class="headerlink" href="#Get-pricing-info" title="Permalink to this headline">¶</a></h2>
+<p>The pricing data passed to alphalens should contain the entry price for the assets so it must reflect the next available price after a factor value was observed at a given timestamp. Those prices must not be used in the calculation of the factor values for that time. Always double check to ensure you are not introducing lookahead bias to your study.</p>
+<p>The pricing data must also contain the exit price for the assets, for period 1 the price at the next timestamp will be used, for period 2 the price after 2 timestats will be used and so on.</p>
+<p>There are no restrinctions/assumptions on the time frequencies a factor should be computed at and neither on the specific time a factor should be traded (trading at the open vs trading at the close vs intraday trading), it is only required that factor and price DataFrames are properly aligned given the rules above.</p>
+<p>In our example, before the trading starts every day, we observe yesterday factor values. The price we pass to alphalens is the next available price after that factor observation: the daily open price that will be used as assets entry price. Also, we are not adding additional prices so the assets exit price will be the following days open prices (how many days depends on ‘periods’ argument). The retuns computed by Alphalens will therefore based on assets open prices.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pricing</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Open&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="s1">&#39;asset&#39;</span><span class="p">)</span>
+<span class="n">pricing</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>asset</th>
+      <th>AAL</th>
+      <th>AAP</th>
+      <th>AAPL</th>
+      <th>ABBV</th>
+      <th>ABC</th>
+      <th>ABT</th>
+      <th>ACN</th>
+      <th>ADBE</th>
+      <th>ADI</th>
+      <th>ADM</th>
+      <th>...</th>
+      <th>PCG</th>
+      <th>PKG</th>
+      <th>PPG</th>
+      <th>SCHW</th>
+      <th>STZ</th>
+      <th>T</th>
+      <th>VZ</th>
+      <th>XEC</th>
+      <th>XOM</th>
+      <th>A</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2014-12-01 00:00:00+00:00</th>
+      <td>49.000000</td>
+      <td>146.410004</td>
+      <td>29.702499</td>
+      <td>69.080002</td>
+      <td>90.639999</td>
+      <td>44.270000</td>
+      <td>85.879997</td>
+      <td>73.639999</td>
+      <td>54.480000</td>
+      <td>52.660000</td>
+      <td>...</td>
+      <td>50.209999</td>
+      <td>74.250000</td>
+      <td>108.730003</td>
+      <td>28.080000</td>
+      <td>95.820000</td>
+      <td>35.279999</td>
+      <td>50.680000</td>
+      <td>103.980003</td>
+      <td>90.360001</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2014-12-02 00:00:00+00:00</th>
+      <td>48.119999</td>
+      <td>146.710007</td>
+      <td>28.375000</td>
+      <td>68.879997</td>
+      <td>90.930000</td>
+      <td>44.680000</td>
+      <td>85.849998</td>
+      <td>74.000000</td>
+      <td>54.540001</td>
+      <td>52.740002</td>
+      <td>...</td>
+      <td>50.689999</td>
+      <td>73.209999</td>
+      <td>110.605003</td>
+      <td>27.860001</td>
+      <td>94.930000</td>
+      <td>34.889999</td>
+      <td>49.799999</td>
+      <td>102.790001</td>
+      <td>92.320000</td>
+      <td>41.599998</td>
+    </tr>
+    <tr>
+      <th>2014-12-03 00:00:00+00:00</th>
+      <td>47.740002</td>
+      <td>148.440002</td>
+      <td>28.937500</td>
+      <td>69.169998</td>
+      <td>91.989998</td>
+      <td>45.220001</td>
+      <td>86.400002</td>
+      <td>73.639999</td>
+      <td>54.950001</td>
+      <td>53.330002</td>
+      <td>...</td>
+      <td>51.500000</td>
+      <td>74.779999</td>
+      <td>109.800003</td>
+      <td>28.200001</td>
+      <td>94.260002</td>
+      <td>34.250000</td>
+      <td>49.020000</td>
+      <td>103.809998</td>
+      <td>94.669998</td>
+      <td>41.980000</td>
+    </tr>
+    <tr>
+      <th>2014-12-04 00:00:00+00:00</th>
+      <td>49.599998</td>
+      <td>152.419998</td>
+      <td>28.942499</td>
+      <td>68.349998</td>
+      <td>91.870003</td>
+      <td>45.660000</td>
+      <td>86.410004</td>
+      <td>73.089996</td>
+      <td>56.459999</td>
+      <td>53.270000</td>
+      <td>...</td>
+      <td>50.910000</td>
+      <td>76.760002</td>
+      <td>111.555000</td>
+      <td>28.940001</td>
+      <td>94.010002</td>
+      <td>34.080002</td>
+      <td>48.730000</td>
+      <td>105.550003</td>
+      <td>94.129997</td>
+      <td>42.150002</td>
+    </tr>
+    <tr>
+      <th>2014-12-05 00:00:00+00:00</th>
+      <td>50.090000</td>
+      <td>154.210007</td>
+      <td>28.997499</td>
+      <td>69.519997</td>
+      <td>92.379997</td>
+      <td>45.430000</td>
+      <td>86.309998</td>
+      <td>73.160004</td>
+      <td>56.750000</td>
+      <td>52.750000</td>
+      <td>...</td>
+      <td>49.860001</td>
+      <td>77.790001</td>
+      <td>111.949997</td>
+      <td>29.770000</td>
+      <td>94.250000</td>
+      <td>33.880001</td>
+      <td>48.680000</td>
+      <td>106.860001</td>
+      <td>93.949997</td>
+      <td>42.230000</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 163 columns</p>
+</div></div>
+</div>
+<p>Often, we’d want to know how our factor looks across various groupings (sectors, industires, countries, etc.), in this example let’s use sectors. To generate sector level breakdowns, you’ll need to pass alphalens a sector mapping for each traded name.</p>
+<p>This mapping can come in the form of a MultiIndexed Series (with the same date/symbol index as your factor value) if you want to provide a sector mapping for each symbol on each day.</p>
+<p>If you’d like to use constant sector mappings, you may pass symbol to sector mappings as a dict.</p>
+<p>If your sector mappings come in the form of codes (as they do in this tutorial), you may also pass alphalens a dict of sector names to use in place of sector codes.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sector_names</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;information_technology&quot;</span><span class="p">,</span>
+    <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;financials&quot;</span><span class="p">,</span>
+    <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;health_care&quot;</span><span class="p">,</span>
+    <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;industrials&quot;</span><span class="p">,</span>
+    <span class="mi">4</span><span class="p">:</span> <span class="s2">&quot;utilities&quot;</span><span class="p">,</span>
+    <span class="mi">5</span><span class="p">:</span> <span class="s2">&quot;real_estate&quot;</span><span class="p">,</span>
+    <span class="mi">6</span><span class="p">:</span> <span class="s2">&quot;materials&quot;</span><span class="p">,</span>
+    <span class="mi">7</span><span class="p">:</span> <span class="s2">&quot;telecommunication_services&quot;</span><span class="p">,</span>
+    <span class="mi">8</span><span class="p">:</span> <span class="s2">&quot;consumer_staples&quot;</span><span class="p">,</span>
+    <span class="mi">9</span><span class="p">:</span> <span class="s2">&quot;consumer_discretionary&quot;</span><span class="p">,</span>
+    <span class="mi">10</span><span class="p">:</span> <span class="s2">&quot;energy&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Format-tearsheet-input-data">
+<h2>Format tearsheet input data<a class="headerlink" href="#Format-tearsheet-input-data" title="Permalink to this headline">¶</a></h2>
+<p>Alphalens contains a handy data formatting function to transform your factor and pricing data into the exact inputs expected by the tear sheet functions.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">factor_data</span> <span class="o">=</span> <span class="n">alphalens</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">get_clean_factor_and_forward_returns</span><span class="p">(</span><span class="n">predictive_factor</span><span class="p">,</span>
+                                                                   <span class="n">pricing</span><span class="p">,</span>
+                                                                   <span class="n">quantiles</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                                                                   <span class="n">bins</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                                                   <span class="n">groupby</span><span class="o">=</span><span class="n">ticker_sector</span><span class="p">,</span>
+                                                                   <span class="n">groupby_labels</span><span class="o">=</span><span class="n">sector_names</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Dropped 1.0% entries from factor data: 1.0% in forward returns computation and 0.0% in binning phase (set max_loss=0 to see potentially suppressed Exceptions).
+max_loss is 35.0%, not exceeded: OK!
+</pre></div></div>
+</div>
+<p>The function inform the user how much data was dropped after formatting the input data. Factor data can be partially dropped due to being flawed itself (e.g. NaNs), not having provided enough price data to compute forward returns for all factor values, or because it is not possible to perform binning. It is possible to control the maximum allowed data loss using ‘max_loss’ argument.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">factor_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>1D</th>
+      <th>5D</th>
+      <th>10D</th>
+      <th>factor</th>
+      <th>group</th>
+      <th>factor_quantile</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th>asset</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="5" valign="top">2014-12-01 00:00:00+00:00</th>
+      <th>AAL</th>
+      <td>-0.017959</td>
+      <td>0.029388</td>
+      <td>0.024694</td>
+      <td>0.029388</td>
+      <td>industrials</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>AAP</th>
+      <td>0.002049</td>
+      <td>0.057920</td>
+      <td>0.104433</td>
+      <td>0.057920</td>
+      <td>consumer_discretionary</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>AAPL</th>
+      <td>-0.044693</td>
+      <td>-0.039643</td>
+      <td>-0.068260</td>
+      <td>-0.039643</td>
+      <td>information_technology</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>ABBV</th>
+      <td>-0.002895</td>
+      <td>0.010567</td>
+      <td>-0.048205</td>
+      <td>0.010567</td>
+      <td>health_care</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>ABC</th>
+      <td>0.003199</td>
+      <td>0.015115</td>
+      <td>0.010040</td>
+      <td>0.015115</td>
+      <td>health_care</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>You’ll notice that we’ve placed all of the information we need for our calculations into one dataframe. Variables are the columns, and observations are each row.</p>
+<p>The integer columns represents the forward returns or the daily price change for the N days after a timestamp. The 1 day forward return for AAPL on 2014-12-2 is the percent change in the AAPL open price on 2014-12-2 and the AAPL open price on 2014-12-3. The 5 day forward return is the percent change from open 2014-12-2 to open 2014-12-9 (5 trading days) divided by 5.</p>
+</div>
+</div>
+<div class="section" id="Returns-Analysis">
+<h1>Returns Analysis<a class="headerlink" href="#Returns-Analysis" title="Permalink to this headline">¶</a></h1>
+<p>Returns analysis gives us a raw description of a factor’s value that shows us the power of a factor in real currency values.</p>
+<p>One of the most basic ways to look at a factor’s predictive power is to look at the mean return of different factor quantile.</p>
+<div class="section" id="Performance-Metrics-&amp;-Plotting-Functions">
+<h2>Performance Metrics &amp; Plotting Functions<a class="headerlink" href="#Performance-Metrics-&-Plotting-Functions" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">mean_return_by_q_daily</span><span class="p">,</span> <span class="n">std_err</span> <span class="o">=</span> <span class="n">alphalens</span><span class="o">.</span><span class="n">performance</span><span class="o">.</span><span class="n">mean_return_by_quantile</span><span class="p">(</span>
+    <span class="n">factor_data</span><span class="p">,</span> <span class="n">by_date</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">mean_return_by_q_daily</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>1D</th>
+      <th>5D</th>
+      <th>10D</th>
+    </tr>
+    <tr>
+      <th>factor_quantile</th>
+      <th>date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="5" valign="top">1</th>
+      <th>2014-12-01 00:00:00+00:00</th>
+      <td>-0.011639</td>
+      <td>-0.040503</td>
+      <td>-0.048165</td>
+    </tr>
+    <tr>
+      <th>2014-12-02 00:00:00+00:00</th>
+      <td>-0.001948</td>
+      <td>-0.042854</td>
+      <td>-0.051933</td>
+    </tr>
+    <tr>
+      <th>2014-12-03 00:00:00+00:00</th>
+      <td>-0.009176</td>
+      <td>-0.048059</td>
+      <td>-0.047047</td>
+    </tr>
+    <tr>
+      <th>2014-12-04 00:00:00+00:00</th>
+      <td>-0.003707</td>
+      <td>-0.048854</td>
+      <td>-0.025982</td>
+    </tr>
+    <tr>
+      <th>2014-12-05 00:00:00+00:00</th>
+      <td>-0.014295</td>
+      <td>-0.057625</td>
+      <td>-0.034734</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">mean_return_by_q</span><span class="p">,</span> <span class="n">std_err_by_q</span> <span class="o">=</span> <span class="n">alphalens</span><span class="o">.</span><span class="n">performance</span><span class="o">.</span><span class="n">mean_return_by_quantile</span><span class="p">(</span>
+    <span class="n">factor_data</span><span class="p">,</span> <span class="n">by_date</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">mean_return_by_q</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1D</th>
+      <th>5D</th>
+      <th>10D</th>
+    </tr>
+    <tr>
+      <th>factor_quantile</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>-0.008624</td>
+      <td>-0.041080</td>
+      <td>-0.041164</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-0.002719</td>
+      <td>-0.013478</td>
+      <td>-0.013805</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.000089</td>
+      <td>-0.000332</td>
+      <td>-0.000289</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.002760</td>
+      <td>0.012724</td>
+      <td>0.012964</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.008672</td>
+      <td>0.042145</td>
+      <td>0.042270</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">alphalens</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">plot_quantile_returns_bar</span><span class="p">(</span><span class="n">mean_return_by_q</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_overview_33_0.png" src="../_images/notebooks_overview_33_0.png" />
+</div>
+</div>
+<p>By looking at the mean return by quantile we can get a real look at how well the factor differentiates forward returns across the signal values. Obviously we want securities with a better signal to exhibit higher returns. For a good factor we’d expect to see negative values in the lower quartiles and positive values in the upper quantiles.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">alphalens</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">plot_quantile_returns_violin</span><span class="p">(</span><span class="n">mean_return_by_q_daily</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_overview_35_0.png" src="../_images/notebooks_overview_35_0.png" />
+</div>
+</div>
+<p>This violin plot is similar to the one before it but shows more information about the underlying data. It gives a better idea about the range of values, the median, and the inter-quartile range. What gives the plots their shape is the application of a probability density of the data at different values.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">quant_return_spread</span><span class="p">,</span> <span class="n">std_err_spread</span> <span class="o">=</span> <span class="n">alphalens</span><span class="o">.</span><span class="n">performance</span><span class="o">.</span><span class="n">compute_mean_returns_spread</span><span class="p">(</span><span class="n">mean_return_by_q_daily</span><span class="p">,</span>
+                                                                                        <span class="n">upper_quant</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                                                                                        <span class="n">lower_quant</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                                                                        <span class="n">std_err</span><span class="o">=</span><span class="n">std_err</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">alphalens</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">plot_mean_quantile_returns_spread_time_series</span><span class="p">(</span>
+    <span class="n">quant_return_spread</span><span class="p">,</span> <span class="n">std_err_spread</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_overview_38_0.png" src="../_images/notebooks_overview_38_0.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_overview_38_1.png" src="../_images/notebooks_overview_38_1.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_overview_38_2.png" src="../_images/notebooks_overview_38_2.png" />
+</div>
+</div>
+<p>This rolling forward returns spread graph allows us to look at the raw spread in basis points between the top and bottom quantiles over time. The green line is the returns spread while the orange line is a 1 month average to smooth the data and make it easier to visualize.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">alphalens</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">plot_cumulative_returns_by_quantile</span><span class="p">(</span>
+    <span class="n">mean_return_by_q_daily</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;1D&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_overview_40_0.png" src="../_images/notebooks_overview_40_0.png" />
+</div>
+</div>
+<p>By looking at the cumulative returns by factor quantile we can get an intuition for which quantiles are contributing the most to the factor and at what time. Ideally we would like to see a these curves originate at the same value on the left and spread out like a fan as they move to the right through time, with the higher quantiles on the top.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ls_factor_returns</span> <span class="o">=</span> <span class="n">alphalens</span><span class="o">.</span><span class="n">performance</span><span class="o">.</span><span class="n">factor_returns</span><span class="p">(</span><span class="n">factor_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ls_factor_returns</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1D</th>
+      <th>5D</th>
+      <th>10D</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2014-12-01 00:00:00+00:00</th>
+      <td>0.009314</td>
+      <td>0.042049</td>
+      <td>0.041802</td>
+    </tr>
+    <tr>
+      <th>2014-12-02 00:00:00+00:00</th>
+      <td>0.003506</td>
+      <td>0.040637</td>
+      <td>0.046887</td>
+    </tr>
+    <tr>
+      <th>2014-12-03 00:00:00+00:00</th>
+      <td>0.012037</td>
+      <td>0.043812</td>
+      <td>0.041752</td>
+    </tr>
+    <tr>
+      <th>2014-12-04 00:00:00+00:00</th>
+      <td>0.004942</td>
+      <td>0.040428</td>
+      <td>0.028340</td>
+    </tr>
+    <tr>
+      <th>2014-12-05 00:00:00+00:00</th>
+      <td>0.009555</td>
+      <td>0.046433</td>
+      <td>0.031056</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">alphalens</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">plot_cumulative_returns</span><span class="p">(</span>
+    <span class="n">ls_factor_returns</span><span class="p">[</span><span class="s1">&#39;1D&#39;</span><span class="p">],</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;1D&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_overview_44_0.png" src="../_images/notebooks_overview_44_0.png" />
+</div>
+</div>
+<p>While looking at quantiles is important we must also look at the factor returns as a whole. The cumulative factor long/short returns plot lets us view the combined effects overtime of our entire factor.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">alpha_beta</span> <span class="o">=</span> <span class="n">alphalens</span><span class="o">.</span><span class="n">performance</span><span class="o">.</span><span class="n">factor_alpha_beta</span><span class="p">(</span><span class="n">factor_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">alpha_beta</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1D</th>
+      <th>5D</th>
+      <th>10D</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Ann. alpha</th>
+      <td>8.656010</td>
+      <td>7.927868</td>
+      <td>1.985069</td>
+    </tr>
+    <tr>
+      <th>beta</th>
+      <td>0.093763</td>
+      <td>0.079954</td>
+      <td>0.061756</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>A very important part of factor returns analysis is determing the alpha, and how significant it is. Here we surface the annualized alpha, and beta.</p>
+</div>
+<div class="section" id="Returns-Tear-Sheet">
+<h2>Returns Tear Sheet<a class="headerlink" href="#Returns-Tear-Sheet" title="Permalink to this headline">¶</a></h2>
+<p>We can view all returns analysis calculations together.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">alphalens</span><span class="o">.</span><span class="n">tears</span><span class="o">.</span><span class="n">create_returns_tear_sheet</span><span class="p">(</span><span class="n">factor_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="Information-Analysis">
+<h1>Information Analysis<a class="headerlink" href="#Information-Analysis" title="Permalink to this headline">¶</a></h1>
+<p>Information Analysis is a way for us to evaluate the predicitive value of a factor without the confounding effects of transaction costs. The main way we look at this is through the Information Coefficient (IC).</p>
+<p>From Wikipedia…</p>
+<blockquote>
+<div><p>The information coefficient (IC) is a measure of the merit of a predicted value. In finance, the information coefficient is used as a performance metric for the predictive skill of a financial analyst. The information coefficient is similar to correlation in that it can be seen to measure the linear relationship between two random variables, e.g. predicted stock returns and the actualized returns. The information coefficient ranges from 0 to 1, with 0 denoting no linear relationship between
+predictions and actual values (poor forecasting skills) and 1 denoting a perfect linear relationship (good forecasting skills).</p>
+</div></blockquote>
+<div class="section" id="id1">
+<h2>Performance Metrics &amp; Plotting Functions<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ic</span> <span class="o">=</span> <span class="n">alphalens</span><span class="o">.</span><span class="n">performance</span><span class="o">.</span><span class="n">factor_information_coefficient</span><span class="p">(</span><span class="n">factor_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ic</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1D</th>
+      <th>5D</th>
+      <th>10D</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2014-12-01 00:00:00+00:00</th>
+      <td>0.355752</td>
+      <td>1.0</td>
+      <td>0.561977</td>
+    </tr>
+    <tr>
+      <th>2014-12-02 00:00:00+00:00</th>
+      <td>0.230225</td>
+      <td>1.0</td>
+      <td>0.718246</td>
+    </tr>
+    <tr>
+      <th>2014-12-03 00:00:00+00:00</th>
+      <td>0.485738</td>
+      <td>1.0</td>
+      <td>0.716855</td>
+    </tr>
+    <tr>
+      <th>2014-12-04 00:00:00+00:00</th>
+      <td>0.306327</td>
+      <td>1.0</td>
+      <td>0.609102</td>
+    </tr>
+    <tr>
+      <th>2014-12-05 00:00:00+00:00</th>
+      <td>0.485616</td>
+      <td>1.0</td>
+      <td>0.728141</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">alphalens</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">plot_ic_ts</span><span class="p">(</span><span class="n">ic</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_overview_56_0.png" src="../_images/notebooks_overview_56_0.png" />
+</div>
+</div>
+<p>By looking at the IC each day we can understand how theoretically predicitive our factor is overtime. We like our mean IC to be high and the standard deviation, or volatility of it, to be low. We want to find consistently predictive factors.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">alphalens</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">plot_ic_hist</span><span class="p">(</span><span class="n">ic</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_overview_58_0.png" src="../_images/notebooks_overview_58_0.png" />
+</div>
+</div>
+<p>Looking at a histogram of the daily IC values can indicate how the factor behaves most of the time, where the likely IC values will fall, it also allows us to see if the factor has fat tails.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">alphalens</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">plot_ic_qq</span><span class="p">(</span><span class="n">ic</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_overview_60_0.png" src="../_images/notebooks_overview_60_0.png" />
+</div>
+</div>
+<p>These Q-Q plots show the difference in shape between the distribution of IC values and a normal distribution. This is especially helpful in seeing how the most extreme values in the distribution affect the predicitive power.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">mean_monthly_ic</span> <span class="o">=</span> <span class="n">alphalens</span><span class="o">.</span><span class="n">performance</span><span class="o">.</span><span class="n">mean_information_coefficient</span><span class="p">(</span>
+    <span class="n">factor_data</span><span class="p">,</span> <span class="n">by_time</span><span class="o">=</span><span class="s1">&#39;M&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">mean_monthly_ic</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1D</th>
+      <th>5D</th>
+      <th>10D</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2014-12-31 00:00:00+00:00</th>
+      <td>0.380726</td>
+      <td>1.0</td>
+      <td>0.657422</td>
+    </tr>
+    <tr>
+      <th>2015-01-31 00:00:00+00:00</th>
+      <td>0.424420</td>
+      <td>1.0</td>
+      <td>0.663536</td>
+    </tr>
+    <tr>
+      <th>2015-02-28 00:00:00+00:00</th>
+      <td>0.462670</td>
+      <td>1.0</td>
+      <td>0.729582</td>
+    </tr>
+    <tr>
+      <th>2015-03-31 00:00:00+00:00</th>
+      <td>0.423443</td>
+      <td>1.0</td>
+      <td>0.685343</td>
+    </tr>
+    <tr>
+      <th>2015-04-30 00:00:00+00:00</th>
+      <td>0.417112</td>
+      <td>1.0</td>
+      <td>0.638436</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">alphalens</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">plot_monthly_ic_heatmap</span><span class="p">(</span><span class="n">mean_monthly_ic</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_overview_64_0.png" src="../_images/notebooks_overview_64_0.png" />
+</div>
+</div>
+<p>By displaying the IC data in heatmap format we can get an idea about the consistency of the factor, and how it behaves during different market regimes/seasons.</p>
+</div>
+<div class="section" id="Information-Tear-Sheet">
+<h2>Information Tear Sheet<a class="headerlink" href="#Information-Tear-Sheet" title="Permalink to this headline">¶</a></h2>
+<p>We can view all information analysis calculations together.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">alphalens</span><span class="o">.</span><span class="n">tears</span><span class="o">.</span><span class="n">create_information_tear_sheet</span><span class="p">(</span><span class="n">factor_data</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Information Analysis
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1D</th>
+      <th>5D</th>
+      <th>10D</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>IC Mean</th>
+      <td>0.414</td>
+      <td>1.000000e+00</td>
+      <td>0.669</td>
+    </tr>
+    <tr>
+      <th>IC Std.</th>
+      <td>0.175</td>
+      <td>0.000000e+00</td>
+      <td>0.127</td>
+    </tr>
+    <tr>
+      <th>Risk-Adjusted IC</th>
+      <td>2.361</td>
+      <td>3.455090e+16</td>
+      <td>5.273</td>
+    </tr>
+    <tr>
+      <th>t-stat(IC)</th>
+      <td>53.633</td>
+      <td>7.848456e+17</td>
+      <td>119.777</td>
+    </tr>
+    <tr>
+      <th>p-value(IC)</th>
+      <td>0.000</td>
+      <td>0.000000e+00</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th>IC Skew</th>
+      <td>-0.673</td>
+      <td>-3.840000e+00</td>
+      <td>-1.034</td>
+    </tr>
+    <tr>
+      <th>IC Kurtosis</th>
+      <td>1.145</td>
+      <td>1.174300e+01</td>
+      <td>2.099</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Figure size 432x288 with 0 Axes&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_overview_67_3.png" src="../_images/notebooks_overview_67_3.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="Turnover-Analysis">
+<h1>Turnover Analysis<a class="headerlink" href="#Turnover-Analysis" title="Permalink to this headline">¶</a></h1>
+<p>Turnover Analysis gives us an idea about the nature of a factor’s makeup and how it changes.</p>
+<div class="section" id="id2">
+<h2>Performance Metrics &amp; Plotting Functions<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">quantile_factor</span> <span class="o">=</span> <span class="n">factor_data</span><span class="p">[</span><span class="s1">&#39;factor_quantile&#39;</span><span class="p">]</span>
+<span class="n">turnover_period</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">quantile_turnover</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">alphalens</span><span class="o">.</span><span class="n">performance</span><span class="o">.</span><span class="n">quantile_turnover</span><span class="p">(</span><span class="n">quantile_factor</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">turnover_period</span><span class="p">)</span>
+                               <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">quantile_factor</span><span class="o">.</span><span class="n">max</span><span class="p">())</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">quantile_turnover</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2014-12-01 00:00:00+00:00</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2014-12-02 00:00:00+00:00</th>
+      <td>0.333333</td>
+      <td>0.62500</td>
+      <td>0.666667</td>
+      <td>0.50000</td>
+      <td>0.424242</td>
+    </tr>
+    <tr>
+      <th>2014-12-03 00:00:00+00:00</th>
+      <td>0.151515</td>
+      <td>0.37500</td>
+      <td>0.545455</td>
+      <td>0.53125</td>
+      <td>0.393939</td>
+    </tr>
+    <tr>
+      <th>2014-12-04 00:00:00+00:00</th>
+      <td>0.181818</td>
+      <td>0.53125</td>
+      <td>0.757576</td>
+      <td>0.68750</td>
+      <td>0.424242</td>
+    </tr>
+    <tr>
+      <th>2014-12-05 00:00:00+00:00</th>
+      <td>0.151515</td>
+      <td>0.31250</td>
+      <td>0.515152</td>
+      <td>0.53125</td>
+      <td>0.606061</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">alphalens</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">plot_top_bottom_quantile_turnover</span><span class="p">(</span>
+    <span class="n">quantile_turnover</span><span class="p">,</span> <span class="n">turnover_period</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_overview_73_0.png" src="../_images/notebooks_overview_73_0.png" />
+</div>
+</div>
+<p>Factor turnover is important as it indicates the incorporation of new information and the make up of the extremes of a signal. By looking at the new additions to the sets of top and bottom quantiles we can see how much of this factor is getting remade everyday.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">factor_autocorrelation</span> <span class="o">=</span> <span class="n">alphalens</span><span class="o">.</span><span class="n">performance</span><span class="o">.</span><span class="n">factor_rank_autocorrelation</span><span class="p">(</span>
+    <span class="n">factor_data</span><span class="p">,</span> <span class="n">turnover_period</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">factor_autocorrelation</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+date
+2014-12-01 00:00:00+00:00         NaN
+2014-12-02 00:00:00+00:00    0.708640
+2014-12-03 00:00:00+00:00    0.857790
+2014-12-04 00:00:00+00:00    0.727252
+2014-12-05 00:00:00+00:00    0.803030
+Freq: C, Name: 1, dtype: float64
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">alphalens</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">plot_factor_rank_auto_correlation</span><span class="p">(</span><span class="n">factor_autocorrelation</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_overview_77_0.png" src="../_images/notebooks_overview_77_0.png" />
+</div>
+</div>
+<p>The autocorrelation of the factor indicates to us the persistence of the signal itself.</p>
+</div>
+<div class="section" id="Turnover-Tear-Sheet">
+<h2>Turnover Tear Sheet<a class="headerlink" href="#Turnover-Tear-Sheet" title="Permalink to this headline">¶</a></h2>
+<p>We can view all turnover calculations together.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">alphalens</span><span class="o">.</span><span class="n">tears</span><span class="o">.</span><span class="n">create_turnover_tear_sheet</span><span class="p">(</span><span class="n">factor_data</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Turnover Analysis
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1D</th>
+      <th>5D</th>
+      <th>10D</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Quantile 1 Mean Turnover</th>
+      <td>0.340</td>
+      <td>0.765</td>
+      <td>0.785</td>
+    </tr>
+    <tr>
+      <th>Quantile 2 Mean Turnover</th>
+      <td>0.601</td>
+      <td>0.791</td>
+      <td>0.799</td>
+    </tr>
+    <tr>
+      <th>Quantile 3 Mean Turnover</th>
+      <td>0.636</td>
+      <td>0.781</td>
+      <td>0.781</td>
+    </tr>
+    <tr>
+      <th>Quantile 4 Mean Turnover</th>
+      <td>0.607</td>
+      <td>0.791</td>
+      <td>0.800</td>
+    </tr>
+    <tr>
+      <th>Quantile 5 Mean Turnover</th>
+      <td>0.350</td>
+      <td>0.783</td>
+      <td>0.793</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1D</th>
+      <th>5D</th>
+      <th>10D</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Mean Factor Rank Autocorrelation</th>
+      <td>0.756</td>
+      <td>0.0</td>
+      <td>-0.03</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Figure size 432x288 with 0 Axes&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_overview_80_4.png" src="../_images/notebooks_overview_80_4.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="Event-Style-Returns-Analysis">
+<h1>Event Style Returns Analysis<a class="headerlink" href="#Event-Style-Returns-Analysis" title="Permalink to this headline">¶</a></h1>
+<p>Looking at the average cumulative return in a window before and after a factor can indicate to us how long the predicative power of a factor lasts. This tear sheet takes a while to run.</p>
+<p><strong>NOTE:</strong> This tear sheet takes in an extra argument <code class="docutils literal notranslate"><span class="pre">pricing</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">alphalens</span><span class="o">.</span><span class="n">tears</span><span class="o">.</span><span class="n">create_event_returns_tear_sheet</span><span class="p">(</span>
+    <span class="n">factor_data</span><span class="p">,</span> <span class="n">pricing</span><span class="p">,</span> <span class="n">by_group</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Figure size 432x288 with 0 Axes&gt;
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_overview_82_1.png" src="../_images/notebooks_overview_82_1.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_overview_82_2.png" src="../_images/notebooks_overview_82_2.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Groupwise-Performance">
+<h1>Groupwise Performance<a class="headerlink" href="#Groupwise-Performance" title="Permalink to this headline">¶</a></h1>
+<p>Many of the plots in Alphalens can be viewed on their own by grouping if grouping information is provided. The returns and information tear sheets can be viewed groupwise by passing in the <code class="docutils literal notranslate"><span class="pre">by_group=True</span></code> argument.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ic_by_sector</span> <span class="o">=</span> <span class="n">alphalens</span><span class="o">.</span><span class="n">performance</span><span class="o">.</span><span class="n">mean_information_coefficient</span><span class="p">(</span>
+    <span class="n">factor_data</span><span class="p">,</span> <span class="n">by_group</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ic_by_sector</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1D</th>
+      <th>5D</th>
+      <th>10D</th>
+    </tr>
+    <tr>
+      <th>group</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>consumer_discretionary</th>
+      <td>0.376525</td>
+      <td>1.0</td>
+      <td>0.630168</td>
+    </tr>
+    <tr>
+      <th>consumer_staples</th>
+      <td>0.388736</td>
+      <td>1.0</td>
+      <td>0.645816</td>
+    </tr>
+    <tr>
+      <th>energy</th>
+      <td>0.394440</td>
+      <td>1.0</td>
+      <td>0.634939</td>
+    </tr>
+    <tr>
+      <th>financials</th>
+      <td>0.404388</td>
+      <td>1.0</td>
+      <td>0.648418</td>
+    </tr>
+    <tr>
+      <th>health_care</th>
+      <td>0.388439</td>
+      <td>1.0</td>
+      <td>0.627040</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">alphalens</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">plot_ic_by_group</span><span class="p">(</span><span class="n">ic_by_sector</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;AxesSubplot:title={&#39;center&#39;:&#39;Information Coefficient By Group&#39;}&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_overview_87_1.png" src="../_images/notebooks_overview_87_1.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">mean_return_quantile_sector</span><span class="p">,</span> <span class="n">mean_return_quantile_sector_err</span> <span class="o">=</span> <span class="n">alphalens</span><span class="o">.</span><span class="n">performance</span><span class="o">.</span><span class="n">mean_return_by_quantile</span><span class="p">(</span>
+    <span class="n">factor_data</span><span class="p">,</span> <span class="n">by_group</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">mean_return_quantile_sector</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>1D</th>
+      <th>5D</th>
+      <th>10D</th>
+    </tr>
+    <tr>
+      <th>factor_quantile</th>
+      <th>group</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="5" valign="top">1</th>
+      <th>consumer_discretionary</th>
+      <td>-0.008481</td>
+      <td>-0.042084</td>
+      <td>-0.041998</td>
+    </tr>
+    <tr>
+      <th>consumer_staples</th>
+      <td>-0.007378</td>
+      <td>-0.035313</td>
+      <td>-0.036838</td>
+    </tr>
+    <tr>
+      <th>energy</th>
+      <td>-0.009574</td>
+      <td>-0.044188</td>
+      <td>-0.043574</td>
+    </tr>
+    <tr>
+      <th>financials</th>
+      <td>-0.007825</td>
+      <td>-0.038616</td>
+      <td>-0.039761</td>
+    </tr>
+    <tr>
+      <th>health_care</th>
+      <td>-0.008552</td>
+      <td>-0.041262</td>
+      <td>-0.040898</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">alphalens</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">plot_quantile_returns_bar</span><span class="p">(</span>
+    <span class="n">mean_return_quantile_sector</span><span class="p">,</span> <span class="n">by_group</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([&lt;AxesSubplot:title={&#39;center&#39;:&#39;consumer_discretionary&#39;}, ylabel=&#39;Mean Return (bps)&#39;&gt;,
+       &lt;AxesSubplot:title={&#39;center&#39;:&#39;consumer_staples&#39;}, ylabel=&#39;Mean Return (bps)&#39;&gt;,
+       &lt;AxesSubplot:title={&#39;center&#39;:&#39;energy&#39;}, ylabel=&#39;Mean Return (bps)&#39;&gt;,
+       &lt;AxesSubplot:title={&#39;center&#39;:&#39;financials&#39;}, ylabel=&#39;Mean Return (bps)&#39;&gt;,
+       &lt;AxesSubplot:title={&#39;center&#39;:&#39;health_care&#39;}, ylabel=&#39;Mean Return (bps)&#39;&gt;,
+       &lt;AxesSubplot:title={&#39;center&#39;:&#39;industrials&#39;}, ylabel=&#39;Mean Return (bps)&#39;&gt;,
+       &lt;AxesSubplot:title={&#39;center&#39;:&#39;information_technology&#39;}, ylabel=&#39;Mean Return (bps)&#39;&gt;,
+       &lt;AxesSubplot:title={&#39;center&#39;:&#39;materials&#39;}, ylabel=&#39;Mean Return (bps)&#39;&gt;,
+       &lt;AxesSubplot:title={&#39;center&#39;:&#39;real_estate&#39;}, ylabel=&#39;Mean Return (bps)&#39;&gt;,
+       &lt;AxesSubplot:title={&#39;center&#39;:&#39;telecommunication_services&#39;}, ylabel=&#39;Mean Return (bps)&#39;&gt;,
+       &lt;AxesSubplot:title={&#39;center&#39;:&#39;utilities&#39;}, ylabel=&#39;Mean Return (bps)&#39;&gt;,
+       &lt;AxesSubplot:&gt;], dtype=object)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_overview_90_1.png" src="../_images/notebooks_overview_90_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Summary-Tear-Sheet">
+<h1>Summary Tear Sheet<a class="headerlink" href="#Summary-Tear-Sheet" title="Permalink to this headline">¶</a></h1>
+<p>There are a lot of plots above. If you want a quick snapshot of how the alpha factor performs consider the summary tear sheet.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">alphalens</span><span class="o">.</span><span class="n">tears</span><span class="o">.</span><span class="n">create_summary_tear_sheet</span><span class="p">(</span><span class="n">factor_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Quantiles Statistics
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>min</th>
+      <th>max</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>count</th>
+      <th>count %</th>
+    </tr>
+    <tr>
+      <th>factor_quantile</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>-0.362876</td>
+      <td>0.034670</td>
+      <td>-0.039407</td>
+      <td>0.032398</td>
+      <td>17028</td>
+      <td>20.245639</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-0.127588</td>
+      <td>0.046669</td>
+      <td>-0.011804</td>
+      <td>0.019490</td>
+      <td>16513</td>
+      <td>19.633324</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.109737</td>
+      <td>0.068948</td>
+      <td>0.001341</td>
+      <td>0.018291</td>
+      <td>17026</td>
+      <td>20.243262</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.087449</td>
+      <td>0.098542</td>
+      <td>0.014397</td>
+      <td>0.019180</td>
+      <td>16512</td>
+      <td>19.632135</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>-0.061661</td>
+      <td>0.494950</td>
+      <td>0.043818</td>
+      <td>0.036501</td>
+      <td>17028</td>
+      <td>20.245639</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Returns Analysis
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1D</th>
+      <th>5D</th>
+      <th>10D</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Ann. alpha</th>
+      <td>8.656</td>
+      <td>7.928</td>
+      <td>1.985</td>
+    </tr>
+    <tr>
+      <th>beta</th>
+      <td>0.094</td>
+      <td>0.080</td>
+      <td>0.062</td>
+    </tr>
+    <tr>
+      <th>Mean Period Wise Return Top Quantile (bps)</th>
+      <td>86.725</td>
+      <td>82.903</td>
+      <td>41.487</td>
+    </tr>
+    <tr>
+      <th>Mean Period Wise Return Bottom Quantile (bps)</th>
+      <td>-86.236</td>
+      <td>-83.545</td>
+      <td>-41.947</td>
+    </tr>
+    <tr>
+      <th>Mean Period Wise Spread (bps)</th>
+      <td>172.960</td>
+      <td>166.458</td>
+      <td>83.458</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Information Analysis
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1D</th>
+      <th>5D</th>
+      <th>10D</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>IC Mean</th>
+      <td>0.414</td>
+      <td>1.000000e+00</td>
+      <td>0.669</td>
+    </tr>
+    <tr>
+      <th>IC Std.</th>
+      <td>0.175</td>
+      <td>0.000000e+00</td>
+      <td>0.127</td>
+    </tr>
+    <tr>
+      <th>Risk-Adjusted IC</th>
+      <td>2.361</td>
+      <td>3.455090e+16</td>
+      <td>5.273</td>
+    </tr>
+    <tr>
+      <th>t-stat(IC)</th>
+      <td>53.633</td>
+      <td>7.848456e+17</td>
+      <td>119.777</td>
+    </tr>
+    <tr>
+      <th>p-value(IC)</th>
+      <td>0.000</td>
+      <td>0.000000e+00</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th>IC Skew</th>
+      <td>-0.673</td>
+      <td>-3.840000e+00</td>
+      <td>-1.034</td>
+    </tr>
+    <tr>
+      <th>IC Kurtosis</th>
+      <td>1.145</td>
+      <td>1.174300e+01</td>
+      <td>2.099</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Turnover Analysis
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1D</th>
+      <th>5D</th>
+      <th>10D</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Quantile 1 Mean Turnover</th>
+      <td>0.340</td>
+      <td>0.765</td>
+      <td>0.785</td>
+    </tr>
+    <tr>
+      <th>Quantile 2 Mean Turnover</th>
+      <td>0.601</td>
+      <td>0.791</td>
+      <td>0.799</td>
+    </tr>
+    <tr>
+      <th>Quantile 3 Mean Turnover</th>
+      <td>0.636</td>
+      <td>0.781</td>
+      <td>0.781</td>
+    </tr>
+    <tr>
+      <th>Quantile 4 Mean Turnover</th>
+      <td>0.607</td>
+      <td>0.791</td>
+      <td>0.800</td>
+    </tr>
+    <tr>
+      <th>Quantile 5 Mean Turnover</th>
+      <td>0.350</td>
+      <td>0.783</td>
+      <td>0.793</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1D</th>
+      <th>5D</th>
+      <th>10D</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Mean Factor Rank Autocorrelation</th>
+      <td>0.756</td>
+      <td>0.0</td>
+      <td>-0.03</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Figure size 432x288 with 0 Axes&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_overview_92_10.png" src="../_images/notebooks_overview_92_10.png" />
+</div>
+</div>
+</div>
+<div class="section" id="The-Whole-Thing">
+<h1>The Whole Thing<a class="headerlink" href="#The-Whole-Thing" title="Permalink to this headline">¶</a></h1>
+<p>If you want to see all of the results create a full tear sheet. By passing in the factor data you can analyze all of the above statistics and plots at once.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">alphalens</span><span class="o">.</span><span class="n">tears</span><span class="o">.</span><span class="n">create_full_tear_sheet</span><span class="p">(</span><span class="n">factor_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Quantiles Statistics
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>min</th>
+      <th>max</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>count</th>
+      <th>count %</th>
+    </tr>
+    <tr>
+      <th>factor_quantile</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>-0.362876</td>
+      <td>0.034670</td>
+      <td>-0.039407</td>
+      <td>0.032398</td>
+      <td>17028</td>
+      <td>20.245639</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-0.127588</td>
+      <td>0.046669</td>
+      <td>-0.011804</td>
+      <td>0.019490</td>
+      <td>16513</td>
+      <td>19.633324</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.109737</td>
+      <td>0.068948</td>
+      <td>0.001341</td>
+      <td>0.018291</td>
+      <td>17026</td>
+      <td>20.243262</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.087449</td>
+      <td>0.098542</td>
+      <td>0.014397</td>
+      <td>0.019180</td>
+      <td>16512</td>
+      <td>19.632135</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>-0.061661</td>
+      <td>0.494950</td>
+      <td>0.043818</td>
+      <td>0.036501</td>
+      <td>17028</td>
+      <td>20.245639</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Returns Analysis
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1D</th>
+      <th>5D</th>
+      <th>10D</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Ann. alpha</th>
+      <td>8.656</td>
+      <td>7.928</td>
+      <td>1.985</td>
+    </tr>
+    <tr>
+      <th>beta</th>
+      <td>0.094</td>
+      <td>0.080</td>
+      <td>0.062</td>
+    </tr>
+    <tr>
+      <th>Mean Period Wise Return Top Quantile (bps)</th>
+      <td>86.725</td>
+      <td>82.903</td>
+      <td>41.487</td>
+    </tr>
+    <tr>
+      <th>Mean Period Wise Return Bottom Quantile (bps)</th>
+      <td>-86.236</td>
+      <td>-83.545</td>
+      <td>-41.947</td>
+    </tr>
+    <tr>
+      <th>Mean Period Wise Spread (bps)</th>
+      <td>172.960</td>
+      <td>166.458</td>
+      <td>83.458</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Figure size 432x288 with 0 Axes&gt;
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_overview_94_5.png" src="../_images/notebooks_overview_94_5.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Information Analysis
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1D</th>
+      <th>5D</th>
+      <th>10D</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>IC Mean</th>
+      <td>0.414</td>
+      <td>1.000000e+00</td>
+      <td>0.669</td>
+    </tr>
+    <tr>
+      <th>IC Std.</th>
+      <td>0.175</td>
+      <td>0.000000e+00</td>
+      <td>0.127</td>
+    </tr>
+    <tr>
+      <th>Risk-Adjusted IC</th>
+      <td>2.361</td>
+      <td>3.455090e+16</td>
+      <td>5.273</td>
+    </tr>
+    <tr>
+      <th>t-stat(IC)</th>
+      <td>53.633</td>
+      <td>7.848456e+17</td>
+      <td>119.777</td>
+    </tr>
+    <tr>
+      <th>p-value(IC)</th>
+      <td>0.000</td>
+      <td>0.000000e+00</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th>IC Skew</th>
+      <td>-0.673</td>
+      <td>-3.840000e+00</td>
+      <td>-1.034</td>
+    </tr>
+    <tr>
+      <th>IC Kurtosis</th>
+      <td>1.145</td>
+      <td>1.174300e+01</td>
+      <td>2.099</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_overview_94_8.png" src="../_images/notebooks_overview_94_8.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Turnover Analysis
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1D</th>
+      <th>5D</th>
+      <th>10D</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Quantile 1 Mean Turnover</th>
+      <td>0.340</td>
+      <td>0.765</td>
+      <td>0.785</td>
+    </tr>
+    <tr>
+      <th>Quantile 2 Mean Turnover</th>
+      <td>0.601</td>
+      <td>0.791</td>
+      <td>0.799</td>
+    </tr>
+    <tr>
+      <th>Quantile 3 Mean Turnover</th>
+      <td>0.636</td>
+      <td>0.781</td>
+      <td>0.781</td>
+    </tr>
+    <tr>
+      <th>Quantile 4 Mean Turnover</th>
+      <td>0.607</td>
+      <td>0.791</td>
+      <td>0.800</td>
+    </tr>
+    <tr>
+      <th>Quantile 5 Mean Turnover</th>
+      <td>0.350</td>
+      <td>0.783</td>
+      <td>0.793</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1D</th>
+      <th>5D</th>
+      <th>10D</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Mean Factor Rank Autocorrelation</th>
+      <td>0.756</td>
+      <td>0.0</td>
+      <td>-0.03</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_overview_94_12.png" src="../_images/notebooks_overview_94_12.png" />
+</div>
+</div>
+</div>
+
+
+              </div>
+
+
+              <div class='prev-next-bottom'>
+
+    <a class='left-prev' id="prev-link" href="../index.html" title="previous page">Getting started</a>
+    <a class='right-next' id="next-link" href="intraday_factor.html" title="next page">Intraday Factor</a>
+
+              </div>
+
+          </main>
+
+
+      </div>
+    </div>
+
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+
+
+    <!-- Google Analytics -->
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-74956955-3', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2016, Quantopian, Inc..<br/>
+</p>
+    </div>
+
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+</p>
+    </div>
+
+  </div>
+</footer>
+  </body>
+</html>
