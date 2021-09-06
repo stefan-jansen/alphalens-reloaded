@@ -627,11 +627,15 @@ def quantile_turnover(quantile_factor, quantile, period=1):
 
     new_names = (quant_name_sets - name_shifted).dropna()
 
-    f = lambda xs: 0 if pd.isna(xs) else len(xs)
-    g = lambda xs: 1 if pd.isna(xs) else len(xs)
-    quant_turnover = (
-        new_names.apply(f) / quant_name_sets.apply(g)
-    ).rename(quantile)
+    def f(xs):
+        return 0 if pd.isna(xs) else len(xs)
+
+    def g(xs):
+        return 1 if pd.isna(xs) else len(xs)
+
+    quant_turnover = (new_names.apply(f) / quant_name_sets.apply(g)).rename(
+        quantile
+    )
     return quant_turnover
 
 
