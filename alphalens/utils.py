@@ -19,7 +19,12 @@ import re
 import warnings
 
 from IPython.display import display
-from pandas.tseries.offsets import BaseOffset, CustomBusinessDay, Day, BusinessDay
+from pandas.tseries.offsets import (
+    BaseOffset,
+    CustomBusinessDay,
+    Day,
+    BusinessDay,
+)
 from scipy.stats import mode
 
 
