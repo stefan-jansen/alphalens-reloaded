@@ -1,0 +1,64 @@
+name: PyPI
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Package Index'
+        required: true
+        default: 'TESTPYPI'
+  release:
+    types:
+    - published
+
+jobs:
+  dist:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        python-version: [ 3.8 ]
+
+    steps:
+      - name: Checkout alphalens
+        uses: actions/checkout@v2
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Build wheels
+        run: pipx run build
+
+      - name: Store artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          path: dist/*
+
+      - name: Check metadata
+        run: pipx run twine check dist/*
+
+  upload_pypi:
+    needs: [ dist ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: artifact
+          path: dist
+
+      - name: publish to testpypi
+        uses: pypa/gh-action-pypi-publish@v1.4.1
+        if: ${{ github.event.inputs.target }} == 'TESTPYPI'
+        with:
+          user: __token__
+          password: ${{ secrets.TESTPYPI_TOKEN }}
+          repository_url: https://test.pypi.org/legacy/
+      - name: publish to pypi
+        uses: pypa/gh-action-pypi-publish@master
+        if: ${{ github.event.inputs.target }} == 'PYPI'
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_TOKEN }}
