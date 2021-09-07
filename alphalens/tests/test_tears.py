@@ -16,6 +16,7 @@
 import warnings
 
 from unittest import TestCase
+from unittest.mock import patch, Mock
 from parameterized import parameterized
 from numpy import nan
 from pandas import DataFrame, date_range, Timedelta, concat
@@ -36,6 +37,7 @@ from ..tears import (  # noqa: E402
 from ..utils import get_clean_factor_and_forward_returns  # noqa: E402
 
 
+@patch("matplotlib.pyplot.show", Mock())
 class TearsTestCase(TestCase):
     tickers = ["A", "B", "C", "D", "E", "F"]
 
@@ -199,6 +201,7 @@ class TearsTestCase(TestCase):
         """
         Test no exceptions are thrown
         """
+
         factor_data = get_clean_factor_and_forward_returns(
             self.factor,
             self.prices,

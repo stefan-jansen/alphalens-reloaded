@@ -285,7 +285,7 @@ def plot_ic_hist(ic, ax=None):
         ax = ax.flatten()
 
     for a, (period_num, ic) in zip(ax, ic.iteritems()):
-        sns.distplot(ic.replace(np.nan, 0.0), norm_hist=True, ax=a)
+        sns.histplot(ic.replace(np.nan, 0.0), kde=True, ax=a)
         a.set(title="%s Period IC" % period_num, xlabel="IC")
         a.set_xlim([-1, 1])
         a.text(

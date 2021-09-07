@@ -1032,6 +1032,10 @@ def add_custom_calendar_timedelta(input, timedelta, freq):
     return input + freq * days + offset
 
 
+def make_naive_ts(t):
+    return t.tz_convert(None) if t.tzinfo is not None else t.tz_localize(None)
+
+
 def diff_custom_calendar_timedeltas(start, end, freq):
     """
     Compute the difference between two pd.Timedelta taking into consideration
@@ -1070,8 +1074,8 @@ def diff_custom_calendar_timedeltas(start, end, freq):
     if weekmask is not None and holidays is not None:
         # we prefer this method as it is faster
         actual_days = np.busday_count(
-            np.array(start).astype("datetime64[D]"),
-            np.array(end).astype("datetime64[D]"),
+            np.array(make_naive_ts(start)).astype("datetime64[D]"),
+            np.array(make_naive_ts(end)).astype("datetime64[D]"),
             weekmask,
             holidays,
         )
