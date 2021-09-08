@@ -1,5 +1,5 @@
 {% set name = "alphalens-reloaded" %}
-{% set version = "0.4.1.post1" %}
+{% set version = "0.4.2" %}
 
 package:
   name: {{ name|lower }}
@@ -28,7 +28,7 @@ requirements:
     - seaborn>=0.6.0
     - statsmodels>=0.6.1
     - IPython>=3.2.3
-    - empyrical-reloaded>=0.5.7
+    - empyrical-reloaded>=0.5.8
 
 test:
   imports:

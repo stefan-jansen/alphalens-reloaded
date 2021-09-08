@@ -4,8 +4,16 @@
 </a>
 </p>
 
-[![CI Tests](https://github.com/stefan-jansen/alphalens-reloaded/actions/workflows/unit_tests.yml/badge.svg)](https://github.com/stefan-jansen/alphalens-reloaded/actions/workflows/unit_tests.yml)
+![PyPI](https://img.shields.io/pypi/v/alphalens-reloaded)
+![Conda](https://img.shields.io/conda/pn/ml4t/alphalens-reloaded)
+[![Tests](https://github.com/stefan-jansen/alphalens-reloaded/actions/workflows/unit_tests.yml/badge.svg)](https://github.com/stefan-jansen/alphalens-reloaded/actions/workflows/unit_tests.yml)
 [![PyPI Wheels](https://github.com/stefan-jansen/alphalens-reloaded/actions/workflows/distribution.yml/badge.svg)](https://github.com/stefan-jansen/alphalens-reloaded/actions/workflows/distribution.yml)
+[![Alphalens conda distribution](https://github.com/stefan-jansen/alphalens-reloaded/actions/workflows/conda_package.yml/badge.svg)](https://github.com/stefan-jansen/alphalens-reloaded/actions/workflows/conda_package.yml)
+[![Coverage Status](https://coveralls.io/repos/github/stefan-jansen/alphalens-reloaded/badge.svg?branch=main)](https://coveralls.io/github/stefan-jansen/alphalens-reloaded?branch=main)
+![GitHub issues](https://img.shields.io/github/issues/stefan-jansen/alphalens-reloaded)
+![PyPI - License](https://img.shields.io/pypi/l/alphalens-reloaded)
+![Discourse users](https://img.shields.io/discourse/users?server=https%3A%2F%2Fexchange.ml4trading.io%2F)
+![Twitter Follow](https://img.shields.io/twitter/follow/ml4trading?style=social)
 
 Alphalens is a Python library for performance analysis of predictive
 (alpha) stock factors. Alphalens works great with the
