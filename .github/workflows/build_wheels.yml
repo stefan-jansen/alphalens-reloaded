@@ -52,14 +52,14 @@ jobs:
           path: dist
 
       - name: publish to testpypi
-        uses: pypa/gh-action-pypi-publish@v1.5.0
+        uses: pypa/gh-action-pypi-publish@v1.6.1
         if: ${{ github.event.inputs.target }} == 'TESTPYPI'
         with:
           user: __token__
           password: ${{ secrets.TESTPYPI_TOKEN }}
           repository_url: https://test.pypi.org/legacy/
       - name: publish to pypi
-        uses: pypa/gh-action-pypi-publish@v1.5.0
+        uses: pypa/gh-action-pypi-publish@v1.6.1
         if: ${{ github.event.inputs.target }} == 'PYPI'
         with:
           user: __token__
