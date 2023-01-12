@@ -30,3 +30,4 @@ update
 .pre-commit-config.yaml
 conda/recipe
 _static
+_version.py
