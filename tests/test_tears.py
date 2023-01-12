@@ -24,7 +24,7 @@ from pandas import DataFrame, date_range, Timedelta, concat
 warnings.filterwarnings("ignore", category=UserWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-from ..tears import (  # noqa: E402
+from alphalens.tears import (  # noqa: E402
     create_returns_tear_sheet,
     create_information_tear_sheet,
     create_turnover_tear_sheet,
@@ -34,7 +34,7 @@ from ..tears import (  # noqa: E402
     create_event_study_tear_sheet,
 )  # noqa: E402
 
-from ..utils import get_clean_factor_and_forward_returns  # noqa: E402
+from alphalens.utils import get_clean_factor_and_forward_returns  # noqa: E402
 
 
 @patch("matplotlib.pyplot.show", Mock())
@@ -44,7 +44,7 @@ class TearsTestCase(TestCase):
     factor_groups = {"A": 1, "B": 2, "C": 1, "D": 2, "E": 1, "F": 2}
 
     price_data = [
-        [1.25 ** i, 1.50 ** i, 1.00 ** i, 0.50 ** i, 1.50 ** i, 1.00 ** i]
+        [1.25**i, 1.50**i, 1.00**i, 0.50**i, 1.50**i, 1.00**i]
         for i in range(1, 51)
     ]
 
@@ -123,9 +123,7 @@ class TearsTestCase(TestCase):
 
     bfactor_index = date_range(start="2015-1-15", end="2015-2-25", freq="B")
     bfactor_index.name = "date"
-    bfactor = DataFrame(
-        index=bfactor_index, columns=tickers, data=factor_data
-    ).stack()
+    bfactor = DataFrame(index=bfactor_index, columns=tickers, data=factor_data).stack()
 
     #
     # full calendar
@@ -136,9 +134,7 @@ class TearsTestCase(TestCase):
 
     factor_index = date_range(start="2015-1-15", end="2015-2-13")
     factor_index.name = "date"
-    factor = DataFrame(
-        index=factor_index, columns=tickers, data=factor_data
-    ).stack()
+    factor = DataFrame(index=factor_index, columns=tickers, data=factor_data).stack()
 
     #
     # intraday factor
@@ -160,9 +156,7 @@ class TearsTestCase(TestCase):
         data=price_data,
     )
     today_open_3h -= today_open_3h * 0.002
-    intraday_prices = concat(
-        [today_open, today_open_1h, today_open_3h]
-    ).sort_index()
+    intraday_prices = concat([today_open, today_open_1h, today_open_3h]).sort_index()
 
     intraday_factor = DataFrame(
         index=factor_index + Timedelta("9h30m"),
@@ -195,9 +189,7 @@ class TearsTestCase(TestCase):
         return prices, factor
 
     @parameterized.expand([(2, (1, 5, 10), None), (3, (2, 4, 6), 20)])
-    def test_create_returns_tear_sheet(
-        self, quantiles, periods, filter_zscore
-    ):
+    def test_create_returns_tear_sheet(self, quantiles, periods, filter_zscore):
         """
         Test no exceptions are thrown
         """
@@ -215,9 +207,7 @@ class TearsTestCase(TestCase):
         )
 
     @parameterized.expand([(1, (1, 5, 10), None), (4, (1, 2, 3, 7), 20)])
-    def test_create_information_tear_sheet(
-        self, quantiles, periods, filter_zscore
-    ):
+    def test_create_information_tear_sheet(self, quantiles, periods, filter_zscore):
         """
         Test no exceptions are thrown
         """
@@ -229,9 +219,7 @@ class TearsTestCase(TestCase):
             filter_zscore=filter_zscore,
         )
 
-        create_information_tear_sheet(
-            factor_data, group_neutral=False, by_group=False
-        )
+        create_information_tear_sheet(factor_data, group_neutral=False, by_group=False)
 
     @parameterized.expand(
         [
@@ -258,9 +246,7 @@ class TearsTestCase(TestCase):
         create_turnover_tear_sheet(factor_data, turnover_periods)
 
     @parameterized.expand([(2, (1, 5, 10), None), (3, (1, 2, 3, 7), 20)])
-    def test_create_summary_tear_sheet(
-        self, quantiles, periods, filter_zscore
-    ):
+    def test_create_summary_tear_sheet(self, quantiles, periods, filter_zscore):
         """
         Test no exceptions are thrown
         """
@@ -272,12 +258,8 @@ class TearsTestCase(TestCase):
             filter_zscore=filter_zscore,
         )
 
-        create_summary_tear_sheet(
-            factor_data, long_short=True, group_neutral=False
-        )
-        create_summary_tear_sheet(
-            factor_data, long_short=False, group_neutral=False
-        )
+        create_summary_tear_sheet(factor_data, long_short=True, group_neutral=False)
+        create_summary_tear_sheet(factor_data, long_short=False, group_neutral=False)
 
     @parameterized.expand(
         [
@@ -287,16 +269,12 @@ class TearsTestCase(TestCase):
             (4, (1, 2, 3, 7), None, "US/Eastern"),
         ]
     )
-    def test_create_full_tear_sheet(
-        self, quantiles, periods, filter_zscore, tz
-    ):
+    def test_create_full_tear_sheet(self, quantiles, periods, filter_zscore, tz):
         """
         Test no exceptions are thrown
         """
         for factor, prices in zip(self.all_factors, self.all_prices):
-            prices, factor = self.__localize_prices_and_factor(
-                prices, factor, tz
-            )
+            prices, factor = self.__localize_prices_and_factor(prices, factor, tz)
             factor_data = get_clean_factor_and_forward_returns(
                 factor,
                 prices,
@@ -337,9 +315,7 @@ class TearsTestCase(TestCase):
         Test no exceptions are thrown
         """
         for factor, prices in zip(self.all_factors, self.all_prices):
-            prices, factor = self.__localize_prices_and_factor(
-                prices, factor, tz
-            )
+            prices, factor = self.__localize_prices_and_factor(prices, factor, tz)
             factor_data = get_clean_factor_and_forward_returns(
                 factor,
                 prices,
@@ -408,16 +384,12 @@ class TearsTestCase(TestCase):
             # ((3, 0), 20, 'US/Eastern') # TODO: these tests fail
         ]
     )
-    def test_create_event_study_tear_sheet(
-        self, avgretplot, filter_zscore, tz
-    ):
+    def test_create_event_study_tear_sheet(self, avgretplot, filter_zscore, tz):
         """
         Test no exceptions are thrown
         """
         for factor, prices in zip(self.all_events, self.all_prices):
-            prices, factor = self.__localize_prices_and_factor(
-                prices, factor, tz
-            )
+            prices, factor = self.__localize_prices_and_factor(prices, factor, tz)
             factor_data = get_clean_factor_and_forward_returns(
                 factor,
                 prices,
@@ -427,6 +399,4 @@ class TearsTestCase(TestCase):
                 filter_zscore=filter_zscore,
             )
 
-            create_event_study_tear_sheet(
-                factor_data, prices, avgretplot=avgretplot
-            )
+            create_event_study_tear_sheet(factor_data, prices, avgretplot=avgretplot)

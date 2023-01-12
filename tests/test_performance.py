@@ -15,7 +15,7 @@
 
 
 from unittest import TestCase
-from parameterized import parameterized
+
 from numpy import nan
 from pandas import (
     Series,
@@ -28,12 +28,11 @@ from pandas import (
     Categorical,
     CategoricalIndex,
 )
-
-from pandas.tseries.offsets import BDay, Day, CDay
-
 from pandas.testing import assert_frame_equal, assert_series_equal
+from pandas.tseries.offsets import BDay, Day, CDay
+from parameterized import parameterized
 
-from ..performance import (
+from alphalens.performance import (
     factor_information_coefficient,
     mean_information_coefficient,
     mean_return_by_quantile,
@@ -46,8 +45,7 @@ from ..performance import (
     common_start_returns,
     average_cumulative_return_by_quantile,
 )
-
-from ..utils import (
+from alphalens.utils import (
     get_forward_returns_columns,
     get_clean_factor_and_forward_returns,
 )
@@ -123,9 +121,7 @@ class PerformanceTestCase(TestCase):
         expected_ic_val,
     ):
 
-        factor_data["1D"] = Series(
-            index=factor_data.index, data=forward_returns
-        )
+        factor_data["1D"] = Series(index=factor_data.index, data=forward_returns)
 
         ic = factor_information_coefficient(
             factor_data=factor_data,
@@ -178,9 +174,7 @@ class PerformanceTestCase(TestCase):
                 "W",
                 MultiIndex.from_product(
                     [
-                        DatetimeIndex(
-                            ["2015-01-04"], name="date", freq="W-SUN"
-                        ),
+                        DatetimeIndex(["2015-01-04"], name="date", freq="W-SUN"),
                         Categorical([1, 2]),
                     ],
                     names=["date", "group"],
@@ -200,9 +194,7 @@ class PerformanceTestCase(TestCase):
         expected_ic_val,
     ):
 
-        factor_data["1D"] = Series(
-            index=factor_data.index, data=forward_returns
-        )
+        factor_data["1D"] = Series(index=factor_data.index, data=forward_returns)
 
         ic = mean_information_coefficient(
             factor_data,
@@ -311,9 +303,7 @@ class PerformanceTestCase(TestCase):
 
         factor_index = date_range(start=start, end=factor_end)
         factor_index.name = "date"
-        factor = DataFrame(
-            index=factor_index, columns=tickers, data=factor
-        ).stack()
+        factor = DataFrame(index=factor_index, columns=tickers, data=factor).stack()
 
         factor_data = get_clean_factor_and_forward_returns(
             factor,
@@ -874,9 +864,7 @@ class PerformanceTestCase(TestCase):
     ):
 
         index = date_range("1/12/2000", periods=len(factor_vals))
-        factor = DataFrame(
-            index=index, columns=tickers, data=factor_vals
-        ).stack()
+        factor = DataFrame(index=index, columns=tickers, data=factor_vals).stack()
         factor.index = factor.index.set_names(["date", "asset"])
         factor.name = "factor"
 
@@ -888,13 +876,9 @@ class PerformanceTestCase(TestCase):
             data=groups[factor.index.get_level_values("asset")].values,
         )
 
-        weights = factor_weights(
-            factor_data, demeaned, group_adjust, equal_weight
-        )
+        weights = factor_weights(factor_data, demeaned, group_adjust, equal_weight)
 
-        expected = Series(
-            data=expected_vals, index=factor_data.index, name="factor"
-        )
+        expected = Series(data=expected_vals, index=factor_data.index, name="factor")
 
         assert_series_equal(weights, expected)
 
@@ -1024,9 +1008,7 @@ class PerformanceTestCase(TestCase):
             ),
         ]
     )
-    def test_cumulative_returns(
-        self, returns, ret_freq, period_len, expected_vals
-    ):
+    def test_cumulative_returns(self, returns, ret_freq, period_len, expected_vals):
         if "CD" in ret_freq:
             ret_freq_class = CDay(weekmask="Tue Wed Thu Fri Sun")
             ret_freq = ret_freq_class
@@ -1333,11 +1315,10 @@ class PerformanceTestCase(TestCase):
     def test_common_start_returns(
         self, before, after, mean_by_date, demeaned, expected_vals
     ):
-        dr = date_range(start="2015-1-17", end="2015-2-2")
-        dr.name = "date"
+        dr = date_range(start="2015-1-17", end="2015-2-2", name="date")
         tickers = ["A", "B", "C", "D"]
         r1, r2, r3, r4 = (1.20, 1.40, 0.90, 0.80)
-        data = [[r1 ** i, r2 ** i, r3 ** i, r4 ** i] for i in range(1, 18)]
+        data = [[r1**i, r2**i, r3**i, r4**i] for i in range(1, 18)]
         returns = DataFrame(data=data, index=dr, columns=tickers)
         dr2 = date_range(start="2015-1-21", end="2015-1-29")
         factor = DataFrame(
@@ -1367,9 +1348,11 @@ class PerformanceTestCase(TestCase):
             mean_by_date=mean_by_date,
             demean_by=factor if demeaned else None,
         )
-        cmrt = DataFrame({"mean": cmrt.mean(axis=1), "std": cmrt.std(axis=1)})
+        cmrt = DataFrame(
+            {"mean": cmrt.mean(axis=1), "std": cmrt.std(axis=1)}
+        ).sort_index()
         expected = DataFrame(
-            index=range(-before, after + 1),
+            index=list(range(-before, after + 1)),
             columns=["mean", "std"],
             data=expected_vals,
         )
@@ -1538,7 +1521,7 @@ class PerformanceTestCase(TestCase):
         dr.name = "date"
         tickers = ["A", "B", "C", "D"]
         r1, r2, r3, r4 = (1.25, 1.50, 1.00, 0.50)
-        data = [[r1 ** i, r2 ** i, r3 ** i, r4 ** i] for i in range(1, 19)]
+        data = [[r1**i, r2**i, r3**i, r4**i] for i in range(1, 19)]
         returns = DataFrame(index=dr, columns=tickers, data=data)
         dr2 = date_range(start="2015-1-21", end="2015-1-26")
         dr2.name = "date"
@@ -1648,8 +1631,7 @@ class PerformanceTestCase(TestCase):
         tickers = ["A", "B", "C", "D", "E", "F"]
         r1, r2, r3, r4 = (1.25, 1.50, 1.00, 0.50)
         data = [
-            [r1 ** i, r2 ** i, r3 ** i, r4 ** i, r2 ** i, r3 ** i]
-            for i in range(1, 12)
+            [r1**i, r2**i, r3**i, r4**i, r2**i, r3**i] for i in range(1, 12)
         ]
         prices = DataFrame(index=dr, columns=tickers, data=data)
         dr2 = date_range(start="2015-1-18", end="2015-1-21")

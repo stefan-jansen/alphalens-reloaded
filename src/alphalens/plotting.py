@@ -133,11 +133,9 @@ def axes_style(style="darkgrid", rc=None):
     return sns.axes_style(style=style, rc=rc)
 
 
-def plot_returns_table(
-    alpha_beta, mean_ret_quantile, mean_ret_spread_quantile
-):
+def plot_returns_table(alpha_beta, mean_ret_quantile, mean_ret_spread_quantile):
     returns_table = pd.DataFrame()
-    returns_table = returns_table.append(alpha_beta)
+    returns_table = pd.concat([returns_table, alpha_beta])
     returns_table.loc["Mean Period Wise Return Top Quantile (bps)"] = (
         mean_ret_quantile.iloc[-1] * DECIMAL_TO_BPS
     )
@@ -155,13 +153,13 @@ def plot_returns_table(
 def plot_turnover_table(autocorrelation_data, quantile_turnover):
     turnover_table = pd.DataFrame()
     for period in sorted(quantile_turnover.keys()):
-        for quantile, p_data in quantile_turnover[period].iteritems():
+        for quantile, p_data in quantile_turnover[period].items():
             turnover_table.loc[
                 "Quantile {} Mean Turnover ".format(quantile),
                 "{}D".format(period),
             ] = p_data.mean()
     auto_corr = pd.DataFrame()
-    for period, p_data in autocorrelation_data.iteritems():
+    for period, p_data in autocorrelation_data.items():
         auto_corr.loc[
             "Mean Factor Rank Autocorrelation", "{}D".format(period)
         ] = p_data.mean()
@@ -223,17 +221,13 @@ def plot_ic_ts(ic, ax=None):
         ax = np.asarray([ax]).flatten()
 
     ymin, ymax = (None, None)
-    for a, (period_num, ic) in zip(ax, ic.iteritems()):
+    for a, (period_num, ic) in zip(ax, ic.items()):
         ic.plot(alpha=0.7, ax=a, lw=0.7, color="steelblue")
-        ic.rolling(window=22).mean().plot(
-            ax=a, color="forestgreen", lw=2, alpha=0.8
-        )
+        ic.rolling(window=22).mean().plot(ax=a, color="forestgreen", lw=2, alpha=0.8)
 
         a.set(ylabel="IC", xlabel="")
         a.set_title(
-            "{} Period Forward Return Information Coefficient (IC)".format(
-                period_num
-            )
+            "{} Period Forward Return Information Coefficient (IC)".format(period_num)
         )
         a.axhline(0.0, linestyle="-", color="black", lw=1, alpha=0.8)
         a.legend(["IC", "1 month moving avg"], loc="upper right")
@@ -284,7 +278,7 @@ def plot_ic_hist(ic, ax=None):
         f, ax = plt.subplots(v_spaces, 3, figsize=(18, v_spaces * 6))
         ax = ax.flatten()
 
-    for a, (period_num, ic) in zip(ax, ic.iteritems()):
+    for a, (period_num, ic) in zip(ax, ic.items()):
         sns.histplot(ic.replace(np.nan, 0.0), kde=True, ax=a)
         a.set(title="%s Period IC" % period_num, xlabel="IC")
         a.set_xlim([-1, 1])
@@ -343,7 +337,7 @@ def plot_ic_qq(ic, theoretical_dist=stats.norm, ax=None):
     else:
         dist_name = "Theoretical"
 
-    for a, (period_num, ic) in zip(ax, ic.iteritems()):
+    for a, (period_num, ic) in zip(ax, ic.items()):
         sm.qqplot(
             ic.replace(np.nan, 0.0).values,
             theoretical_dist,
@@ -387,12 +381,10 @@ def plot_quantile_returns_bar(
 
     if ylim_percentiles is not None:
         ymin = (
-            np.nanpercentile(mean_ret_by_q.values, ylim_percentiles[0])
-            * DECIMAL_TO_BPS
+            np.nanpercentile(mean_ret_by_q.values, ylim_percentiles[0]) * DECIMAL_TO_BPS
         )
         ymax = (
-            np.nanpercentile(mean_ret_by_q.values, ylim_percentiles[1])
-            * DECIMAL_TO_BPS
+            np.nanpercentile(mean_ret_by_q.values, ylim_percentiles[1]) * DECIMAL_TO_BPS
         )
     else:
         ymin = None
@@ -466,12 +458,10 @@ def plot_quantile_returns_violin(return_by_q, ylim_percentiles=None, ax=None):
 
     if ylim_percentiles is not None:
         ymin = (
-            np.nanpercentile(return_by_q.values, ylim_percentiles[0])
-            * DECIMAL_TO_BPS
+            np.nanpercentile(return_by_q.values, ylim_percentiles[0]) * DECIMAL_TO_BPS
         )
         ymax = (
-            np.nanpercentile(return_by_q.values, ylim_percentiles[1])
-            * DECIMAL_TO_BPS
+            np.nanpercentile(return_by_q.values, ylim_percentiles[1]) * DECIMAL_TO_BPS
         )
     else:
         ymin = None
@@ -538,7 +528,7 @@ def plot_mean_quantile_returns_spread_time_series(
 
         ymin, ymax = (None, None)
         for (i, a), (name, fr_column) in zip(
-            enumerate(ax), mean_returns_spread.iteritems()
+            enumerate(ax), mean_returns_spread.items()
         ):
             stdn = None if std_err is None else std_err[name]
             a = plot_mean_quantile_returns_spread_time_series(
@@ -560,9 +550,7 @@ def plot_mean_quantile_returns_spread_time_series(
     periods = mean_returns_spread.name
     title = (
         "Top Minus Bottom Quantile Mean Return "
-        "({} Period Forward Return)".format(
-            periods if periods is not None else ""
-        )
+        "({} Period Forward Return)".format(periods if periods is not None else "")
     )
 
     if ax is None:
@@ -627,9 +615,7 @@ def plot_ic_by_group(ic_group, ax=None):
     return ax
 
 
-def plot_factor_rank_auto_correlation(
-    factor_autocorrelation, period=1, ax=None
-):
+def plot_factor_rank_auto_correlation(factor_autocorrelation, period=1, ax=None):
     """
     Plots factor rank autocorrelation over time.
     See factor_rank_autocorrelation for more details.
@@ -742,7 +728,7 @@ def plot_monthly_ic_heatmap(mean_monthly_ic, ax=None):
         [new_index_year, new_index_month], names=["year", "month"]
     )
 
-    for a, (periods_num, ic) in zip(ax, mean_monthly_ic.iteritems()):
+    for a, (periods_num, ic) in zip(ax, mean_monthly_ic.items()):
         sns.heatmap(
             ic.unstack(),
             annot=True,
@@ -765,9 +751,7 @@ def plot_monthly_ic_heatmap(mean_monthly_ic, ax=None):
     return ax
 
 
-def plot_cumulative_returns(
-    factor_returns, period, freq=None, title=None, ax=None
-):
+def plot_cumulative_returns(factor_returns, period, freq=None, title=None, ax=None):
     """
     Plots the cumulative returns of the returns series passed in.
 
@@ -815,9 +799,7 @@ def plot_cumulative_returns(
     return ax
 
 
-def plot_cumulative_returns_by_quantile(
-    quantile_returns, period, freq=None, ax=None
-):
+def plot_cumulative_returns_by_quantile(quantile_returns, period, freq=None, ax=None):
     """
     Plots the cumulative returns of various factor quantiles.
 
@@ -974,9 +956,7 @@ def plot_quantile_average_cumulative_return(
         ax.set(
             ylabel="Mean Return (bps)",
             title=(
-                "Average Cumulative Returns by Quantile"
-                if title is None
-                else title
+                "Average Cumulative Returns by Quantile" if title is None else title
             ),
             xlabel="Periods",
         )
