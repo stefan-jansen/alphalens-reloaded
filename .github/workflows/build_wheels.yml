@@ -7,7 +7,7 @@ on:
         description: 'Publish to PyPI?'
         required: true
         type: boolean
-        default: 'false'
+        default: false
 
 jobs:
   dist:
@@ -52,7 +52,7 @@ jobs:
 
       - name: publish to testpypi
         uses: pypa/gh-action-pypi-publish@release/v1
-        if: inputs.publish_to_pypi == 'false'
+        if: ${{ inputs.publish_to_pypi == false }}
         with:
           user: __token__
           password: ${{ secrets.TESTPYPI_TOKEN }}
@@ -60,7 +60,7 @@ jobs:
 
       - name: publish to pypi
         uses: pypa/gh-action-pypi-publish@release/v1
-        if: inputs.publish_to_pypi == 'true'
+        if: ${{ inputs.publish_to_pypi == true }}
         with:
           user: __token__
           password: ${{ secrets.PYPI_TOKEN }}
