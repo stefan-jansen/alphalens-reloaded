@@ -185,9 +185,9 @@ def plot_information_table(ic_data):
 
 
 def plot_quantile_statistics_table(factor_data):
-    quantile_stats = factor_data.groupby("factor_quantile").agg(
+    quantile_stats = factor_data.groupby("factor_quantile")["factor"].agg(
         ["min", "max", "mean", "std", "count"]
-    )["factor"]
+    )
     quantile_stats["count %"] = (
         quantile_stats["count"] / quantile_stats["count"].sum() * 100.0
     )
