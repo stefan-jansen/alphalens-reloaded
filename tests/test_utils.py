@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from distutils.version import StrictVersion
+from packaging.version import Version
 from unittest import TestCase, skipIf
 
 import pandas as pd
@@ -36,9 +36,9 @@ from alphalens.utils import (
     quantize_factor,
 )
 
-pandas_version = StrictVersion(pd.__version__)
+pandas_version = Version(pd.__version__)
 
-pandas_one_point_zero = StrictVersion("1.0") < pandas_version < StrictVersion("1.1")
+pandas_one_point_zero = Version("1.0") < pandas_version < Version("1.1")
 
 
 class UtilsTestCase(TestCase):
