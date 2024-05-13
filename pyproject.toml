@@ -133,7 +133,7 @@ extend-exclude = '''
 [tool.tox]
 legacy_tox_ini = """
 [tox]
-envlist = py{38,39}-pandas12, py{38,39,310}-pandas{13,14,15}, py311-pandas15
+envlist = py39-pandas12, py{39,310,311}-pandas{13,14,15}, py{39,310,311,312}-pandas{15,20,21,22}
 isolated_build = True
 skip_missing_interpreters = True
 minversion = 3.23.0
