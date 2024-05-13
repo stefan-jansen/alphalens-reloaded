@@ -133,7 +133,9 @@ def axes_style(style="darkgrid", rc=None):
     return sns.axes_style(style=style, rc=rc)
 
 
-def plot_returns_table(alpha_beta, mean_ret_quantile, mean_ret_spread_quantile):
+def plot_returns_table(
+    alpha_beta, mean_ret_quantile, mean_ret_spread_quantile, return_df=False
+):
     returns_table = pd.DataFrame()
     returns_table = pd.concat([returns_table, alpha_beta])
     returns_table.loc["Mean Period Wise Return Top Quantile (bps)"] = (
@@ -146,11 +148,14 @@ def plot_returns_table(alpha_beta, mean_ret_quantile, mean_ret_spread_quantile):
         mean_ret_spread_quantile.mean() * DECIMAL_TO_BPS
     )
 
-    print("Returns Analysis")
-    utils.print_table(returns_table.apply(lambda x: x.round(3)))
+    if return_df:
+        return returns_table
+    else:
+        print("Returns Analysis")
+        utils.print_table(returns_table.apply(lambda x: x.round(3)))
 
 
-def plot_turnover_table(autocorrelation_data, quantile_turnover):
+def plot_turnover_table(autocorrelation_data, quantile_turnover, return_df=False):
     turnover_table = pd.DataFrame()
     for period in sorted(quantile_turnover.keys()):
         for quantile, p_data in quantile_turnover[period].items():
@@ -164,12 +169,15 @@ def plot_turnover_table(autocorrelation_data, quantile_turnover):
             "Mean Factor Rank Autocorrelation", "{}D".format(period)
         ] = p_data.mean()
 
-    print("Turnover Analysis")
-    utils.print_table(turnover_table.apply(lambda x: x.round(3)))
-    utils.print_table(auto_corr.apply(lambda x: x.round(3)))
+    if return_df:
+        return turnover_table, auto_corr
+    else:
+        print("Turnover Analysis")
+        utils.print_table(turnover_table.apply(lambda x: x.round(3)))
+        utils.print_table(auto_corr.apply(lambda x: x.round(3)))
 
 
-def plot_information_table(ic_data):
+def plot_information_table(ic_data, return_df=False):
     ic_summary_table = pd.DataFrame()
     ic_summary_table["IC Mean"] = ic_data.mean()
     ic_summary_table["IC Std."] = ic_data.std()
@@ -180,20 +188,27 @@ def plot_information_table(ic_data):
     ic_summary_table["IC Skew"] = stats.skew(ic_data)
     ic_summary_table["IC Kurtosis"] = stats.kurtosis(ic_data)
 
-    print("Information Analysis")
-    utils.print_table(ic_summary_table.apply(lambda x: x.round(3)).T)
+    if return_df:
+        return ic_summary_table
+    else:
+        print("Information Analysis")
+        utils.print_table(ic_summary_table.apply(lambda x: x.round(3)).T)
 
 
-def plot_quantile_statistics_table(factor_data):
-    quantile_stats = factor_data.groupby("factor_quantile").agg(
+def plot_quantile_statistics_table(factor_data, return_df=False):
+    quantile_stats = factor_data.groupby("factor_quantile")["factor"].agg(
         ["min", "max", "mean", "std", "count"]
-    )["factor"]
+    )
+
     quantile_stats["count %"] = (
         quantile_stats["count"] / quantile_stats["count"].sum() * 100.0
     )
 
-    print("Quantiles Statistics")
-    utils.print_table(quantile_stats)
+    if return_df:
+        return quantile_stats
+    else:
+        print("Quantiles Statistics")
+        utils.print_table(quantile_stats)
 
 
 def plot_ic_ts(ic, ax=None):
