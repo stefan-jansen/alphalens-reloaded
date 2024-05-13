@@ -676,7 +676,6 @@ def get_clean_factor(
         raise MaxLossExceededError(message)
     else:
         print("max_loss is %.1f%%, not exceeded: OK!" % (max_loss * 100))
-
     return merged_data
 
 
