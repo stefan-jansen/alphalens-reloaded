@@ -3,33 +3,37 @@ name: PyPI
 on:
   workflow_dispatch:
     inputs:
-      publish_to_pypi:
-        description: 'Publish to PyPI?'
+      target:
+        type: choice
+        description: 'Package Index'
         required: true
-        type: boolean
-        default: false
+        default: 'PYPI'
+        options: [ 'TESTPYPI', 'PYPI' ]
 
 jobs:
   dist:
+    name: Package source distribution
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest ]
-        python-version: [ 3.8 ]
+        python-version: [ "3.10" ]
 
     steps:
       - name: Checkout alphalens
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          fetch-tags: true
+          ref: v0.4.4
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Build wheels
+      - name: Build wheel
         run: pipx run build
 
       - name: Store artifacts
@@ -49,17 +53,19 @@ jobs:
           name: artifact
           path: dist
 
-      - name: publish to testpypi
+      - name: Publish to PyPI
+        if: ${{ github.event.inputs.target  == 'PYPI' }}
         uses: pypa/gh-action-pypi-publish@release/v1
-        if: ${{ inputs.publish_to_pypi == false }}
-        with:
-          user: __token__
-          password: ${{ secrets.TESTPYPI_TOKEN }}
-          repository_url: https://test.pypi.org/legacy/
-
-      - name: publish to pypi
-        uses: pypa/gh-action-pypi-publish@release/v1
-        if: ${{ inputs.publish_to_pypi == true }}
         with:
           user: __token__
           password: ${{ secrets.PYPI_TOKEN }}
+
+      - name: Publish to PyPI - Test
+        if: ${{ github.event.inputs.target  == 'TESTPYPI' }}
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.PYPITEST_TOKEN }}
+          repository-url: https://test.pypi.org/legacy/
+          skip-existing: true
+          verbose: true
