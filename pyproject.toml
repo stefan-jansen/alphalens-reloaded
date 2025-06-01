@@ -172,7 +172,6 @@ deps =
     numpy21: numpy>=2.1.0,<2.2.0
     numpy22: numpy>=2.2.0,<2.3.0
 
-
 commands =
     pytest -n 2 --cov={toxinidir}/src --cov-report term  --cov-report=xml --cov-report=html:htmlcov {toxinidir}/tests
 """
