@@ -12,7 +12,7 @@ on:
       version:
         description: 'Version to publish'
         required: true
-        default: '0.4.5'
+        default: '0.4.6'
 
 jobs:
   dist:
