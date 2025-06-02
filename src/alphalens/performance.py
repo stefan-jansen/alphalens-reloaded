@@ -417,6 +417,8 @@ def positions(weights, period, freq=None):
     trades_idx = weights.index.copy()
     returns_idx = utils.add_custom_calendar_timedelta(trades_idx, period, freq)
     weights_idx = trades_idx.union(returns_idx)
+    # remove duplicated dates if trading dates include weekends
+    weights_idx = weights_idx.drop_duplicates()
 
     #
     # Compute portfolio weights for each point in time contained in the index
