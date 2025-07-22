@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import sys
 import warnings
 import matplotlib.gridspec as gridspec
 import matplotlib.pyplot as plt
@@ -59,7 +60,8 @@ class GridFigure(object):
 
 
 @plotting.customize
-def create_summary_tear_sheet(factor_data, long_short=True, group_neutral=False):
+def create_summary_tear_sheet(factor_data, long_short=True, group_neutral=False,
+                              display_table=True, fh=sys.stdout):
     """
     Creates a small summary tear sheet with returns, information, and turnover
     analysis.
@@ -128,20 +130,23 @@ def create_summary_tear_sheet(factor_data, long_short=True, group_neutral=False)
     vertical_sections = 2 + fr_cols * 3
     gf = GridFigure(rows=vertical_sections, cols=1)
 
-    plotting.plot_quantile_statistics_table(factor_data)
+    plotting.plot_quantile_statistics_table(factor_data,
+                                            display_table=display_table, fh=fh)
 
-    plotting.plot_returns_table(alpha_beta, mean_quant_rateret, mean_ret_spread_quant)
+    plotting.plot_returns_table(alpha_beta, mean_quant_rateret, mean_ret_spread_quant,
+                                display_table=display_table, fh=fh)
 
     plotting.plot_quantile_returns_bar(
         mean_quant_rateret,
         by_group=False,
         ylim_percentiles=None,
         ax=gf.next_row(),
+        display_table=display_table, fh=fh
     )
 
     # Information Analysis
     ic = perf.factor_information_coefficient(factor_data)
-    plotting.plot_information_table(ic)
+    plotting.plot_information_table(ic, display_table=display_table, fh=fh)
 
     # Turnover Analysis
     quantile_factor = factor_data["factor_quantile"]
@@ -162,7 +167,8 @@ def create_summary_tear_sheet(factor_data, long_short=True, group_neutral=False)
         axis=1,
     )
 
-    plotting.plot_turnover_table(autocorrelation, quantile_turnover)
+    plotting.plot_turnover_table(autocorrelation, quantile_turnover,
+                                 display_table=display_table, fh=fh)
 
     plt.show()
     gf.close()
@@ -170,7 +176,8 @@ def create_summary_tear_sheet(factor_data, long_short=True, group_neutral=False)
 
 @plotting.customize
 def create_returns_tear_sheet(
-    factor_data, long_short=True, group_neutral=False, by_group=False
+    factor_data, long_short=True, group_neutral=False, by_group=False,
+    display_table=True, fh=sys.stdout
 ):
     """
     Creates a tear sheet for returns analysis of a factor.
@@ -243,13 +250,14 @@ def create_returns_tear_sheet(
     vertical_sections = 2 + fr_cols * 3
     gf = GridFigure(rows=vertical_sections, cols=1)
 
-    plotting.plot_returns_table(alpha_beta, mean_quant_rateret, mean_ret_spread_quant)
+    plotting.plot_returns_table(alpha_beta, mean_quant_rateret, mean_ret_spread_quant,
+                                display_table=display_table, fh=fh)
 
     plotting.plot_quantile_returns_bar(
         mean_quant_rateret,
         by_group=False,
         ylim_percentiles=None,
-        ax=gf.next_row(),
+        ax=gf.next_row()
     )
 
     plotting.plot_quantile_returns_violin(
@@ -330,7 +338,8 @@ def create_returns_tear_sheet(
 
 
 @plotting.customize
-def create_information_tear_sheet(factor_data, group_neutral=False, by_group=False):
+def create_information_tear_sheet(factor_data, group_neutral=False, by_group=False,
+                                  display_table=True, fh=sys.stdout):
     """
     Creates a tear sheet for information analysis of a factor.
 
@@ -350,7 +359,7 @@ def create_information_tear_sheet(factor_data, group_neutral=False, by_group=Fal
 
     ic = perf.factor_information_coefficient(factor_data, group_neutral)
 
-    plotting.plot_information_table(ic)
+    plotting.plot_information_table(ic, display_table=display_table, fh=fh)
 
     columns_wide = 2
     fr_cols = len(ic.columns)
@@ -388,7 +397,8 @@ def create_information_tear_sheet(factor_data, group_neutral=False, by_group=Fal
 
 
 @plotting.customize
-def create_turnover_tear_sheet(factor_data, turnover_periods=None):
+def create_turnover_tear_sheet(factor_data, turnover_periods=None,
+                               display_table=True, fh=sys.stdout):
     """
     Creates a tear sheet for analyzing the turnover properties of a factor.
 
@@ -438,7 +448,8 @@ def create_turnover_tear_sheet(factor_data, turnover_periods=None):
         axis=1,
     )
 
-    plotting.plot_turnover_table(autocorrelation, quantile_turnover)
+    plotting.plot_turnover_table(autocorrelation, quantile_turnover,
+                                 display_table=display_table, fh=fh)
 
     fr_cols = len(turnover_periods)
     columns_wide = 1
@@ -466,7 +477,8 @@ def create_turnover_tear_sheet(factor_data, turnover_periods=None):
 
 @plotting.customize
 def create_full_tear_sheet(
-    factor_data, long_short=True, group_neutral=False, by_group=False
+    factor_data, long_short=True, group_neutral=False, by_group=False,
+    display_table=True, fh=sys.stdout
 ):
     """
     Creates a full tear sheet for analysis and evaluating single
@@ -494,14 +506,17 @@ def create_full_tear_sheet(
         If True, display graphs separately for each group.
     """
 
-    plotting.plot_quantile_statistics_table(factor_data)
+    plotting.plot_quantile_statistics_table(factor_data, display_table=display_table, fh=fh)
     create_returns_tear_sheet(
-        factor_data, long_short, group_neutral, by_group, set_context=False
+        factor_data, long_short, group_neutral, by_group, set_context=False,
+        display_table=display_table, fh=fh
     )
     create_information_tear_sheet(
-        factor_data, group_neutral, by_group, set_context=False
+        factor_data, group_neutral, by_group, set_context=False,
+        display_table=display_table, fh=fh
     )
-    create_turnover_tear_sheet(factor_data, set_context=False)
+    create_turnover_tear_sheet(factor_data, set_context=False,
+                               display_table=display_table, fh=fh)
 
 
 @plotting.customize

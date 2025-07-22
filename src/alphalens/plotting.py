@@ -12,7 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+from sys import stdout
 import numpy as np
 import pandas as pd
 from scipy import stats
@@ -134,7 +134,8 @@ def axes_style(style="darkgrid", rc=None):
 
 
 def plot_returns_table(
-    alpha_beta, mean_ret_quantile, mean_ret_spread_quantile, return_df=False
+    alpha_beta, mean_ret_quantile, mean_ret_spread_quantile, return_df=False, 
+    display_table=True, fh=stdout
 ):
     returns_table = pd.DataFrame()
     returns_table = pd.concat([returns_table, alpha_beta])
@@ -151,11 +152,13 @@ def plot_returns_table(
     if return_df:
         return returns_table
     else:
-        print("Returns Analysis")
-        utils.print_table(returns_table.apply(lambda x: x.round(3)))
+        print("Returns Analysis", file=fh)
+        utils.print_table(returns_table.apply(lambda x: x.round(3)),
+                           display_table=display_table, fh=fh)
 
 
-def plot_turnover_table(autocorrelation_data, quantile_turnover, return_df=False):
+def plot_turnover_table(autocorrelation_data, quantile_turnover, return_df=False,
+                        display_table=True, fh=stdout):
     turnover_table = pd.DataFrame()
     for period in sorted(quantile_turnover.keys()):
         for quantile, p_data in quantile_turnover[period].items():
@@ -172,12 +175,15 @@ def plot_turnover_table(autocorrelation_data, quantile_turnover, return_df=False
     if return_df:
         return turnover_table, auto_corr
     else:
-        print("Turnover Analysis")
-        utils.print_table(turnover_table.apply(lambda x: x.round(3)))
-        utils.print_table(auto_corr.apply(lambda x: x.round(3)))
+        print("Turnover Analysis", file=fh)
+        utils.print_table(turnover_table.apply(lambda x: x.round(3)),
+                          display_table=display_table, fh=fh)
+        utils.print_table(auto_corr.apply(lambda x: x.round(3)),
+                          display_table=display_table, fh=fh)
 
 
-def plot_information_table(ic_data, return_df=False):
+def plot_information_table(ic_data, return_df=False,
+                           display_table=True, fh=stdout):
     ic_summary_table = pd.DataFrame()
     ic_summary_table["IC Mean"] = ic_data.mean()
     ic_summary_table["IC Std."] = ic_data.std()
@@ -191,11 +197,13 @@ def plot_information_table(ic_data, return_df=False):
     if return_df:
         return ic_summary_table
     else:
-        print("Information Analysis")
-        utils.print_table(ic_summary_table.apply(lambda x: x.round(3)).T)
+        print("Information Analysis", file=fh)
+        utils.print_table(ic_summary_table.apply(lambda x: x.round(3)).T,
+                          display_table=display_table, fh=fh)
 
 
-def plot_quantile_statistics_table(factor_data, return_df=False):
+def plot_quantile_statistics_table(factor_data, return_df=False,
+                                   display_table=True, fh=stdout):
     quantile_stats = factor_data.groupby("factor_quantile")["factor"].agg(
         ["min", "max", "mean", "std", "count"]
     )
@@ -207,8 +215,9 @@ def plot_quantile_statistics_table(factor_data, return_df=False):
     if return_df:
         return quantile_stats
     else:
-        print("Quantiles Statistics")
-        utils.print_table(quantile_stats)
+        print("Quantiles Statistics", file=fh)
+        utils.print_table(quantile_stats,
+                          display_table=display_table, fh=fh)
 
 
 def plot_ic_ts(ic, ax=None):
