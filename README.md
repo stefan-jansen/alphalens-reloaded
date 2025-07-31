@@ -45,7 +45,7 @@ alphalens.tears.create_full_tear_sheet(factor_data)
 
 # Learn more
 
-Check out the [example notebooks](https://github.com/stefan-jansen/alphalens-reloaded/tree/master/alphalens/examples)
+Check out the [example notebooks](https://github.com/stefan-jansen/alphalens-reloaded/tree/src/main/alphalens/examples)
 for more on how to read and use the factor tear sheet.
 
 # Installation
