@@ -17,6 +17,7 @@ import pandas as pd
 import numpy as np
 import re
 import warnings
+import sys
 
 from IPython.display import display
 from pandas.tseries.offsets import (
@@ -435,7 +436,7 @@ def demean_forward_returns(factor_data, grouper=None):
     return factor_data
 
 
-def print_table(table, name=None, fmt=None):
+def print_table(table, name=None, fmt=None, display_table=True, fh=sys.stdout):
     """
     Pretty print a pandas DataFrame.
 
@@ -463,7 +464,10 @@ def print_table(table, name=None, fmt=None):
     if fmt is not None:
         pd.set_option("display.float_format", lambda x: fmt.format(x))
 
-    display(table)
+    if display_table:
+        display(table)
+    else:
+        print(table, file=fh)    
 
     if fmt is not None:
         pd.set_option("display.float_format", prev_option)
@@ -479,6 +483,7 @@ def get_clean_factor(
     groupby_labels=None,
     max_loss=0.35,
     zero_aware=False,
+    fh=sys.stdout
 ):
     """
     Formats the factor data, forward return data, and group mappings into a
@@ -665,7 +670,8 @@ def get_clean_factor(
         "Dropped %.1f%% entries from factor data: %.1f%% in forward "
         "returns computation and %.1f%% in binning phase "
         "(set max_loss=0 to see potentially suppressed Exceptions)."
-        % (tot_loss * 100, fwdret_loss * 100, bin_loss * 100)
+        % (tot_loss * 100, fwdret_loss * 100, bin_loss * 100),
+        file=fh
     )
 
     if tot_loss > max_loss:
@@ -675,7 +681,8 @@ def get_clean_factor(
         )
         raise MaxLossExceededError(message)
     else:
-        print("max_loss is %.1f%%, not exceeded: OK!" % (max_loss * 100))
+        print("max_loss is %.1f%%, not exceeded: OK!" % (max_loss * 100),
+              file=fh)
     return merged_data
 
 
@@ -692,6 +699,7 @@ def get_clean_factor_and_forward_returns(
     max_loss=0.35,
     zero_aware=False,
     cumulative_returns=True,
+    fh=sys.stdout
 ):
     """
     Formats the factor data, pricing data, and group mappings into a DataFrame
@@ -857,6 +865,7 @@ def get_clean_factor_and_forward_returns(
         binning_by_group=binning_by_group,
         max_loss=max_loss,
         zero_aware=zero_aware,
+        fh=fh
     )
     return factor_data
 
