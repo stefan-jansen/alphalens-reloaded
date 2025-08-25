@@ -140,8 +140,7 @@ def create_summary_tear_sheet(factor_data, long_short=True, group_neutral=False,
         mean_quant_rateret,
         by_group=False,
         ylim_percentiles=None,
-        ax=gf.next_row(),
-        display_table=display_table, fh=fh
+        ax=gf.next_row()
     )
 
     # Information Analysis
