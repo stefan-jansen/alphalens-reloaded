@@ -33,7 +33,7 @@ dependencies = [
     # following pandas
     "numpy>=1.23.5; python_version<'3.12'",
     "numpy>=1.26.0; python_version>='3.12'",
-    "pandas >=1.5.0,<3.0",
+    "pandas >=1.5.0",
     "matplotlib >=1.4.0",
     "scipy >=0.14.0",
     "seaborn >=0.6.0",
@@ -60,7 +60,7 @@ build-backend = 'setuptools.build_meta'
 test = [
     "tox >=2.3.1",
     "coverage >=4.0.3",
-    "coveralls ==3.0.1",
+    "coveralls >=3.0.1",
     "pytest >=6.2",
     'pytest-xdist >=2.5.0',
     "pytest-cov >=2.12",

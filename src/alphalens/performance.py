@@ -123,7 +123,7 @@ def mean_information_coefficient(
         ic = ic.mean()
 
     else:
-        ic = ic.reset_index().set_index("date").groupby(grouper).mean()
+        ic = ic.reset_index().set_index("date").groupby(grouper, observed=False).mean()
 
     return ic
 
@@ -517,7 +517,9 @@ def mean_return_by_quantile(
         grouper = [mean_ret.index.get_level_values("factor_quantile")]
         if by_group:
             grouper.append(mean_ret.index.get_level_values("group"))
-        group_stats = mean_ret.groupby(grouper).agg(["mean", "std", "count"])
+        group_stats = mean_ret.groupby(grouper, observed=False).agg(
+            ["mean", "std", "count"]
+        )
         mean_ret = group_stats.T.xs("mean", level=1).T
 
     std_error_ret = group_stats.T.xs("std", level=1).T / np.sqrt(
@@ -1157,7 +1159,7 @@ def create_pyfolio_input(
         quantiles,
         groups,
     )
-    cumrets = cumrets.resample("1D").last().fillna(method="ffill")
+    cumrets = cumrets.resample("1D").last().ffill()
     returns = cumrets.pct_change().fillna(0)
 
     #
@@ -1174,7 +1176,7 @@ def create_pyfolio_input(
         quantiles,
         groups,
     )
-    positions = positions.resample("1D").sum().fillna(method="ffill")
+    positions = positions.resample("1D").sum().ffill()
     positions = positions.div(positions.abs().sum(axis=1), axis=0).fillna(0)
     positions["cash"] = 1.0 - positions.sum(axis=1)
 
@@ -1200,7 +1202,7 @@ def create_pyfolio_input(
             group_neutral=False,
             equal_weight=True,
         )
-        benchmark_rets = benchmark_rets.resample("1D").last().fillna(method="ffill")
+        benchmark_rets = benchmark_rets.resample("1D").last().ffill()
         benchmark_rets = benchmark_rets.pct_change().fillna(0)
         benchmark_rets.name = "benchmark"
     else:

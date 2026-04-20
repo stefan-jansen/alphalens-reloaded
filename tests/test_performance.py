@@ -57,6 +57,7 @@ class PerformanceTestCase(TestCase):
     factor = (
         DataFrame(index=dr, columns=tickers, data=[[1, 2, 3, 4], [4, 3, 2, 1]])
         .stack()
+        .dropna()
         .rename("factor")
     )
     factor.index = factor.index.set_names(["date", "asset"])
@@ -131,7 +132,7 @@ class PerformanceTestCase(TestCase):
 
         expected_ic_df = DataFrame(
             index=expected_ix,
-            columns=Index(["1D"], dtype="object"),
+            columns=["1D"],
             data=expected_ic_val,
         )
 
@@ -205,7 +206,7 @@ class PerformanceTestCase(TestCase):
 
         expected_ic_df = DataFrame(
             index=expected_ix,
-            columns=Index(["1D"], dtype="object"),
+            columns=["1D"],
             data=expected_ic_val,
         )
 
@@ -598,7 +599,7 @@ class PerformanceTestCase(TestCase):
         quantized_test_factor = (
             DataFrame(index=dr, columns=tickers, data=quantile_values)
             .rename_axis("asset", axis=1)
-            .stack()
+            .stack().dropna()
         )
 
         to = quantile_turnover(quantized_test_factor, test_quantile, period)
@@ -864,7 +865,7 @@ class PerformanceTestCase(TestCase):
     ):
 
         index = date_range("1/12/2000", periods=len(factor_vals))
-        factor = DataFrame(index=index, columns=tickers, data=factor_vals).stack()
+        factor = DataFrame(index=index, columns=tickers, data=factor_vals).stack().dropna()
         factor.index = factor.index.set_names(["date", "asset"])
         factor.name = "factor"
 
@@ -1154,7 +1155,7 @@ class PerformanceTestCase(TestCase):
         factor = (
             DataFrame(index=dr, columns=tickers, data=factor_values)
             .rename_axis("asset", axis=1)
-            .stack()
+            .stack().dropna()
         )
 
         factor_df = DataFrame(data=factor, columns=["factor"])
@@ -1335,7 +1336,7 @@ class PerformanceTestCase(TestCase):
                 [3, 4, 2, 1],
                 [3, 4, 2, 1],
             ],
-        ).stack()
+        ).stack().dropna()
         factor.index = factor.index.set_names(["date", "asset"])
         factor.name = "factor"
 
@@ -1536,7 +1537,7 @@ class PerformanceTestCase(TestCase):
                 [3, 4, 2, 1],
                 [3, 4, 2, 1],
             ],
-        ).stack()
+        ).stack().dropna()
 
         factor_data = get_clean_factor_and_forward_returns(
             factor,
@@ -1645,7 +1646,7 @@ class PerformanceTestCase(TestCase):
                 [3, nan, nan, 1, 4, 2],
                 [3, nan, nan, 1, 4, 2],
             ],
-        ).stack()
+        ).stack().dropna()
 
         factor_data = get_clean_factor_and_forward_returns(
             factor,

@@ -171,7 +171,9 @@ def quantize_factor(
     if by_group:
         grouper.append("group")
 
-    factor_quantile = factor_data.groupby(grouper, group_keys=False)["factor"].apply(
+    factor_quantile = factor_data.groupby(
+        grouper, group_keys=False, observed=False
+    )["factor"].apply(
         quantile_calc, quantiles, bins, zero_aware, no_raise
     )
     factor_quantile.name = "factor_quantile"
@@ -305,9 +307,10 @@ def compute_forward_returns(
 
     for period in sorted(periods):
         if cumulative_returns:
-            returns = prices.pct_change(period)
+            # Keep legacy pct_change behavior across pandas versions.
+            returns = prices.ffill().pct_change(periods=period)
         else:
-            returns = prices.pct_change()
+            returns = prices.ffill().pct_change(periods=1)
 
         forward_returns = returns.shift(-period).reindex(factor_dateindex)
 
@@ -370,7 +373,7 @@ def backshift_returns_series(series, N):
     """
     ix = series.index
     dates, sids = ix.levels
-    date_labels, sid_labels = map(np.array, ix.labels)
+    date_labels, sid_labels = map(np.array, ix.codes)
 
     # Output date labels will contain the all but the last N dates.
     new_dates = dates[:-N]
@@ -428,7 +431,7 @@ def demean_forward_returns(factor_data, grouper=None):
         grouper = factor_data.index.get_level_values("date")
 
     cols = get_forward_returns_columns(factor_data.columns)
-    factor_data[cols] = factor_data.groupby(grouper)[cols].transform(
+    factor_data[cols] = factor_data.groupby(grouper, observed=False)[cols].transform(
         lambda x: x - x.mean()
     )
 
