@@ -20,6 +20,8 @@ import warnings
 import empyrical as ep
 from pandas.tseries.offsets import BDay
 from scipy import stats
+from scipy.optimize import curve_fit
+from scipy.stats import t as t_dist
 from statsmodels.regression.linear_model import OLS
 from statsmodels.tools.tools import add_constant
 from . import utils
@@ -1207,3 +1209,139 @@ def create_pyfolio_input(
         benchmark_rets = None
 
     return returns, positions, benchmark_rets
+
+
+# ---------------------------------------------------------------------------
+# Alpha Decay Analysis
+# ---------------------------------------------------------------------------
+
+def compute_alpha_decay(factor_data, group_adjust=False):
+    """
+    Computes mean IC at each forward return horizon to measure alpha decay.
+
+    Requires factor_data to have been created with multiple forward return
+    periods (e.g., periods=(1, 5, 10, 20)). The more horizons provided,
+    the better the decay curve estimate.
+
+    Parameters
+    ----------
+    factor_data : pd.DataFrame - MultiIndex
+        A MultiIndex DataFrame indexed by date (level 0) and asset (level 1),
+        containing factor values and forward returns for multiple periods.
+        - See full explanation in utils.get_clean_factor_and_forward_returns
+    group_adjust : bool
+        Demean forward returns by group before computing IC.
+
+    Returns
+    -------
+    decay_ic : pd.DataFrame
+        DataFrame indexed by horizon (in trading days) with columns:
+        - mean_ic : mean IC across all dates
+        - std_ic  : standard deviation of IC
+        - t_stat  : t-statistic (mean / stderr)
+        - p_value : two-tailed p-value for IC != 0
+    """
+    fwd_cols = utils.get_forward_returns_columns(factor_data.columns)
+    if len(fwd_cols) < 2:
+        raise ValueError(
+            "compute_alpha_decay requires at least 2 forward return periods. "
+            "Re-run get_clean_factor_and_forward_returns with e.g. periods=(1,5,10,20)."
+        )
+
+    horizons = [pd.Timedelta(c).days for c in fwd_cols]
+
+    factor_data = factor_data.copy()
+    grouper = [factor_data.index.get_level_values("date")]
+    if group_adjust:
+        factor_data = utils.demean_forward_returns(factor_data, grouper + ["group"])
+
+    records = []
+    for col, h in zip(fwd_cols, horizons):
+        def _ic(group, _col=col):
+            return stats.spearmanr(group["factor"], group[_col])[0]
+
+        daily_ic = factor_data.groupby(grouper, observed=True).apply(_ic).dropna()
+        n = len(daily_ic)
+        mean = daily_ic.mean()
+        std = daily_ic.std()
+        stderr = std / np.sqrt(n)
+        t = mean / stderr if stderr > 0 else np.nan
+        p = 2 * t_dist.sf(np.abs(t), df=n - 1) if not np.isnan(t) else np.nan
+        records.append({"horizon": h, "mean_ic": mean, "std_ic": std,
+                        "t_stat": t, "p_value": p})
+
+    return pd.DataFrame(records).set_index("horizon")
+
+
+def _exp_decay(h, ic0, lam):
+    return ic0 * np.exp(-lam * h)
+
+
+def fit_decay_curve(decay_ic):
+    """
+    Fits an exponential decay curve to IC-vs-horizon data and computes
+    the alpha half-life.
+
+    Model: IC(h) = IC0 * exp(-lambda * h)
+    Half-life: tau = ln(2) / lambda
+
+    Parameters
+    ----------
+    decay_ic : pd.DataFrame
+        Output of compute_alpha_decay(). Must have index 'horizon' and
+        column 'mean_ic'.
+
+    Returns
+    -------
+    params : dict
+        - ic0      : fitted IC at horizon=0
+        - lambda_  : decay rate (per trading day)
+        - half_life: tau in trading days (None if fit failed or lambda <= 0)
+        - r_squared: goodness of fit (R^2)
+        - fit_ok   : bool, whether the fit converged and makes physical sense
+    """
+    h = decay_ic.index.values.astype(float)
+    ic = decay_ic["mean_ic"].values
+
+    try:
+        p0 = [ic[0], 0.05]
+        popt, _ = curve_fit(_exp_decay, h, ic, p0=p0, maxfev=5000)
+        ic0, lam = popt
+
+        ic_pred = _exp_decay(h, ic0, lam)
+        ss_res = np.sum((ic - ic_pred) ** 2)
+        ss_tot = np.sum((ic - ic.mean()) ** 2)
+        r2 = 1 - ss_res / ss_tot if ss_tot > 0 else np.nan
+
+        fit_ok = bool(lam > 0 and ic0 > 0)
+        half_life = float(np.log(2) / lam) if fit_ok else None
+
+        return {"ic0": ic0, "lambda_": lam, "half_life": half_life,
+                "r_squared": r2, "fit_ok": fit_ok}
+    except (RuntimeError, ValueError):
+        return {"ic0": np.nan, "lambda_": np.nan, "half_life": None,
+                "r_squared": np.nan, "fit_ok": False}
+
+
+def factor_decay_half_life(factor_data, group_adjust=False):
+    """
+    Returns the alpha decay half-life in trading days.
+
+    Convenience wrapper around compute_alpha_decay + fit_decay_curve.
+
+    Parameters
+    ----------
+    factor_data : pd.DataFrame - MultiIndex
+        See compute_alpha_decay for requirements (needs >= 2 forward return periods).
+    group_adjust : bool
+        Demean forward returns by group before computing IC.
+
+    Returns
+    -------
+    half_life : float or None
+        Estimated half-life in trading days. None if factor IC is not
+        decaying monotonically or the exponential fit did not converge.
+    """
+    decay_ic = compute_alpha_decay(factor_data, group_adjust=group_adjust)
+    params = fit_decay_curve(decay_ic)
+    return params["half_life"]
