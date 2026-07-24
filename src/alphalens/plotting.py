@@ -1012,3 +1012,128 @@ def plot_events_distribution(events, num_bars=50, ax=None):
     )
 
     return ax
+
+
+# ---------------------------------------------------------------------------
+# Alpha Decay Plots
+# ---------------------------------------------------------------------------
+
+def plot_alpha_decay(decay_ic, decay_params, ax=None):
+    """
+    Plots IC vs forward return horizon with a fitted exponential decay curve.
+
+    Parameters
+    ----------
+    decay_ic : pd.DataFrame
+        Output of performance.compute_alpha_decay(). Index = horizon (days),
+        columns include mean_ic and std_ic.
+    decay_params : dict
+        Output of performance.fit_decay_curve(decay_ic).
+    ax : matplotlib.axes.Axes, optional
+        Axes to use. Creates a new figure if None.
+
+    Returns
+    -------
+    ax : matplotlib.axes.Axes
+    """
+    if ax is None:
+        _, ax = plt.subplots(figsize=(10, 5))
+
+    horizons = decay_ic.index.values.astype(float)
+    mean_ic = decay_ic["mean_ic"].values
+    std_ic = decay_ic["std_ic"].values
+
+    bar_width = np.diff(horizons).min() * 0.5 if len(horizons) > 1 else 1.0
+    ax.bar(horizons, mean_ic, width=bar_width, alpha=0.5,
+           color="steelblue", label="Mean IC (observed)")
+    ax.errorbar(horizons, mean_ic, yerr=std_ic, fmt="none",
+                color="steelblue", capsize=4, alpha=0.7)
+
+    if decay_params["fit_ok"]:
+        h_fine = np.linspace(horizons[0], horizons[-1], 300)
+        ic_fit = decay_params["ic0"] * np.exp(-decay_params["lambda_"] * h_fine)
+        hl = decay_params["half_life"]
+        r2 = decay_params["r_squared"]
+        ax.plot(h_fine, ic_fit, color="tomato", linewidth=2,
+                label=f"Fitted decay  (half-life = {hl:.1f}d,  R²={r2:.2f})")
+
+        ic_half = decay_params["ic0"] * 0.5
+        ax.axvline(hl, color="tomato", linestyle="--", alpha=0.45)
+        ax.axhline(ic_half, color="tomato", linestyle="--", alpha=0.45)
+        x_offset = (horizons[-1] - horizons[0]) * 0.04
+        ax.annotate(
+            f"τ½ = {hl:.1f}d",
+            xy=(hl, ic_half),
+            xytext=(hl + x_offset, ic_half * 1.15),
+            fontsize=10,
+            color="tomato",
+            arrowprops=dict(arrowstyle="->", color="tomato", alpha=0.7),
+        )
+    else:
+        ax.text(
+            0.5, 0.92,
+            "Decay fit did not converge — IC may be non-monotonic",
+            transform=ax.transAxes, ha="center", color="gray", fontsize=10,
+        )
+
+    ax.axhline(0, color="black", linewidth=0.8)
+    ax.set_xlabel("Forward Return Horizon (trading days)", fontsize=12)
+    ax.set_ylabel("Mean IC (Spearman)", fontsize=12)
+    ax.set_title("Alpha Decay: IC vs Forecast Horizon", fontsize=14)
+    ax.legend(fontsize=10)
+
+    return ax
+
+
+def plot_decay_table(decay_ic, decay_params, ax=None):
+    """
+    Renders a summary table of alpha decay statistics.
+
+    Parameters
+    ----------
+    decay_ic : pd.DataFrame
+        Output of performance.compute_alpha_decay().
+    decay_params : dict
+        Output of performance.fit_decay_curve(decay_ic).
+    ax : matplotlib.axes.Axes, optional
+
+    Returns
+    -------
+    ax : matplotlib.axes.Axes
+    """
+    if ax is None:
+        _, ax = plt.subplots(figsize=(8, 3))
+
+    table_data = []
+    for h, row in decay_ic.iterrows():
+        p = row["p_value"]
+        sig = "***" if p < 0.01 else "**" if p < 0.05 else "*" if p < 0.1 else ""
+        table_data.append([
+            f"{int(h)}D",
+            f"{row['mean_ic']:.4f}{sig}",
+            f"{row['std_ic']:.4f}",
+            f"{row['t_stat']:.2f}",
+            f"{p:.4f}",
+        ])
+
+    tbl = ax.table(
+        cellText=table_data,
+        colLabels=["Horizon", "Mean IC", "Std IC", "t-stat", "p-value"],
+        loc="center",
+        cellLoc="center",
+    )
+    tbl.auto_set_font_size(False)
+    tbl.set_fontsize(10)
+    tbl.scale(1, 1.5)
+
+    hl_str = (f"{decay_params['half_life']:.1f} trading days"
+              if decay_params.get("half_life") is not None else "N/A")
+    r2 = decay_params.get("r_squared", float("nan"))
+    r2_str = f"{r2:.3f}" if not np.isnan(r2) else "N/A"
+    ax.set_title(
+        f"Alpha Decay Summary  |  Half-life: {hl_str}  |  Fit R²: {r2_str}\n"
+        "Significance: * p<0.1  ** p<0.05  *** p<0.01",
+        fontsize=11, pad=14,
+    )
+    ax.set_axis_off()
+    return ax
