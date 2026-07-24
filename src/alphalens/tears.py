@@ -704,3 +704,54 @@ def create_event_study_tear_sheet(
 
     plt.show()
     gf.close()
+
+
+@plotting.customize
+def create_decay_tear_sheet(factor_data, group_adjust=False):
+    """
+    Creates an alpha decay tear sheet showing how predictive power diminishes
+    across forecast horizons.
+
+    Requires factor_data created with at least 2 forward return periods::
+
+        factor_data = alphalens.utils.get_clean_factor_and_forward_returns(
+            factor, pricing, periods=(1, 5, 10, 20)
+        )
+        alphalens.tears.create_decay_tear_sheet(factor_data)
+
+    The tear sheet shows:
+
+    - A summary table with per-horizon mean IC, std, t-stat, p-value and
+      significance stars.
+    - An IC vs horizon bar chart with a fitted exponential decay curve and
+      half-life annotation.
+
+    Parameters
+    ----------
+    factor_data : pd.DataFrame - MultiIndex
+        A MultiIndex DataFrame indexed by date (level 0) and asset (level 1).
+        Must contain forward returns for at least 2 different horizons.
+        See utils.get_clean_factor_and_forward_returns for the full spec.
+    group_adjust : bool
+        Demean forward returns by group before computing IC.
+
+    Returns
+    -------
+    None
+        Displays the tear sheet inline (Jupyter) or via plt.show().
+
+    Raises
+    ------
+    ValueError
+        If factor_data contains fewer than 2 forward return periods.
+    """
+    decay_ic = perf.compute_alpha_decay(factor_data, group_adjust=group_adjust)
+    decay_params = perf.fit_decay_curve(decay_ic)
+
+    gf = GridFigure(rows=2, cols=1)
+
+    plotting.plot_decay_table(decay_ic, decay_params, ax=gf.next_row())
+    plotting.plot_alpha_decay(decay_ic, decay_params, ax=gf.next_row())
+
+    plt.show()
+    gf.close()
