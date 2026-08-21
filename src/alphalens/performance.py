@@ -189,7 +189,10 @@ def factor_weights(factor_data, demeaned=True, group_adjust=False, equal_weight=
         elif _demeaned:
             group = group - group.mean()
 
-        return group / group.abs().sum()
+        denom = group.abs().sum()
+        if denom == 0:
+            return group * 0.0
+        return group / denom
 
     grouper = [factor_data.index.get_level_values("date")]
     if group_adjust:
