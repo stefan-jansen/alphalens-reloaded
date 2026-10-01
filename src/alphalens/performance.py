@@ -529,9 +529,13 @@ def mean_return_by_quantile(
 
 def compute_mean_returns_spread(mean_returns, upper_quant, lower_quant, std_err=None):
     """
-    Computes the difference between the mean returns of
-    two quantiles. Optionally, computes the standard error
-    of this difference.
+    Computes the return of a dollar-neutral portfolio that is long the upper
+    quantile and short the lower quantile, at 100% gross leverage (50% long
+    and 50% short). Optionally, computes the standard error of this return.
+
+    The raw difference of the two quantile returns is a 200% gross book
+    (100% long and 100% short). Dividing by two puts the spread on the same
+    gross leverage as a single quantile portfolio.
 
     Parameters
     ----------
@@ -558,16 +562,17 @@ def compute_mean_returns_spread(mean_returns, upper_quant, lower_quant, std_err=
         if std_err is None, this will be None
     """
 
-    mean_return_difference = mean_returns.xs(
-        upper_quant, level="factor_quantile"
-    ) - mean_returns.xs(lower_quant, level="factor_quantile")
+    mean_return_difference = (
+        mean_returns.xs(upper_quant, level="factor_quantile")
+        - mean_returns.xs(lower_quant, level="factor_quantile")
+    ) / 2.0
 
     if std_err is None:
         joint_std_err = None
     else:
         std1 = std_err.xs(upper_quant, level="factor_quantile")
         std2 = std_err.xs(lower_quant, level="factor_quantile")
-        joint_std_err = np.sqrt(std1**2 + std2**2)
+        joint_std_err = np.sqrt(std1**2 + std2**2) / 2.0
 
     return mean_return_difference, joint_std_err
 
