@@ -1007,6 +1007,20 @@ def timedelta_strings_to_integers(sequence):
     return list(map(lambda x: pd.Timedelta(x).days, sequence))
 
 
+def turnover_periods_from_columns(columns):
+    """
+    Index shifts for turnover analysis.
+
+    Only exact day-multiple horizons are returned. Sub-day labels such as
+    ``30m`` have ``Timedelta.days == 0``, and shifting the factor by 0
+    reports zero turnover and perfect rank autocorrelation.
+    """
+    day_columns = get_forward_returns_columns(
+        columns, require_exact_day_multiple=True
+    )
+    return timedelta_strings_to_integers(day_columns)
+
+
 def add_custom_calendar_timedelta(input, timedelta, freq):
     """
     Add timedelta to 'input' taking into consideration custom frequency, which

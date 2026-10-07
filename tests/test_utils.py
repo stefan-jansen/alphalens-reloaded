@@ -36,6 +36,7 @@ from alphalens.utils import (
     compute_forward_returns,
     get_forward_returns_columns,
     quantize_factor,
+    turnover_periods_from_columns,
 )
 
 pandas_version = Version(pd.__version__)
@@ -171,6 +172,10 @@ class UtilsTestCase(TestCase):
 
         with self.assertRaises(ValueError):
             compute_forward_returns(factor, prices, periods=(5,), filter_zscore=None)
+
+    def test_turnover_periods_from_columns_skips_subday(self):
+        columns = pd.Index(["1h", "3h", "1D", "5D", "factor"])
+        self.assertEqual(turnover_periods_from_columns(columns), [1, 5])
 
     def test_get_forward_returns_columns_accepts_nanoseconds(self):
         columns = pd.Index(["1D", "1ns", "1us", "1ms", "30m", "factor"])
