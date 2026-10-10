@@ -25,6 +25,16 @@ The main function of Alphalens is to surface the most relevant statistics and pl
 - Turnover Analysis
 - Grouped Analysis
 
+# Maintenance and new projects
+
+We continue to maintain Alphalens Reloaded for bug, security and compatibility fixes.
+Our new development focuses on [ML4T Diagnostic](https://github.com/ml4t/diagnostic).
+For new projects, evaluate it through the
+[factor-analysis migration guide](https://www.ml4trading.io/docs/diagnostic/user-guide/migration/#alphalens-factor-analysis),
+which includes a runnable example and explains the differences between the workflows.
+See the [Diagnostic documentation](https://www.ml4trading.io/docs/diagnostic/) and the
+[ML4T website](https://www.ml4trading.io/) for the current libraries and their workflows.
+
 # Getting started
 
 With a signal and pricing data creating a factor \"tear sheet\" is a two step process:
