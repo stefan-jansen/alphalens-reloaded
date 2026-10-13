@@ -2,23 +2,66 @@ name: Test Wheels
 
 on:
   workflow_dispatch:
+    inputs:
+      ref:
+        description: Git revision to build and test
+        required: true
+        type: string
+  workflow_call:
+    inputs:
+      ref:
+        required: true
+        type: string
 
 jobs:
-  test_wheels:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      source-sha: ${{ steps.source.outputs.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ inputs.ref }}
+      - id: source
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - uses: astral-sh/setup-uv@v7
+        with:
+          python-version: '3.12'
+      - name: Build and validate distributions
+        run: |
+          uv build --out-dir dist
+          uvx twine check dist/*.whl dist/*.tar.gz
+      - uses: actions/upload-artifact@v6
+        with:
+          name: wheel-distributions
+          path: dist/*
+          if-no-files-found: error
+
+  test:
+    needs: build
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
-        python-version: [ 3.7, 3.8, 3.9 ]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ['3.10', '3.11', '3.12', '3.13']
     steps:
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
         with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install wheel
+          ref: ${{ needs.build.outputs.source-sha }}
+      - uses: astral-sh/setup-uv@v7
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: actions/download-artifact@v7
+        with:
+          name: wheel-distributions
+          path: dist
+      - name: Install and test the built wheel
+        shell: bash
         run: |
-          pip install -U pip wheel
-          pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple alphalens-reloaded[test]
-          pytest alphalens/tests
+          uv venv --python "${{ matrix.python }}"
+          wheel=$(find dist -name '*.whl')
+          uv pip install "${wheel}[test]"
+          uv run --no-sync python -c "import alphalens; assert 'site-packages' in alphalens.__file__"
+          uv run --no-sync pytest -o pythonpath= tests/ -n 2

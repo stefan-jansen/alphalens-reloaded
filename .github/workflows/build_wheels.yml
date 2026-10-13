@@ -10,9 +10,12 @@ on:
         default: 'PYPI'
         options: [ 'TESTPYPI', 'PYPI' ]
       version:
-        description: 'Version to publish'
+        description: 'Version tag to build'
         required: true
-        default: '0.4.6'
+      publish:
+        description: 'Publish validated distributions'
+        type: boolean
+        default: false
 
 jobs:
   dist:
@@ -40,6 +43,11 @@ jobs:
       - name: Build wheel
         run: pipx run build
 
+      - name: Verify requested version
+        env:
+          EXPECTED_VERSION: ${{ inputs.version }}
+        run: python .github/scripts/prepare_conda_source.py dist --expected-version "$EXPECTED_VERSION" --github-env "$GITHUB_ENV"
+
       - name: Store artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -49,6 +57,7 @@ jobs:
         run: pipx run twine check dist/*
 
   upload_pypi:
+    if: ${{ inputs.publish }}
     needs: [ dist ]
     runs-on: ubuntu-latest
     steps:
