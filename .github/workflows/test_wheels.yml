@@ -9,9 +9,15 @@ on:
         type: string
   workflow_call:
     inputs:
+      test-os:
+        type: string
+        default: '["ubuntu-latest", "windows-latest", "macos-latest"]'
       ref:
         required: true
         type: string
+
+env:
+  MPLBACKEND: Agg
 
 jobs:
   build:
@@ -44,7 +50,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: ${{ fromJSON(inputs.test-os || '["ubuntu-latest", "windows-latest", "macos-latest"]') }}
         python: ['3.10', '3.11', '3.12', '3.13']
     steps:
       - uses: actions/checkout@v4

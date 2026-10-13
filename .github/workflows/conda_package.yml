@@ -37,7 +37,7 @@ jobs:
       - uses: conda-incubator/setup-miniconda@v3
         with:
           miniforge-version: latest
-          python-version: ${{ matrix.python }}
+          python-version: '3.11'
           activate-environment: recipe
           channels: ml4t,conda-forge
           channel-priority: strict
