@@ -39,9 +39,8 @@ jobs:
           miniforge-version: latest
           python-version: '3.11'
           activate-environment: recipe
-          channels: ml4t,conda-forge
+          channels: conda-forge,ml4t
           channel-priority: strict
-          use-mamba: true
       - name: Prepare selected source distribution
         env:
           EXPECTED_VERSION: ${{ inputs.version }}
@@ -50,8 +49,8 @@ jobs:
           python .github/scripts/prepare_conda_source.py dist --expected-version "$EXPECTED_VERSION" --github-env "$GITHUB_ENV"
       - name: Build and test Conda package
         run: |
-          mamba install --yes conda-build conda-verify anaconda-client
-          conda-build --no-anaconda-upload --output-folder packages --python "${{ matrix.python }}" conda/recipe
+          conda install --name recipe --yes conda-build conda-verify anaconda-client
+          conda run --no-capture-output --name recipe conda-build --no-anaconda-upload --output-folder packages --python "${{ matrix.python }}" conda/recipe
       - uses: actions/upload-artifact@v6
         with:
           name: conda-${{ matrix.os }}-py${{ matrix.python }}
