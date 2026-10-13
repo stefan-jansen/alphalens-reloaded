@@ -537,6 +537,11 @@ def compute_mean_returns_spread(mean_returns, upper_quant, lower_quant, std_err=
     (100% long and 100% short). Dividing by two puts the spread on the same
     gross leverage as a single quantile portfolio.
 
+    This halves the spread and its standard error compared with the previous
+    raw-difference convention. Historical tear sheets use a different scale.
+    The quantile portfolio is equally weighted within each leg; it is not
+    the factor-weighted portfolio used for the alpha and beta rows.
+
     Parameters
     ----------
     mean_returns : pd.DataFrame
