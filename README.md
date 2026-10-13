@@ -96,6 +96,9 @@ If you find a bug, feel free to open an issue on our [github tracker](https://gi
 
 # Contribute
 
+Read the [contribution guide](https://github.com/stefan-jansen/alphalens-reloaded/blob/main/CONTRIBUTING.md)
+for maintenance scope, review requirements and local checks.
+
 If you want to contribute, a great place to start would be the
 [help-wanted issues](https://github.com/stefan-jansen/alphalens-reloaded/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22).
 
