@@ -51,7 +51,7 @@ jobs:
       - name: Build and test Conda package
         run: |
           mamba install --yes conda-build conda-verify anaconda-client
-          conda build --no-anaconda-upload --output-folder packages --python "${{ matrix.python }}" conda/recipe
+          python -m conda_build.cli.main_build --no-anaconda-upload --output-folder packages --python "${{ matrix.python }}" conda/recipe
       - uses: actions/upload-artifact@v6
         with:
           name: conda-${{ matrix.os }}-py${{ matrix.python }}
