@@ -440,10 +440,11 @@ def positions(weights, period, freq=None):
         #
         # remove expired entry in active_weights (older than 'period')
         #
-        if active_weights:
-            expire_ts, assets_weights = active_weights[0]
-            if expire_ts <= curr_time:
-                active_weights.pop(0)
+        active_weights = [
+            (expiry, allocation)
+            for expiry, allocation in active_weights
+            if expiry > curr_time
+        ]
 
         if not active_weights:
             continue
