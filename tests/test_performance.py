@@ -1630,9 +1630,7 @@ class PerformanceTestCase(TestCase):
         dr.name = "date"
         tickers = ["A", "B", "C", "D", "E", "F"]
         r1, r2, r3, r4 = (1.25, 1.50, 1.00, 0.50)
-        data = [
-            [r1**i, r2**i, r3**i, r4**i, r2**i, r3**i] for i in range(1, 12)
-        ]
+        data = [[r1**i, r2**i, r3**i, r4**i, r2**i, r3**i] for i in range(1, 12)]
         prices = DataFrame(index=dr, columns=tickers, data=data)
         dr2 = date_range(start="2015-1-18", end="2015-1-21")
         dr2.name = "date"

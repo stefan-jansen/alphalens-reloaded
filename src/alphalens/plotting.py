@@ -165,9 +165,9 @@ def plot_turnover_table(autocorrelation_data, quantile_turnover, return_df=False
             ] = p_data.mean()
     auto_corr = pd.DataFrame()
     for period, p_data in autocorrelation_data.items():
-        auto_corr.loc[
-            "Mean Factor Rank Autocorrelation", "{}D".format(period)
-        ] = p_data.mean()
+        auto_corr.loc["Mean Factor Rank Autocorrelation", "{}D".format(period)] = (
+            p_data.mean()
+        )
 
     if return_df:
         return turnover_table, auto_corr
