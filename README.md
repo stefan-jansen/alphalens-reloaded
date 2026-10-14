@@ -50,6 +50,11 @@ for more on how to read and use the factor tear sheet.
 
 # Installation
 
+The next release supports Python 3.11-3.14. Python 3.10 and older are no longer
+supported; previous release artifacts remain available. Python 3.15 is blocked
+by a reproduced crash in the declared pandas 2.3.3 dependency and is excluded
+until dependency installation and public API tests pass.
+
 Install with pip:
 
     pip install alphalens-reloaded
@@ -71,8 +76,8 @@ Alphalens depends on:
 - [seaborn](https://github.com/mwaskom/seaborn)
 - [statsmodels](https://github.com/statsmodels/statsmodels)
 
-> Note that Numpy>=2.0 requires pandas>=2.2.2. If you are using an older version of pandas, you may need to upgrade
-> accordingly, otherwise you may encounter compatibility issues.
+NumPy >=2.0 requires pandas >=2.2.2. Upgrade older pandas versions before using
+NumPy 2 to avoid compatibility issues.
 
 # Usage
 
