@@ -9,6 +9,10 @@ on:
         required: true
         default: 'PYPI'
         options: [ 'TESTPYPI', 'PYPI' ]
+      version:
+        description: 'Version to publish'
+        required: true
+        default: '0.4.6'
 
 jobs:
   dist:
@@ -18,7 +22,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest ]
-        python-version: [ "3.10" ]
+        python-version: [ "3.12" ]
 
     steps:
       - name: Checkout alphalens
@@ -26,10 +30,10 @@ jobs:
         with:
           fetch-depth: 0
           fetch-tags: true
-          ref: v0.4.4
+          ref: ${{ github.event.inputs.version }}
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
 
