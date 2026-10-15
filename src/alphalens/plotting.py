@@ -177,16 +177,59 @@ def plot_turnover_table(autocorrelation_data, quantile_turnover, return_df=False
         utils.print_table(auto_corr.apply(lambda x: x.round(3)))
 
 
+def _ic_columns(ic_data):
+    if isinstance(ic_data, pd.Series):
+        return ic_data.to_frame()
+    return ic_data
+
+
+def _stat_ignoring_missing(ic_data, stat):
+    """Column-wise statistic that skips missing IC observations.
+
+    One missing day otherwise makes the whole column NaN for t-tests and
+    for scipy skew and kurtosis, while the mean and standard deviation
+    already ignore those days.
+    """
+    frame = _ic_columns(ic_data)
+    values = []
+    for column in frame.columns:
+        clean = frame[column].dropna()
+        if len(clean) == 0:
+            values.append(np.nan)
+        else:
+            values.append(stat(clean.to_numpy()))
+    return pd.Series(values, index=frame.columns)
+
+
+def _ttest_ignoring_missing(ic_data):
+    frame = _ic_columns(ic_data)
+    statistics = []
+    pvalues = []
+    for column in frame.columns:
+        clean = frame[column].dropna()
+        if len(clean) < 2:
+            statistics.append(np.nan)
+            pvalues.append(np.nan)
+            continue
+        result = stats.ttest_1samp(clean.to_numpy(), 0)
+        statistics.append(result.statistic)
+        pvalues.append(result.pvalue)
+    return (
+        pd.Series(statistics, index=frame.columns),
+        pd.Series(pvalues, index=frame.columns),
+    )
+
+
 def plot_information_table(ic_data, return_df=False):
     ic_summary_table = pd.DataFrame()
     ic_summary_table["IC Mean"] = ic_data.mean()
     ic_summary_table["IC Std."] = ic_data.std()
     ic_summary_table["Risk-Adjusted IC"] = ic_data.mean() / ic_data.std()
-    t_stat, p_value = stats.ttest_1samp(ic_data, 0)
+    t_stat, p_value = _ttest_ignoring_missing(ic_data)
     ic_summary_table["t-stat(IC)"] = t_stat
     ic_summary_table["p-value(IC)"] = p_value
-    ic_summary_table["IC Skew"] = stats.skew(ic_data)
-    ic_summary_table["IC Kurtosis"] = stats.kurtosis(ic_data)
+    ic_summary_table["IC Skew"] = _stat_ignoring_missing(ic_data, stats.skew)
+    ic_summary_table["IC Kurtosis"] = _stat_ignoring_missing(ic_data, stats.kurtosis)
 
     if return_df:
         return ic_summary_table
@@ -294,7 +337,12 @@ def plot_ic_hist(ic, ax=None):
         ax = ax.flatten()
 
     for a, (period_num, ic) in zip(ax, ic.items()):
-        sns.histplot(ic.replace(np.nan, 0.0), kde=True, ax=a)
+        # Missing ICs are not zero. Filling them in pulls the histogram
+        # and the kernel density toward zero.
+        observed = ic.dropna()
+        if observed.empty:
+            continue
+        sns.histplot(observed, kde=True, ax=a)
         a.set(title="%s Period IC" % period_num, xlabel="IC")
         a.set_xlim([-1, 1])
         a.text(
@@ -353,8 +401,11 @@ def plot_ic_qq(ic, theoretical_dist=stats.norm, ax=None):
         dist_name = "Theoretical"
 
     for a, (period_num, ic) in zip(ax, ic.items()):
+        observed = ic.dropna()
+        if observed.empty:
+            continue
         sm.qqplot(
-            ic.replace(np.nan, 0.0).values,
+            observed.values,
             theoretical_dist,
             fit=True,
             line="45",
