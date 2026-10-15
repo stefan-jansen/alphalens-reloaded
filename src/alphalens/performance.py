@@ -189,7 +189,10 @@ def factor_weights(factor_data, demeaned=True, group_adjust=False, equal_weight=
         elif _demeaned:
             group = group - group.mean()
 
-        return group / group.abs().sum()
+        denom = group.abs().sum()
+        if denom == 0:
+            return group * 0.0
+        return group / denom
 
     grouper = [factor_data.index.get_level_values("date")]
     if group_adjust:
@@ -419,6 +422,8 @@ def positions(weights, period, freq=None):
     trades_idx = weights.index.copy()
     returns_idx = utils.add_custom_calendar_timedelta(trades_idx, period, freq)
     weights_idx = trades_idx.union(returns_idx)
+    # remove duplicated dates if trading dates include weekends
+    weights_idx = weights_idx.drop_duplicates()
 
     #
     # Compute portfolio weights for each point in time contained in the index
@@ -440,10 +445,11 @@ def positions(weights, period, freq=None):
         #
         # remove expired entry in active_weights (older than 'period')
         #
-        if active_weights:
-            expire_ts, assets_weights = active_weights[0]
-            if expire_ts <= curr_time:
-                active_weights.pop(0)
+        active_weights = [
+            (expiry, allocation)
+            for expiry, allocation in active_weights
+            if expiry > curr_time
+        ]
 
         if not active_weights:
             continue

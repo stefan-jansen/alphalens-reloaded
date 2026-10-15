@@ -311,8 +311,7 @@ class UtilsTestCase(TestCase):
         factor_groups = {"A": 1, "B": 2, "C": 1, "D": 2, "E": 1, "F": 2}
 
         price_data = [
-            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i]
-            for i in range(1, 7)
+            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i] for i in range(1, 7)
         ]  # 6 days = 3 + 3 fwd returns
 
         factor_data = [
@@ -383,8 +382,7 @@ class UtilsTestCase(TestCase):
         factor_groups = {"A": 1, "B": 2, "C": 1, "D": 2, "E": 1, "F": 2}
 
         price_data = [
-            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i]
-            for i in range(1, 7)
+            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i] for i in range(1, 7)
         ]  # 6 days = 3 + 3 fwd returns
 
         factor_data = [
@@ -454,8 +452,7 @@ class UtilsTestCase(TestCase):
         factor_groups = {"A": 1, "B": 2, "C": 1, "D": 2, "E": 1, "F": 2}
 
         price_data = [
-            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i]
-            for i in range(1, 5)
+            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i] for i in range(1, 5)
         ]  # 4 days = 3 + 1 fwd returns
 
         factor_data = [
@@ -544,8 +541,7 @@ class UtilsTestCase(TestCase):
         factor_groups = {"A": 1, "B": 2, "C": 1, "D": 2, "E": 1, "F": 2}
 
         price_data = [
-            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i]
-            for i in range(1, 9)
+            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i] for i in range(1, 9)
         ]
 
         factor_data = [
@@ -612,8 +608,7 @@ class UtilsTestCase(TestCase):
         factor_groups = {"A": 1, "B": 2, "C": 1, "D": 2, "E": 1, "F": 2}
 
         price_data = [
-            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i]
-            for i in range(1, 20)
+            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i] for i in range(1, 20)
         ]  # 19 days = 18 + 1 fwd returns
 
         factor_data = [
@@ -715,8 +710,7 @@ class UtilsTestCase(TestCase):
         factor_groups = {"A": 1, "B": 2, "C": 1, "D": 2, "E": 1, "F": 2}
 
         price_data = [
-            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i]
-            for i in range(1, 22)
+            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i] for i in range(1, 22)
         ]  # 21 days = 18 + 3 fwd returns
 
         factor_data = [

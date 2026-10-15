@@ -44,8 +44,7 @@ class TearsTestCase(TestCase):
     factor_groups = {"A": 1, "B": 2, "C": 1, "D": 2, "E": 1, "F": 2}
 
     price_data = [
-        [1.25**i, 1.50**i, 1.00**i, 0.50**i, 1.50**i, 1.00**i]
-        for i in range(1, 51)
+        [1.25**i, 1.50**i, 1.00**i, 0.50**i, 1.50**i, 1.00**i] for i in range(1, 51)
     ]
 
     factor_data = [
