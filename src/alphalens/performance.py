@@ -189,7 +189,10 @@ def factor_weights(factor_data, demeaned=True, group_adjust=False, equal_weight=
         elif _demeaned:
             group = group - group.mean()
 
-        return group / group.abs().sum()
+        denom = group.abs().sum()
+        if denom == 0:
+            return group * 0.0
+        return group / denom
 
     grouper = [factor_data.index.get_level_values("date")]
     if group_adjust:
@@ -353,7 +356,8 @@ def cumulative_returns(returns):
     Returns
     -------
     Cumulative returns series : pd.Series
-        Example:
+        Example::
+
             2015-01-05   1.001310
             2015-01-06   1.000805
             2015-01-07   1.001092
@@ -387,7 +391,8 @@ def positions(weights, period, freq=None):
     -------
     pd.DataFrame
         Assets positions series, datetime on index, assets on columns.
-        Example:
+        Example::
+
             index                 'AAPL'         'MSFT'          cash
             2004-01-09 10:30:00   13939.3800     -14012.9930     711.5585
             2004-01-09 15:30:00       0.00       -16012.9930     411.5585
@@ -417,6 +422,8 @@ def positions(weights, period, freq=None):
     trades_idx = weights.index.copy()
     returns_idx = utils.add_custom_calendar_timedelta(trades_idx, period, freq)
     weights_idx = trades_idx.union(returns_idx)
+    # remove duplicated dates if trading dates include weekends
+    weights_idx = weights_idx.drop_duplicates()
 
     #
     # Compute portfolio weights for each point in time contained in the index
@@ -438,10 +445,11 @@ def positions(weights, period, freq=None):
         #
         # remove expired entry in active_weights (older than 'period')
         #
-        if active_weights:
-            expire_ts, assets_weights = active_weights[0]
-            if expire_ts <= curr_time:
-                active_weights.pop(0)
+        active_weights = [
+            (expiry, allocation)
+            for expiry, allocation in active_weights
+            if expiry > curr_time
+        ]
 
         if not active_weights:
             continue
@@ -810,7 +818,9 @@ def average_cumulative_return_by_quantile(
         (level 1) and the values on the columns in range from
         -periods_before to periods_after
         If by_group=True the index will have an additional 'group' level
+
         ::
+
             ---------------------------------------------------
                         |       | -2  | -1  |  0  |  1  | ...
             ---------------------------------------------------
@@ -950,7 +960,8 @@ def factor_cumulative_returns(
     Returns
     -------
     Cumulative returns series : pd.Series
-        Example:
+        Example::
+
             2015-07-16 09:30:00  -0.012143
             2015-07-16 12:30:00   0.012546
             2015-07-17 09:30:00   0.045350
@@ -1023,7 +1034,8 @@ def factor_positions(
     -------
     assets positions : pd.DataFrame
         Assets positions series, datetime on index, assets on columns.
-        Example:
+        Example::
+
             index                 'AAPL'         'MSFT'          cash
             2004-01-09 10:30:00   13939.3800     -14012.9930     711.5585
             2004-01-09 15:30:00       0.00       -16012.9930     411.5585
@@ -1125,28 +1137,34 @@ def create_pyfolio_input(
 
     Returns
     -------
-     returns : pd.Series
+    returns : pd.Series
         Daily returns of the strategy, noncumulative.
-         - Time series with decimal returns.
-         - Example:
+
+        - Time series with decimal returns.
+
+        Example::
+
             2015-07-16    -0.012143
             2015-07-17    0.045350
             2015-07-20    0.030957
             2015-07-21    0.004902
 
-     positions : pd.DataFrame
+    positions : pd.DataFrame
         Time series of dollar amount (or percentage when 'capital' is not
         provided) invested in each position and cash.
-         - Days where stocks are not held can be represented by 0.
-         - Non-working capital is labelled 'cash'
-         - Example:
+
+        - Days where stocks are not held can be represented by 0.
+        - Non-working capital is labelled 'cash'
+
+        Example::
+
             index         'AAPL'         'MSFT'          cash
             2004-01-09    13939.3800     -14012.9930     711.5585
             2004-01-12    14492.6300     -14624.8700     27.1821
             2004-01-13    -13853.2800    13653.6400      -43.6375
 
 
-     benchmark : pd.Series
+    benchmark : pd.Series
         Benchmark returns computed as the factor universe mean daily returns.
 
     """
