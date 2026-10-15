@@ -73,14 +73,14 @@ def plotting_context(context="notebook", font_scale=1.5, rc=None):
     -------
     seaborn plotting context
 
-    Example
-    -------
-    with alphalens.plotting.plotting_context(font_scale=2):
-        alphalens.create_full_tear_sheet(..., set_context=False)
-
-    See also
+    Examples
     --------
-    For more information, see seaborn.plotting_context().
+    >>> with alphalens.plotting.plotting_context(font_scale=2):
+    ...     alphalens.tears.create_full_tear_sheet(..., set_context=False)
+
+    See Also
+    --------
+    seaborn.plotting_context
     """
     if rc is None:
         rc = {}
@@ -111,14 +111,14 @@ def axes_style(style="darkgrid", rc=None):
     -------
     seaborn plotting context
 
-    Example
-    -------
-    with alphalens.plotting.axes_style(style='whitegrid'):
-        alphalens.create_full_tear_sheet(..., set_context=False)
-
-    See also
+    Examples
     --------
-    For more information, see seaborn.plotting_context().
+    >>> with alphalens.plotting.axes_style(style='whitegrid'):
+    ...     alphalens.tears.create_full_tear_sheet(..., set_context=False)
+
+    See Also
+    --------
+    seaborn.axes_style
 
     """
     if rc is None:

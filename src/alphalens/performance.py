@@ -356,7 +356,8 @@ def cumulative_returns(returns):
     Returns
     -------
     Cumulative returns series : pd.Series
-        Example:
+        Example::
+
             2015-01-05   1.001310
             2015-01-06   1.000805
             2015-01-07   1.001092
@@ -390,7 +391,8 @@ def positions(weights, period, freq=None):
     -------
     pd.DataFrame
         Assets positions series, datetime on index, assets on columns.
-        Example:
+        Example::
+
             index                 'AAPL'         'MSFT'          cash
             2004-01-09 10:30:00   13939.3800     -14012.9930     711.5585
             2004-01-09 15:30:00       0.00       -16012.9930     411.5585
@@ -806,7 +808,9 @@ def average_cumulative_return_by_quantile(
         (level 1) and the values on the columns in range from
         -periods_before to periods_after
         If by_group=True the index will have an additional 'group' level
+
         ::
+
             ---------------------------------------------------
                         |       | -2  | -1  |  0  |  1  | ...
             ---------------------------------------------------
@@ -946,7 +950,8 @@ def factor_cumulative_returns(
     Returns
     -------
     Cumulative returns series : pd.Series
-        Example:
+        Example::
+
             2015-07-16 09:30:00  -0.012143
             2015-07-16 12:30:00   0.012546
             2015-07-17 09:30:00   0.045350
@@ -1019,7 +1024,8 @@ def factor_positions(
     -------
     assets positions : pd.DataFrame
         Assets positions series, datetime on index, assets on columns.
-        Example:
+        Example::
+
             index                 'AAPL'         'MSFT'          cash
             2004-01-09 10:30:00   13939.3800     -14012.9930     711.5585
             2004-01-09 15:30:00       0.00       -16012.9930     411.5585
@@ -1121,28 +1127,34 @@ def create_pyfolio_input(
 
     Returns
     -------
-     returns : pd.Series
+    returns : pd.Series
         Daily returns of the strategy, noncumulative.
-         - Time series with decimal returns.
-         - Example:
+
+        - Time series with decimal returns.
+
+        Example::
+
             2015-07-16    -0.012143
             2015-07-17    0.045350
             2015-07-20    0.030957
             2015-07-21    0.004902
 
-     positions : pd.DataFrame
+    positions : pd.DataFrame
         Time series of dollar amount (or percentage when 'capital' is not
         provided) invested in each position and cash.
-         - Days where stocks are not held can be represented by 0.
-         - Non-working capital is labelled 'cash'
-         - Example:
+
+        - Days where stocks are not held can be represented by 0.
+        - Non-working capital is labelled 'cash'
+
+        Example::
+
             index         'AAPL'         'MSFT'          cash
             2004-01-09    13939.3800     -14012.9930     711.5585
             2004-01-12    14492.6300     -14624.8700     27.1821
             2004-01-13    -13853.2800    13653.6400      -43.6375
 
 
-     benchmark : pd.Series
+    benchmark : pd.Series
         Benchmark returns computed as the factor universe mean daily returns.
 
     """
