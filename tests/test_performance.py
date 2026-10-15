@@ -717,7 +717,7 @@ class PerformanceTestCase(TestCase):
                     -0.25,
                     -0.25,
                     -0.50,
-                    nan,
+                    0.0,
                     0.50,
                 ],
             ),
@@ -843,10 +843,10 @@ class PerformanceTestCase(TestCase):
                     -0.25,
                     -0.25,
                     -0.50,
-                    nan,
+                    0.0,
                     0.50,
                     0.50,
-                    nan,
+                    0.0,
                     -0.50,
                 ],
             ),
@@ -894,7 +894,7 @@ class PerformanceTestCase(TestCase):
                 [1, 1, 1, 1, 1, 1, 1, 1],
                 [4, 3, 2, 1, 1, 2, 3, 4],
                 False,
-                [nan, nan],
+                [0.0, 0.0],
             ),
             (
                 [1, 2, 3, 4, 4, 3, 2, 1],
@@ -912,7 +912,7 @@ class PerformanceTestCase(TestCase):
                 [1, 1, 1, 1, 1, 1, 1, 1],
                 [4, 3, 2, 1, 1, 2, 3, 4],
                 True,
-                [nan, nan],
+                [0.0, 0.0],
             ),
         ]
     )
@@ -1665,3 +1665,23 @@ class PerformanceTestCase(TestCase):
             index=index, columns=range(-before, after + 1), data=expected_vals
         )
         assert_frame_equal(avgrt, expected)
+
+    def test_single_asset_factor_weights_and_alpha_beta(self):
+        dates = date_range("2020-01-01", periods=60, freq="B", name="date")
+        idx = MultiIndex.from_product([dates, ["AAPL"]], names=["date", "asset"])
+        factor = Series(1.0, index=idx, name="factor")
+        prices = DataFrame(100.0, index=dates, columns=["AAPL"])
+
+        factor_data = get_clean_factor_and_forward_returns(factor, prices, quantiles=1)
+        weights = factor_weights(factor_data, demeaned=True)
+        self.assertTrue((weights == 0.0).all())
+
+        alpha_beta = factor_alpha_beta(factor_data, demeaned=True)
+        self.assertTrue((alpha_beta.loc["Ann. alpha"] == 0.0).all())
+        self.assertTrue((alpha_beta.loc["beta"] == 0.0).all())
+
+        from alphalens.tears import create_summary_tear_sheet
+        import matplotlib
+
+        matplotlib.use("Agg")
+        create_summary_tear_sheet(factor_data, long_short=True)
