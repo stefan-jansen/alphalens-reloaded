@@ -38,7 +38,7 @@ jobs:
         run: |
           uv build --out-dir dist
           uvx twine check dist/*.whl dist/*.tar.gz
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: wheel-distributions
           path: dist/*
@@ -59,7 +59,7 @@ jobs:
       - uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python }}
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: wheel-distributions
           path: dist

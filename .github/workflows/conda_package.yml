@@ -34,7 +34,7 @@ jobs:
           fetch-depth: 0
           ref: ${{ inputs.ref || inputs.version }}
       - uses: astral-sh/setup-uv@v7
-      - uses: conda-incubator/setup-miniconda@v3
+      - uses: conda-incubator/setup-miniconda@v4
         with:
           miniforge-version: latest
           python-version: '3.11'
@@ -51,7 +51,7 @@ jobs:
         run: |
           conda install --name recipe --yes conda-build conda-verify anaconda-client
           conda run --no-capture-output --name recipe conda-build --no-anaconda-upload --output-folder packages --python "${{ matrix.python }}" conda/recipe
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: conda-${{ matrix.os }}-py${{ matrix.python }}
           path: |
