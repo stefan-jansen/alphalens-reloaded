@@ -599,7 +599,8 @@ class PerformanceTestCase(TestCase):
         quantized_test_factor = (
             DataFrame(index=dr, columns=tickers, data=quantile_values)
             .rename_axis("asset", axis=1)
-            .stack().dropna()
+            .stack()
+            .dropna()
         )
 
         to = quantile_turnover(quantized_test_factor, test_quantile, period)
@@ -718,7 +719,7 @@ class PerformanceTestCase(TestCase):
                     -0.25,
                     -0.25,
                     -0.50,
-                    nan,
+                    0.0,
                     0.50,
                 ],
             ),
@@ -844,10 +845,10 @@ class PerformanceTestCase(TestCase):
                     -0.25,
                     -0.25,
                     -0.50,
-                    nan,
+                    0.0,
                     0.50,
                     0.50,
-                    nan,
+                    0.0,
                     -0.50,
                 ],
             ),
@@ -865,7 +866,9 @@ class PerformanceTestCase(TestCase):
     ):
 
         index = date_range("1/12/2000", periods=len(factor_vals))
-        factor = DataFrame(index=index, columns=tickers, data=factor_vals).stack().dropna()
+        factor = (
+            DataFrame(index=index, columns=tickers, data=factor_vals).stack().dropna()
+        )
         factor.index = factor.index.set_names(["date", "asset"])
         factor.name = "factor"
 
@@ -895,7 +898,7 @@ class PerformanceTestCase(TestCase):
                 [1, 1, 1, 1, 1, 1, 1, 1],
                 [4, 3, 2, 1, 1, 2, 3, 4],
                 False,
-                [nan, nan],
+                [0.0, 0.0],
             ),
             (
                 [1, 2, 3, 4, 4, 3, 2, 1],
@@ -913,7 +916,7 @@ class PerformanceTestCase(TestCase):
                 [1, 1, 1, 1, 1, 1, 1, 1],
                 [4, 3, 2, 1, 1, 2, 3, 4],
                 True,
-                [nan, nan],
+                [0.0, 0.0],
             ),
         ]
     )
@@ -1155,7 +1158,8 @@ class PerformanceTestCase(TestCase):
         factor = (
             DataFrame(index=dr, columns=tickers, data=factor_values)
             .rename_axis("asset", axis=1)
-            .stack().dropna()
+            .stack()
+            .dropna()
         )
 
         factor_df = DataFrame(data=factor, columns=["factor"])
@@ -1322,21 +1326,25 @@ class PerformanceTestCase(TestCase):
         data = [[r1**i, r2**i, r3**i, r4**i] for i in range(1, 18)]
         returns = DataFrame(data=data, index=dr, columns=tickers)
         dr2 = date_range(start="2015-1-21", end="2015-1-29")
-        factor = DataFrame(
-            index=dr2,
-            columns=tickers,
-            data=[
-                [3, 4, 2, 1],
-                [3, 4, 2, 1],
-                [3, 4, 2, 1],
-                [3, 4, 2, 1],
-                [3, 4, 2, 1],
-                [3, 4, 2, 1],
-                [3, 4, 2, 1],
-                [3, 4, 2, 1],
-                [3, 4, 2, 1],
-            ],
-        ).stack().dropna()
+        factor = (
+            DataFrame(
+                index=dr2,
+                columns=tickers,
+                data=[
+                    [3, 4, 2, 1],
+                    [3, 4, 2, 1],
+                    [3, 4, 2, 1],
+                    [3, 4, 2, 1],
+                    [3, 4, 2, 1],
+                    [3, 4, 2, 1],
+                    [3, 4, 2, 1],
+                    [3, 4, 2, 1],
+                    [3, 4, 2, 1],
+                ],
+            )
+            .stack()
+            .dropna()
+        )
         factor.index = factor.index.set_names(["date", "asset"])
         factor.name = "factor"
 
@@ -1526,18 +1534,22 @@ class PerformanceTestCase(TestCase):
         returns = DataFrame(index=dr, columns=tickers, data=data)
         dr2 = date_range(start="2015-1-21", end="2015-1-26")
         dr2.name = "date"
-        factor = DataFrame(
-            index=dr2,
-            columns=tickers,
-            data=[
-                [3, 4, 2, 1],
-                [3, 4, 2, 1],
-                [3, 4, 2, 1],
-                [3, 4, 2, 1],
-                [3, 4, 2, 1],
-                [3, 4, 2, 1],
-            ],
-        ).stack().dropna()
+        factor = (
+            DataFrame(
+                index=dr2,
+                columns=tickers,
+                data=[
+                    [3, 4, 2, 1],
+                    [3, 4, 2, 1],
+                    [3, 4, 2, 1],
+                    [3, 4, 2, 1],
+                    [3, 4, 2, 1],
+                    [3, 4, 2, 1],
+                ],
+            )
+            .stack()
+            .dropna()
+        )
 
         factor_data = get_clean_factor_and_forward_returns(
             factor,
@@ -1631,22 +1643,24 @@ class PerformanceTestCase(TestCase):
         dr.name = "date"
         tickers = ["A", "B", "C", "D", "E", "F"]
         r1, r2, r3, r4 = (1.25, 1.50, 1.00, 0.50)
-        data = [
-            [r1**i, r2**i, r3**i, r4**i, r2**i, r3**i] for i in range(1, 12)
-        ]
+        data = [[r1**i, r2**i, r3**i, r4**i, r2**i, r3**i] for i in range(1, 12)]
         prices = DataFrame(index=dr, columns=tickers, data=data)
         dr2 = date_range(start="2015-1-18", end="2015-1-21")
         dr2.name = "date"
-        factor = DataFrame(
-            index=dr2,
-            columns=tickers,
-            data=[
-                [3, 4, 2, 1, nan, nan],
-                [3, 4, 2, 1, nan, nan],
-                [3, nan, nan, 1, 4, 2],
-                [3, nan, nan, 1, 4, 2],
-            ],
-        ).stack().dropna()
+        factor = (
+            DataFrame(
+                index=dr2,
+                columns=tickers,
+                data=[
+                    [3, 4, 2, 1, nan, nan],
+                    [3, 4, 2, 1, nan, nan],
+                    [3, nan, nan, 1, 4, 2],
+                    [3, nan, nan, 1, 4, 2],
+                ],
+            )
+            .stack()
+            .dropna()
+        )
 
         factor_data = get_clean_factor_and_forward_returns(
             factor,
@@ -1668,3 +1682,23 @@ class PerformanceTestCase(TestCase):
             index=index, columns=range(-before, after + 1), data=expected_vals
         )
         assert_frame_equal(avgrt, expected)
+
+    def test_single_asset_factor_weights_and_alpha_beta(self):
+        dates = date_range("2020-01-01", periods=60, freq="B", name="date")
+        idx = MultiIndex.from_product([dates, ["AAPL"]], names=["date", "asset"])
+        factor = Series(1.0, index=idx, name="factor")
+        prices = DataFrame(100.0, index=dates, columns=["AAPL"])
+
+        factor_data = get_clean_factor_and_forward_returns(factor, prices, quantiles=1)
+        weights = factor_weights(factor_data, demeaned=True)
+        self.assertTrue((weights == 0.0).all())
+
+        alpha_beta = factor_alpha_beta(factor_data, demeaned=True)
+        self.assertTrue((alpha_beta.loc["Ann. alpha"] == 0.0).all())
+        self.assertTrue((alpha_beta.loc["beta"] == 0.0).all())
+
+        from alphalens.tears import create_summary_tear_sheet
+        import matplotlib
+
+        matplotlib.use("Agg")
+        create_summary_tear_sheet(factor_data, long_short=True)

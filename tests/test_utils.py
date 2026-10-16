@@ -46,9 +46,11 @@ class UtilsTestCase(TestCase):
     dr.name = "date"
     tickers = ["A", "B", "C", "D"]
 
-    factor = DataFrame(
-        index=dr, columns=tickers, data=[[1, 2, 3, 4], [4, 3, 2, 1]]
-    ).stack().dropna()
+    factor = (
+        DataFrame(index=dr, columns=tickers, data=[[1, 2, 3, 4], [4, 3, 2, 1]])
+        .stack()
+        .dropna()
+    )
     factor.index = factor.index.set_names(["date", "asset"])
     factor.name = "factor"
     factor_data = DataFrame()
@@ -57,11 +59,15 @@ class UtilsTestCase(TestCase):
         index=factor.index, data=[1, 1, 2, 2, 1, 1, 2, 2], dtype="category"
     )
 
-    biased_factor = DataFrame(
-        index=dr,
-        columns=tickers.extend(["E", "F", "G", "H"]),
-        data=[[-1, 3, -2, 4, -5, 7, -6, 8], [-4, 2, -3, 1, -8, 6, -7, 5]],
-    ).stack().dropna()
+    biased_factor = (
+        DataFrame(
+            index=dr,
+            columns=tickers.extend(["E", "F", "G", "H"]),
+            data=[[-1, 3, -2, 4, -5, 7, -6, 8], [-4, 2, -3, 1, -8, 6, -7, 5]],
+        )
+        .stack()
+        .dropna()
+    )
     biased_factor.index = biased_factor.index.set_names(["date", "asset"])
     biased_factor.name = "factor"
     biased_factor_data = DataFrame()
@@ -311,8 +317,7 @@ class UtilsTestCase(TestCase):
         factor_groups = {"A": 1, "B": 2, "C": 1, "D": 2, "E": 1, "F": 2}
 
         price_data = [
-            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i]
-            for i in range(1, 7)
+            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i] for i in range(1, 7)
         ]  # 6 days = 3 + 3 fwd returns
 
         factor_data = [
@@ -331,9 +336,11 @@ class UtilsTestCase(TestCase):
 
         factor_index = date_range(start=start, end=factor_end)
         factor_index.name = "date"
-        factor = DataFrame(
-            index=factor_index, columns=tickers, data=factor_data
-        ).stack().dropna()
+        factor = (
+            DataFrame(index=factor_index, columns=tickers, data=factor_data)
+            .stack()
+            .dropna()
+        )
 
         factor_data = get_clean_factor_and_forward_returns(
             factor,
@@ -383,8 +390,7 @@ class UtilsTestCase(TestCase):
         factor_groups = {"A": 1, "B": 2, "C": 1, "D": 2, "E": 1, "F": 2}
 
         price_data = [
-            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i]
-            for i in range(1, 7)
+            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i] for i in range(1, 7)
         ]  # 6 days = 3 + 3 fwd returns
 
         factor_data = [
@@ -403,9 +409,11 @@ class UtilsTestCase(TestCase):
 
         factor_index = date_range(start=start, end=factor_end, freq="B")
         factor_index.name = "date"
-        factor = DataFrame(
-            index=factor_index, columns=tickers, data=factor_data
-        ).stack().dropna()
+        factor = (
+            DataFrame(index=factor_index, columns=tickers, data=factor_data)
+            .stack()
+            .dropna()
+        )
 
         factor_data = get_clean_factor_and_forward_returns(
             factor,
@@ -454,8 +462,7 @@ class UtilsTestCase(TestCase):
         factor_groups = {"A": 1, "B": 2, "C": 1, "D": 2, "E": 1, "F": 2}
 
         price_data = [
-            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i]
-            for i in range(1, 5)
+            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i] for i in range(1, 5)
         ]  # 4 days = 3 + 1 fwd returns
 
         factor_data = [
@@ -491,11 +498,15 @@ class UtilsTestCase(TestCase):
 
         factor_index = date_range(start=start, end=factor_end, freq="B")
         factor_index.name = "date"
-        factor = DataFrame(
-            index=factor_index + Timedelta("9h30m"),
-            columns=tickers,
-            data=factor_data,
-        ).stack().dropna()
+        factor = (
+            DataFrame(
+                index=factor_index + Timedelta("9h30m"),
+                columns=tickers,
+                data=factor_data,
+            )
+            .stack()
+            .dropna()
+        )
 
         factor_data = get_clean_factor_and_forward_returns(
             factor,
@@ -544,8 +555,7 @@ class UtilsTestCase(TestCase):
         factor_groups = {"A": 1, "B": 2, "C": 1, "D": 2, "E": 1, "F": 2}
 
         price_data = [
-            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i]
-            for i in range(1, 9)
+            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i] for i in range(1, 9)
         ]
 
         factor_data = [
@@ -562,9 +572,11 @@ class UtilsTestCase(TestCase):
 
         factor_index = date_range(start="2017-1-12", end="2017-1-18", freq="B")
         factor_index.name = "date"
-        factor = DataFrame(
-            index=factor_index, columns=tickers, data=factor_data
-        ).stack().dropna()
+        factor = (
+            DataFrame(index=factor_index, columns=tickers, data=factor_data)
+            .stack()
+            .dropna()
+        )
 
         factor_data = get_clean_factor_and_forward_returns(
             factor,
@@ -612,8 +624,7 @@ class UtilsTestCase(TestCase):
         factor_groups = {"A": 1, "B": 2, "C": 1, "D": 2, "E": 1, "F": 2}
 
         price_data = [
-            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i]
-            for i in range(1, 20)
+            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i] for i in range(1, 20)
         ]  # 19 days = 18 + 1 fwd returns
 
         factor_data = [
@@ -653,11 +664,15 @@ class UtilsTestCase(TestCase):
 
         factor_index = date_range(start=start, end=factor_end, freq="B", name="date")
         factor_index = factor_index.drop(holidays)
-        factor = DataFrame(
-            index=factor_index + Timedelta("9h30m"),
-            columns=tickers,
-            data=factor_data,
-        ).stack().dropna()
+        factor = (
+            DataFrame(
+                index=factor_index + Timedelta("9h30m"),
+                columns=tickers,
+                data=factor_data,
+            )
+            .stack()
+            .dropna()
+        )
 
         factor_data = get_clean_factor_and_forward_returns(
             factor,
@@ -715,8 +730,7 @@ class UtilsTestCase(TestCase):
         factor_groups = {"A": 1, "B": 2, "C": 1, "D": 2, "E": 1, "F": 2}
 
         price_data = [
-            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i]
-            for i in range(1, 22)
+            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i] for i in range(1, 22)
         ]  # 21 days = 18 + 3 fwd returns
 
         factor_data = [
@@ -739,9 +753,11 @@ class UtilsTestCase(TestCase):
         factor_index = date_range(start=start, end=factor_end, freq="B")
         factor_index.name = "date"
         factor_index = factor_index.drop(holidays)
-        factor = DataFrame(
-            index=factor_index, columns=tickers, data=factor_data
-        ).stack().dropna()
+        factor = (
+            DataFrame(index=factor_index, columns=tickers, data=factor_data)
+            .stack()
+            .dropna()
+        )
 
         factor_data = get_clean_factor_and_forward_returns(
             factor,

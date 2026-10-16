@@ -171,11 +171,9 @@ def quantize_factor(
     if by_group:
         grouper.append("group")
 
-    factor_quantile = factor_data.groupby(
-        grouper, group_keys=False, observed=False
-    )["factor"].apply(
-        quantile_calc, quantiles, bins, zero_aware, no_raise
-    )
+    factor_quantile = factor_data.groupby(grouper, group_keys=False, observed=False)[
+        "factor"
+    ].apply(quantile_calc, quantiles, bins, zero_aware, no_raise)
     factor_quantile.name = "factor_quantile"
 
     return factor_quantile.dropna()
@@ -497,7 +495,9 @@ def get_clean_factor(
     factor : pd.Series - MultiIndex
         A MultiIndex Series indexed by timestamp (level 0) and asset
         (level 1), containing the values for a single alpha factor.
+
         ::
+
             -----------------------------------
                 date    |    asset   |
             -----------------------------------
@@ -521,7 +521,9 @@ def get_clean_factor(
         (pandas DateOffset), see infer_trading_calendar for more details.
         This information is currently used only in cumulative returns
         computation
+
         ::
+
             ---------------------------------------
                        |       | 1D  | 5D  | 10D
             ---------------------------------------
@@ -594,7 +596,9 @@ def get_clean_factor(
         - 'date' index freq property (merged_data.index.levels[0].freq) is the
           same as that of the input forward returns data. This is currently
           used only in cumulative returns computation
+
         ::
+
            -------------------------------------------------------------------
                       |       | 1D  | 5D  | 10D  |factor|group|factor_quantile
            -------------------------------------------------------------------
@@ -710,7 +714,9 @@ def get_clean_factor_and_forward_returns(
     factor : pd.Series - MultiIndex
         A MultiIndex Series indexed by timestamp (level 0) and asset
         (level 1), containing the values for a single alpha factor.
+
         ::
+
             -----------------------------------
                 date    |    asset   |
             -----------------------------------
@@ -746,7 +752,9 @@ def get_clean_factor_and_forward_returns(
         as the maximum value in 'periods'. The asset price after 'period'
         timestamps will be considered the sell price for that asset when
         computing 'period' forward returns.
+
         ::
+
             ----------------------------------------------------
                         | AAPL |  BA  |  CMG  |  DAL  |  LULU  |
             ----------------------------------------------------
@@ -817,13 +825,16 @@ def get_clean_factor_and_forward_returns(
         containing the values for a single alpha factor, forward returns for
         each period, the factor quantile/bin that factor value belongs to, and
         (optionally) the group the asset belongs to.
+
         - forward returns column names follow  the format accepted by
           pd.Timedelta (e.g. '1D', '30m', '3h15m', '1D1h', etc)
         - 'date' index freq property (merged_data.index.levels[0].freq) will be
           set to a trading calendar (pandas DateOffset) inferred from the input
           data (see infer_trading_calendar for more details). This is currently
           used only in cumulative returns computation
+
         ::
+
            -------------------------------------------------------------------
                       |       | 1D  | 5D  | 10D  |factor|group|factor_quantile
            -------------------------------------------------------------------
