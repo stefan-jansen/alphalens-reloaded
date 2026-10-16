@@ -128,8 +128,7 @@ class UtilsTestCase(TestCase):
 
     def test_compute_forward_returns_intraday_multiple_obs(self):
         """
-        Several observations per day must keep 1-bar returns labeled by the
-        modal bar, and must not be resampled onto a daily calendar.
+        Preserve the one-bar return and every intraday IC/return observation.
         """
         hours = []
         for day in date_range("2017-01-12", periods=3, freq="B"):
@@ -146,9 +145,7 @@ class UtilsTestCase(TestCase):
         factor = prices.iloc[:-2].stack()
         factor.index = factor.index.set_names(["date", "asset"])
 
-        fp = compute_forward_returns(
-            factor, prices, periods=(1,), filter_zscore=None
-        )
+        fp = compute_forward_returns(factor, prices, periods=(1,), filter_zscore=None)
 
         self.assertEqual(list(fp.columns), ["1h"])
         self.assertIsNone(fp.index.levels[0].freq)
@@ -372,8 +369,7 @@ class UtilsTestCase(TestCase):
         factor_groups = {"A": 1, "B": 2, "C": 1, "D": 2, "E": 1, "F": 2}
 
         price_data = [
-            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i]
-            for i in range(1, 7)
+            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i] for i in range(1, 7)
         ]  # 6 days = 3 + 3 fwd returns
 
         factor_data = [
@@ -444,8 +440,7 @@ class UtilsTestCase(TestCase):
         factor_groups = {"A": 1, "B": 2, "C": 1, "D": 2, "E": 1, "F": 2}
 
         price_data = [
-            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i]
-            for i in range(1, 7)
+            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i] for i in range(1, 7)
         ]  # 6 days = 3 + 3 fwd returns
 
         factor_data = [
@@ -515,8 +510,7 @@ class UtilsTestCase(TestCase):
         factor_groups = {"A": 1, "B": 2, "C": 1, "D": 2, "E": 1, "F": 2}
 
         price_data = [
-            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i]
-            for i in range(1, 5)
+            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i] for i in range(1, 5)
         ]  # 4 days = 3 + 1 fwd returns
 
         factor_data = [
@@ -605,8 +599,7 @@ class UtilsTestCase(TestCase):
         factor_groups = {"A": 1, "B": 2, "C": 1, "D": 2, "E": 1, "F": 2}
 
         price_data = [
-            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i]
-            for i in range(1, 9)
+            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i] for i in range(1, 9)
         ]
 
         factor_data = [
@@ -673,8 +666,7 @@ class UtilsTestCase(TestCase):
         factor_groups = {"A": 1, "B": 2, "C": 1, "D": 2, "E": 1, "F": 2}
 
         price_data = [
-            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i]
-            for i in range(1, 20)
+            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i] for i in range(1, 20)
         ]  # 19 days = 18 + 1 fwd returns
 
         factor_data = [
@@ -776,8 +768,7 @@ class UtilsTestCase(TestCase):
         factor_groups = {"A": 1, "B": 2, "C": 1, "D": 2, "E": 1, "F": 2}
 
         price_data = [
-            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i]
-            for i in range(1, 22)
+            [1.10**i, 0.50**i, 3.00**i, 0.90**i, 0.50**i, 1.00**i] for i in range(1, 22)
         ]  # 21 days = 18 + 3 fwd returns
 
         factor_data = [

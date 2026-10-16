@@ -73,14 +73,14 @@ def plotting_context(context="notebook", font_scale=1.5, rc=None):
     -------
     seaborn plotting context
 
-    Example
-    -------
-    with alphalens.plotting.plotting_context(font_scale=2):
-        alphalens.create_full_tear_sheet(..., set_context=False)
-
-    See also
+    Examples
     --------
-    For more information, see seaborn.plotting_context().
+    >>> with alphalens.plotting.plotting_context(font_scale=2):
+    ...     alphalens.tears.create_full_tear_sheet(..., set_context=False)
+
+    See Also
+    --------
+    seaborn.plotting_context
     """
     if rc is None:
         rc = {}
@@ -111,14 +111,14 @@ def axes_style(style="darkgrid", rc=None):
     -------
     seaborn plotting context
 
-    Example
-    -------
-    with alphalens.plotting.axes_style(style='whitegrid'):
-        alphalens.create_full_tear_sheet(..., set_context=False)
-
-    See also
+    Examples
     --------
-    For more information, see seaborn.plotting_context().
+    >>> with alphalens.plotting.axes_style(style='whitegrid'):
+    ...     alphalens.tears.create_full_tear_sheet(..., set_context=False)
+
+    See Also
+    --------
+    seaborn.axes_style
 
     """
     if rc is None:
@@ -165,9 +165,9 @@ def plot_turnover_table(autocorrelation_data, quantile_turnover, return_df=False
             ] = p_data.mean()
     auto_corr = pd.DataFrame()
     for period, p_data in autocorrelation_data.items():
-        auto_corr.loc[
-            "Mean Factor Rank Autocorrelation", "{}D".format(period)
-        ] = p_data.mean()
+        auto_corr.loc["Mean Factor Rank Autocorrelation", "{}D".format(period)] = (
+            p_data.mean()
+        )
 
     if return_df:
         return turnover_table, auto_corr
@@ -229,9 +229,7 @@ def plot_information_table(ic_data, return_df=False):
     ic_summary_table["t-stat(IC)"] = t_stat
     ic_summary_table["p-value(IC)"] = p_value
     ic_summary_table["IC Skew"] = _stat_ignoring_missing(ic_data, stats.skew)
-    ic_summary_table["IC Kurtosis"] = _stat_ignoring_missing(
-        ic_data, stats.kurtosis
-    )
+    ic_summary_table["IC Kurtosis"] = _stat_ignoring_missing(ic_data, stats.kurtosis)
 
     if return_df:
         return ic_summary_table

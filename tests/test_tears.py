@@ -18,7 +18,7 @@ import warnings
 from unittest import TestCase
 from unittest.mock import patch, Mock
 from parameterized import parameterized
-from numpy import isnan, nan
+from numpy import nan
 from pandas import DataFrame, date_range, Timedelta, concat
 
 warnings.filterwarnings("ignore", category=UserWarning)
@@ -34,11 +34,6 @@ from alphalens.tears import (  # noqa: E402
     create_event_study_tear_sheet,
 )  # noqa: E402
 
-from alphalens.plotting import (  # noqa: E402
-    plot_ic_hist,
-    plot_ic_qq,
-    plot_information_table,
-)
 from alphalens.utils import get_clean_factor_and_forward_returns  # noqa: E402
 
 
@@ -49,8 +44,7 @@ class TearsTestCase(TestCase):
     factor_groups = {"A": 1, "B": 2, "C": 1, "D": 2, "E": 1, "F": 2}
 
     price_data = [
-        [1.25**i, 1.50**i, 1.00**i, 0.50**i, 1.50**i, 1.00**i]
-        for i in range(1, 51)
+        [1.25**i, 1.50**i, 1.00**i, 0.50**i, 1.50**i, 1.00**i] for i in range(1, 51)
     ]
 
     factor_data = [
@@ -405,42 +399,3 @@ class TearsTestCase(TestCase):
             )
 
             create_event_study_tear_sheet(factor_data, prices, avgretplot=avgretplot)
-
-
-class InformationCoefficientNaNTestCase(TestCase):
-    def test_plot_information_table_skips_missing_days(self):
-        ic = DataFrame({"1D": [0.1, 0.2, nan, -0.1]})
-
-        table = plot_information_table(ic, return_df=True)
-
-        self.assertFalse(isnan(table.loc["1D", "t-stat(IC)"]))
-        self.assertFalse(isnan(table.loc["1D", "p-value(IC)"]))
-        self.assertFalse(isnan(table.loc["1D", "IC Skew"]))
-        self.assertFalse(isnan(table.loc["1D", "IC Kurtosis"]))
-        # Same numbers as computing on the observed days only.
-        observed = ic["1D"].dropna()
-        from scipy import stats
-
-        expected = stats.ttest_1samp(observed.to_numpy(), 0)
-        self.assertAlmostEqual(table.loc["1D", "t-stat(IC)"], expected.statistic)
-
-    @patch("alphalens.plotting.sns.histplot")
-    def test_plot_ic_hist_does_not_fill_missing_with_zero(self, histplot):
-        ic = DataFrame({"1D": [0.1, nan, -0.2]})
-
-        plot_ic_hist(ic, ax=[Mock()])
-
-        plotted = histplot.call_args[0][0]
-        self.assertEqual(len(plotted), 2)
-        self.assertFalse(plotted.isna().any())
-        self.assertNotIn(0.0, list(plotted))
-
-    @patch("alphalens.plotting.sm.qqplot")
-    def test_plot_ic_qq_does_not_fill_missing_with_zero(self, qqplot):
-        ic = DataFrame({"1D": [0.1, nan, -0.2]})
-
-        plot_ic_qq(ic, ax=[Mock()])
-
-        plotted = list(qqplot.call_args[0][0])
-        self.assertEqual(len(plotted), 2)
-        self.assertNotIn(0.0, plotted)

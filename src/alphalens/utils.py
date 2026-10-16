@@ -267,9 +267,9 @@ def compute_forward_returns(
         (level 1), containing the forward returns for assets.
         Forward returns column names follow the format accepted by
         pd.Timedelta (e.g. '1D', '30m', '3h15m', '1D1h', etc).
-        'date' index freq property (forward_returns.index.levels[0].freq)
-        will be set to a trading calendar (pandas DateOffset) inferred
-        from the input data (see infer_trading_calendar for more details).
+        Where factor dates conform, the 'date' index frequency is set to
+        the inferred trading calendar (see infer_trading_calendar). Otherwise
+        the observed timestamp frequency is retained and a warning is emitted.
     """
 
     factor_dateindex = factor.index.levels[0]
@@ -281,7 +281,7 @@ def compute_forward_returns(
             "tz_convert."
         )
 
-    if factor_dateindex.freq:
+    if isinstance(factor_dateindex.freq, (Day, BusinessDay, CustomBusinessDay)):
         freq = factor_dateindex.freq
     else:
         freq = infer_trading_calendar(factor_dateindex, prices.index)
@@ -322,13 +322,7 @@ def compute_forward_returns(
         # several entries in order to find out the most likely period length
         # (in case the user passed inconsistent data).
         #
-        # The length has to be the modal timedelta, not the last sample with
-        # its day-count snapped to the mode. On intraday data the last sample
-        # in this window is often the overnight gap (for example 21h). Snapping
-        # only the day component leaves that gap as the column name, so a
-        # 1-bar return is labeled "21h" and later annualized as 21 hours.
-        #
-        period_lengths = []
+        days_diffs = []
         for i in range(30):
             if i >= len(forward_returns.index):
                 break
@@ -337,18 +331,20 @@ def compute_forward_returns(
                 continue
             start = prices.index[p_idx]
             end = prices.index[p_idx + period]
-            period_lengths.append(diff_custom_calendar_timedeltas(start, end, freq))
+            period_len = diff_custom_calendar_timedeltas(start, end, freq)
+            days_diffs.append(period_len.components.days)
 
-        if not period_lengths:
+        if not days_diffs:
             raise ValueError(
                 "Not enough price data to compute %s-period forward "
                 "returns. Prices must extend past the factor dates by "
                 "at least that many observations." % period
             )
 
-        period_ns = [int(length.value) for length in period_lengths]
-        modal_ns = int(mode(period_ns, keepdims=True).mode[0])
-        period_len = pd.Timedelta(modal_ns, unit="ns")
+        delta_days = (
+            period_len.components.days - mode(days_diffs, keepdims=True).mode[0]
+        )
+        period_len -= pd.Timedelta(days=delta_days)
         label = timedelta_to_string(period_len)
 
         column_list.append(label)
@@ -370,12 +366,11 @@ def compute_forward_returns(
         df.index.levels[0].freq = freq
     except ValueError:
         # A daily trading calendar does not conform to an index with more
-        # than one timestamp per day. Leaving freq unset is safe; callers
-        # must not pass None to DataFrame.asfreq (pandas treats that as
-        # "infer a frequency" and can drop the intraday rows).
+        # than one timestamp per day. Preserve the observed frequency;
+        # downstream code must not resample a missing frequency as daily.
         warnings.warn(
             "Factor dates do not conform to the inferred trading calendar "
-            "(%s); leaving the date index frequency unset." % freq,
+            "(%s); retaining their observed frequency." % freq,
             UserWarning,
         )
     df.index.set_names(["date", "asset"], inplace=True)
@@ -516,7 +511,9 @@ def get_clean_factor(
     factor : pd.Series - MultiIndex
         A MultiIndex Series indexed by timestamp (level 0) and asset
         (level 1), containing the values for a single alpha factor.
+
         ::
+
             -----------------------------------
                 date    |    asset   |
             -----------------------------------
@@ -540,7 +537,9 @@ def get_clean_factor(
         (pandas DateOffset), see infer_trading_calendar for more details.
         This information is currently used only in cumulative returns
         computation
+
         ::
+
             ---------------------------------------
                        |       | 1D  | 5D  | 10D
             ---------------------------------------
@@ -613,7 +612,9 @@ def get_clean_factor(
         - 'date' index freq property (merged_data.index.levels[0].freq) is the
           same as that of the input forward returns data. This is currently
           used only in cumulative returns computation
+
         ::
+
            -------------------------------------------------------------------
                       |       | 1D  | 5D  | 10D  |factor|group|factor_quantile
            -------------------------------------------------------------------
@@ -729,7 +730,9 @@ def get_clean_factor_and_forward_returns(
     factor : pd.Series - MultiIndex
         A MultiIndex Series indexed by timestamp (level 0) and asset
         (level 1), containing the values for a single alpha factor.
+
         ::
+
             -----------------------------------
                 date    |    asset   |
             -----------------------------------
@@ -765,7 +768,9 @@ def get_clean_factor_and_forward_returns(
         as the maximum value in 'periods'. The asset price after 'period'
         timestamps will be considered the sell price for that asset when
         computing 'period' forward returns.
+
         ::
+
             ----------------------------------------------------
                         | AAPL |  BA  |  CMG  |  DAL  |  LULU  |
             ----------------------------------------------------
@@ -836,13 +841,16 @@ def get_clean_factor_and_forward_returns(
         containing the values for a single alpha factor, forward returns for
         each period, the factor quantile/bin that factor value belongs to, and
         (optionally) the group the asset belongs to.
+
         - forward returns column names follow  the format accepted by
           pd.Timedelta (e.g. '1D', '30m', '3h15m', '1D1h', etc)
         - 'date' index freq property (merged_data.index.levels[0].freq) will be
           set to a trading calendar (pandas DateOffset) inferred from the input
           data (see infer_trading_calendar for more details). This is currently
           used only in cumulative returns computation
+
         ::
+
            -------------------------------------------------------------------
                       |       | 1D  | 5D  | 10D  |factor|group|factor_quantile
            -------------------------------------------------------------------
@@ -1015,9 +1023,7 @@ def turnover_periods_from_columns(columns):
     ``30m`` have ``Timedelta.days == 0``, and shifting the factor by 0
     reports zero turnover and perfect rank autocorrelation.
     """
-    day_columns = get_forward_returns_columns(
-        columns, require_exact_day_multiple=True
-    )
+    day_columns = get_forward_returns_columns(columns, require_exact_day_multiple=True)
     return timedelta_strings_to_integers(day_columns)
 
 
