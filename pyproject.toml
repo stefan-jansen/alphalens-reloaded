@@ -144,9 +144,7 @@ envlist =
     py312-pandas{21,22}-numpy1
     py311-pandas222-numpy2{0,1,2}
     py312-pandas222-numpy2{0,1,2}
-    py313
-    py314
-    py{311,312,313,314}-pandas3
+    py{311,312,313,314}-pandas{23,3}
 
 isolated_build = True
 skip_missing_interpreters = True
@@ -172,6 +170,7 @@ deps =
     pandas21: pandas>=2.1,<2.2
     pandas22: pandas>=2.2,<2.3
     pandas222: pandas>=2.2.2,<2.3
+    pandas23: pandas>=2.3,<2.4
     pandas3: pandas>=3.0,<4
     numpy1: numpy>=1.23.5,<2.0
     numpy20: numpy>=2.0.0,<2.1.0
