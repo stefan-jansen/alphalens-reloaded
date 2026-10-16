@@ -1,41 +1,44 @@
-{% set name = "alphalens-reloaded" %}
-{% set version = "0.4.2" %}
+{% set version = environ['ALPHALENS_VERSION'] %}
 
 package:
-  name: {{ name|lower }}
+  name: alphalens-reloaded
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  md5: fb3a6ab0f6c5fdb95750181a7b9654f0
+  url: {{ environ['ALPHALENS_SDIST_URL'] }}
+  sha256: {{ environ['ALPHALENS_SDIST_SHA256'] }}
 
 build:
   number: 0
-  skip: true # [py<37 or not x86_64]
-  script: {{ PYTHON }} -m pip install . -vv
+  skip: true  # [py<311 or py>=315]
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
-  build:
+  host:
     - python
-    - setuptools
-
+    - pip
+    - setuptools >=54
+    - setuptools_scm >=6.2
   run:
-    - python
-    - matplotlib>=1.4.0
-    - numpy>=1.9.1
-    - pandas>=1.0.0
-    - scipy>=0.14.0
-    - seaborn>=0.6.0
-    - statsmodels>=0.6.1
-    - IPython>=3.2.3
-    - empyrical-reloaded>=0.5.8
+    - python >=3.11,<3.15
+    - numpy >=1.23.5  # [py<312]
+    - numpy >=1.26.0  # [py>=312]
+    - pandas >=1.5.0,<3.0
+    - matplotlib >=1.4.0
+    - scipy >=0.14.0
+    - seaborn >=0.6.0
+    - statsmodels >=0.6.1
+    - ipython >=3.2.3
+    - empyrical-reloaded >=0.5.7
 
 test:
   imports:
     - alphalens
+  commands:
+    - python -c "import numpy as np; import pandas as pd; from alphalens.performance import cumulative_returns; assert np.allclose(cumulative_returns(pd.Series([0.1, -0.1])), [1.1, 0.99])"
 
 about:
   home: https://alphalens.ml4trading.io
-  summary: 'Performance analysis of predictive (alpha) stock factors'
-  license: Apache 2.0
+  summary: Performance analysis of predictive (alpha) stock factors
+  license: Apache-2.0
   license_file: LICENSE
