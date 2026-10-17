@@ -1,7 +1,7 @@
 [project]
 name = "alphalens-reloaded"
 description = "Performance analysis of predictive (alpha) stock factors"
-requires-python = '>=3.11,<3.15'
+requires-python = '>=3.11,<3.16'
 dynamic = ["version"]
 readme = "README.md"
 authors = [
@@ -23,6 +23,7 @@ classifiers = [
     'Programming Language :: Python :: 3.12',
     'Programming Language :: Python :: 3.13',
     'Programming Language :: Python :: 3.14',
+    'Programming Language :: Python :: 3.15',
     'Operating System :: OS Independent',
     'Intended Audience :: Science/Research',
     'Topic :: Office/Business :: Financial :: Investment',
@@ -33,7 +34,10 @@ dependencies = [
     # following pandas
     "numpy>=1.23.5; python_version<'3.12'",
     "numpy>=1.26.0; python_version>='3.12'",
-    "pandas >=1.5.0,<3.0",
+    "pandas >=1.5.0,<4.0; python_version < '3.15'",
+    "pandas >=3.0,<4.0; python_version >= '3.15'",
+    "pytz",
+    "tzdata",
     "matplotlib >=1.4.0",
     "scipy >=0.14.0",
     "seaborn >=0.6.0",
@@ -59,8 +63,10 @@ build-backend = 'setuptools.build_meta'
 [project.optional-dependencies]
 test = [
     "tox >=2.3.1",
-    "coverage >=4.0.3",
-    "coveralls ==3.0.1",
+    "coverage >=4.0.3; python_version < '3.15'",
+    "coverage >=7.16.2; python_version >= '3.15'",
+    "coveralls ==3.0.1; python_version < '3.15'",
+    "coveralls ==4.1.0; python_version >= '3.15'",
     "pytest >=6.2",
     'pytest-xdist >=2.5.0',
     "pytest-cov >=2.12",
@@ -106,7 +112,7 @@ testpaths = 'tests'
 addopts = '-v'
 
 [tool.cibuildwheel]
-build = "cp311-* cp312-* cp313-* cp314-*"
+build = "cp311-* cp312-* cp313-* cp314-* cp315-*"
 test-extras = "test"
 test-command = "pytest -n 2 {package}/tests"
 build-verbosity = 3
@@ -142,8 +148,8 @@ envlist =
     py312-pandas{21,22}-numpy1
     py311-pandas222-numpy2{0,1,2}
     py312-pandas222-numpy2{0,1,2}
-    py313
-    py314
+    py{311,312,313,314}-pandas{23,3}
+    py315-pandas3
 
 isolated_build = True
 skip_missing_interpreters = True
@@ -155,6 +161,7 @@ python =
     3.12: py312
     3.13: py313
     3.14: py314
+    3.15: py315
 
 [testenv]
 usedevelop = True
@@ -169,6 +176,8 @@ deps =
     pandas21: pandas>=2.1,<2.2
     pandas22: pandas>=2.2,<2.3
     pandas222: pandas>=2.2.2,<2.3
+    pandas23: pandas>=2.3,<2.4
+    pandas3: pandas>=3.0,<4
     numpy1: numpy>=1.23.5,<2.0
     numpy20: numpy>=2.0.0,<2.1.0
     numpy21: numpy>=2.1.0,<2.2.0

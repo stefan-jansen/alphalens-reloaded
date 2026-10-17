@@ -121,10 +121,8 @@ def create_summary_tear_sheet(factor_data, long_short=True, group_neutral=False)
         std_err=compstd_quant_daily,
     )
 
-    periods = utils.get_forward_returns_columns(factor_data.columns)
-    periods = list(map(lambda p: pd.Timedelta(p).days, periods))
-
-    fr_cols = len(periods)
+    fwd_cols = utils.get_forward_returns_columns(factor_data.columns)
+    fr_cols = len(fwd_cols)
     vertical_sections = 2 + fr_cols * 3
     gf = GridFigure(rows=vertical_sections, cols=1)
 
@@ -145,22 +143,30 @@ def create_summary_tear_sheet(factor_data, long_short=True, group_neutral=False)
 
     # Turnover Analysis
     quantile_factor = factor_data["factor_quantile"]
+    periods = utils.turnover_periods_from_columns(factor_data.columns)
 
-    quantile_turnover = {
-        p: pd.concat(
+    if len(periods) == 0:
+        quantile_turnover = {}
+        autocorrelation = pd.DataFrame()
+    else:
+        quantile_turnover = {
+            p: pd.concat(
+                [
+                    perf.quantile_turnover(quantile_factor, q, p)
+                    for q in range(1, int(quantile_factor.max()) + 1)
+                ],
+                axis=1,
+            )
+            for p in periods
+        }
+
+        autocorrelation = pd.concat(
             [
-                perf.quantile_turnover(quantile_factor, q, p)
-                for q in range(1, int(quantile_factor.max()) + 1)
+                perf.factor_rank_autocorrelation(factor_data, period)
+                for period in periods
             ],
             axis=1,
         )
-        for p in periods
-    }
-
-    autocorrelation = pd.concat(
-        [perf.factor_rank_autocorrelation(factor_data, period) for period in periods],
-        axis=1,
-    )
 
     plotting.plot_turnover_table(autocorrelation, quantile_turnover)
 
@@ -371,7 +377,7 @@ def create_information_tear_sheet(factor_data, group_neutral=False, by_group=Fal
             factor_data,
             group_adjust=group_neutral,
             by_group=False,
-            by_time="M",
+            by_time=pd.offsets.MonthEnd(),
         )
         ax_monthly_ic_heatmap = [gf.next_cell() for x in range(fr_cols)]
         plotting.plot_monthly_ic_heatmap(mean_monthly_ic, ax=ax_monthly_ic_heatmap)

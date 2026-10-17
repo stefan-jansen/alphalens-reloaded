@@ -30,10 +30,13 @@ from pandas import (
 from pandas.testing import assert_frame_equal, assert_series_equal
 from parameterized import parameterized
 
+from alphalens.performance import factor_information_coefficient, factor_returns
 from alphalens.utils import (
     get_clean_factor_and_forward_returns,
     compute_forward_returns,
+    get_forward_returns_columns,
     quantize_factor,
+    turnover_periods_from_columns,
 )
 
 pandas_version = Version(pd.__version__)
@@ -46,9 +49,11 @@ class UtilsTestCase(TestCase):
     dr.name = "date"
     tickers = ["A", "B", "C", "D"]
 
-    factor = DataFrame(
-        index=dr, columns=tickers, data=[[1, 2, 3, 4], [4, 3, 2, 1]]
-    ).stack()
+    factor = (
+        DataFrame(index=dr, columns=tickers, data=[[1, 2, 3, 4], [4, 3, 2, 1]])
+        .stack()
+        .dropna()
+    )
     factor.index = factor.index.set_names(["date", "asset"])
     factor.name = "factor"
     factor_data = DataFrame()
@@ -57,11 +62,15 @@ class UtilsTestCase(TestCase):
         index=factor.index, data=[1, 1, 2, 2, 1, 1, 2, 2], dtype="category"
     )
 
-    biased_factor = DataFrame(
-        index=dr,
-        columns=tickers.extend(["E", "F", "G", "H"]),
-        data=[[-1, 3, -2, 4, -5, 7, -6, 8], [-4, 2, -3, 1, -8, 6, -7, 5]],
-    ).stack()
+    biased_factor = (
+        DataFrame(
+            index=dr,
+            columns=tickers.extend(["E", "F", "G", "H"]),
+            data=[[-1, 3, -2, 4, -5, 7, -6, 8], [-4, 2, -3, 1, -8, 6, -7, 5]],
+        )
+        .stack()
+        .dropna()
+    )
     biased_factor.index = biased_factor.index.set_names(["date", "asset"])
     biased_factor.name = "factor"
     biased_factor_data = DataFrame()
@@ -75,7 +84,7 @@ class UtilsTestCase(TestCase):
     def test_compute_forward_returns(self):
         dr = date_range(start="2015-1-1", end="2015-1-3")
         prices = DataFrame(index=dr, columns=["A", "B"], data=[[1, 1], [1, 2], [2, 1]])
-        factor = prices.stack()
+        factor = prices.stack().dropna()
 
         fp = compute_forward_returns(factor, prices, periods=[1, 2])
 
@@ -96,7 +105,7 @@ class UtilsTestCase(TestCase):
 
         dr = date_range(start="2015-1-1", end="2015-1-3")
         factor = DataFrame(index=dr, columns=["A", "B"], data=[[1, 1], [1, 2], [2, 1]])
-        factor = factor.stack()
+        factor = factor.stack().dropna()
 
         fp = compute_forward_returns(factor, prices, periods=[1, 2])
 
@@ -110,7 +119,7 @@ class UtilsTestCase(TestCase):
     def test_compute_forward_returns_non_cum(self):
         dr = date_range(start="2015-1-1", end="2015-1-3")
         prices = DataFrame(index=dr, columns=["A", "B"], data=[[1, 1], [1, 2], [2, 1]])
-        factor = prices.stack()
+        factor = prices.stack().dropna()
 
         fp = compute_forward_returns(
             factor, prices, periods=[1, 2], cumulative_returns=False
@@ -122,6 +131,61 @@ class UtilsTestCase(TestCase):
         expected["2D"] = [1.0, -0.5, nan, nan, nan, nan]
 
         assert_frame_equal(fp, expected)
+
+    def test_compute_forward_returns_intraday_multiple_obs(self):
+        """
+        Preserve the one-bar return and every intraday IC/return observation.
+        """
+        hours = []
+        for day in date_range("2017-01-12", periods=3, freq="B"):
+            for hour in (9, 10, 11, 12):
+                hours.append(day + Timedelta(hours=hour, minutes=30))
+        idx = pd.DatetimeIndex(hours, name="date")
+        prices = DataFrame(
+            {
+                "A": [float(i) for i in range(1, len(idx) + 1)],
+                "B": [float(i) for i in range(1, len(idx) + 1)],
+            },
+            index=idx,
+        )
+        factor = prices.iloc[:-2].stack()
+        factor.index = factor.index.set_names(["date", "asset"])
+
+        fp = compute_forward_returns(factor, prices, periods=(1,), filter_zscore=None)
+
+        self.assertEqual(list(fp.columns), ["1h"])
+        self.assertIsNone(fp.index.levels[0].freq)
+        # 12:30 (price 4) to next day's 09:30 (price 5) is a 1-bar return.
+        overnight = fp.xs(idx[3], level="date")
+        self.assertAlmostEqual(overnight.loc["A", "1h"], 0.25)
+
+        factor_data = fp.copy()
+        factor_data["factor"] = factor.reindex(fp.index)
+        returns = factor_returns(factor_data, demeaned=False)
+        self.assertEqual(len(returns), fp.index.get_level_values("date").nunique())
+
+        ic = factor_information_coefficient(factor_data)
+        self.assertEqual(len(ic), fp.index.get_level_values("date").nunique())
+
+    def test_compute_forward_returns_requires_future_prices(self):
+        dr = date_range(start="2020-01-01", periods=2, freq="D")
+        prices = DataFrame({"A": [1.0, 2.0]}, index=dr)
+        factor = prices.iloc[:1].stack()
+        factor.index = factor.index.set_names(["date", "asset"])
+
+        with self.assertRaises(ValueError):
+            compute_forward_returns(factor, prices, periods=(5,), filter_zscore=None)
+
+    def test_turnover_periods_from_columns_skips_subday(self):
+        columns = pd.Index(["1h", "3h", "1D", "5D", "factor"])
+        self.assertEqual(turnover_periods_from_columns(columns), [1, 5])
+
+    def test_get_forward_returns_columns_accepts_nanoseconds(self):
+        columns = pd.Index(["1D", "1ns", "1us", "1ms", "30m", "factor"])
+        self.assertEqual(
+            list(get_forward_returns_columns(columns)),
+            ["1D", "1ns", "1us", "1ms", "30m"],
+        )
 
     @parameterized.expand(
         [
@@ -330,9 +394,11 @@ class UtilsTestCase(TestCase):
 
         factor_index = date_range(start=start, end=factor_end)
         factor_index.name = "date"
-        factor = DataFrame(
-            index=factor_index, columns=tickers, data=factor_data
-        ).stack()
+        factor = (
+            DataFrame(index=factor_index, columns=tickers, data=factor_data)
+            .stack()
+            .dropna()
+        )
 
         factor_data = get_clean_factor_and_forward_returns(
             factor,
@@ -401,9 +467,11 @@ class UtilsTestCase(TestCase):
 
         factor_index = date_range(start=start, end=factor_end, freq="B")
         factor_index.name = "date"
-        factor = DataFrame(
-            index=factor_index, columns=tickers, data=factor_data
-        ).stack()
+        factor = (
+            DataFrame(index=factor_index, columns=tickers, data=factor_data)
+            .stack()
+            .dropna()
+        )
 
         factor_data = get_clean_factor_and_forward_returns(
             factor,
@@ -488,11 +556,15 @@ class UtilsTestCase(TestCase):
 
         factor_index = date_range(start=start, end=factor_end, freq="B")
         factor_index.name = "date"
-        factor = DataFrame(
-            index=factor_index + Timedelta("9h30m"),
-            columns=tickers,
-            data=factor_data,
-        ).stack()
+        factor = (
+            DataFrame(
+                index=factor_index + Timedelta("9h30m"),
+                columns=tickers,
+                data=factor_data,
+            )
+            .stack()
+            .dropna()
+        )
 
         factor_data = get_clean_factor_and_forward_returns(
             factor,
@@ -558,9 +630,11 @@ class UtilsTestCase(TestCase):
 
         factor_index = date_range(start="2017-1-12", end="2017-1-18", freq="B")
         factor_index.name = "date"
-        factor = DataFrame(
-            index=factor_index, columns=tickers, data=factor_data
-        ).stack()
+        factor = (
+            DataFrame(index=factor_index, columns=tickers, data=factor_data)
+            .stack()
+            .dropna()
+        )
 
         factor_data = get_clean_factor_and_forward_returns(
             factor,
@@ -648,11 +722,15 @@ class UtilsTestCase(TestCase):
 
         factor_index = date_range(start=start, end=factor_end, freq="B", name="date")
         factor_index = factor_index.drop(holidays)
-        factor = DataFrame(
-            index=factor_index + Timedelta("9h30m"),
-            columns=tickers,
-            data=factor_data,
-        ).stack()
+        factor = (
+            DataFrame(
+                index=factor_index + Timedelta("9h30m"),
+                columns=tickers,
+                data=factor_data,
+            )
+            .stack()
+            .dropna()
+        )
 
         factor_data = get_clean_factor_and_forward_returns(
             factor,
@@ -733,9 +811,11 @@ class UtilsTestCase(TestCase):
         factor_index = date_range(start=start, end=factor_end, freq="B")
         factor_index.name = "date"
         factor_index = factor_index.drop(holidays)
-        factor = DataFrame(
-            index=factor_index, columns=tickers, data=factor_data
-        ).stack()
+        factor = (
+            DataFrame(index=factor_index, columns=tickers, data=factor_data)
+            .stack()
+            .dropna()
+        )
 
         factor_data = get_clean_factor_and_forward_returns(
             factor,

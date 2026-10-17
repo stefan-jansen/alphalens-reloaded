@@ -536,11 +536,16 @@ def plot_quantile_returns_violin(return_by_q, ylim_percentiles=None, ax=None):
     if ax is None:
         f, ax = plt.subplots(1, 1, figsize=(18, 6))
 
-    unstacked_dr = return_by_q.multiply(DECIMAL_TO_BPS)
-    unstacked_dr.columns = unstacked_dr.columns.set_names("forward_periods")
-    unstacked_dr = unstacked_dr.stack()
-    unstacked_dr.name = "return"
-    unstacked_dr = unstacked_dr.reset_index()
+    unstacked_dr = (
+        return_by_q.multiply(DECIMAL_TO_BPS)
+        .rename_axis(columns="forward_periods")
+        .reset_index()
+        .melt(
+            id_vars=["date", "factor_quantile"],
+            var_name="forward_periods",
+            value_name="return",
+        )
+    )
 
     sns.violinplot(
         data=unstacked_dr,
@@ -598,7 +603,7 @@ def plot_mean_quantile_returns_spread_time_series(
         ):
             stdn = None if std_err is None else std_err[name]
             a = plot_mean_quantile_returns_spread_time_series(
-                fr_column, std_err=stdn, ax=a
+                fr_column, std_err=stdn, bandwidth=bandwidth, ax=a
             )
             ax[i] = a
             curr_ymin, curr_ymax = a.get_ylim()

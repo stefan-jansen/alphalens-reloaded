@@ -25,6 +25,16 @@ from statsmodels.tools.tools import add_constant
 from . import utils
 
 
+def _reindex_to_freq(result, freq):
+    """Use the existing index frequency without selecting a new one.
+
+    ``DataFrame.asfreq(None)`` uses daily spacing and can drop intraday rows.
+    """
+    if freq is None:
+        return result
+    return result.asfreq(freq)
+
+
 def factor_information_coefficient(factor_data, group_adjust=False, by_group=False):
     """
     Computes the Spearman Rank Correlation based Information Coefficient (IC)
@@ -74,7 +84,7 @@ def factor_information_coefficient(factor_data, group_adjust=False, by_group=Fal
     if by_group:
         return ic
     else:
-        return ic.asfreq(freq)
+        return _reindex_to_freq(ic, freq)
 
 
 def mean_information_coefficient(
@@ -123,7 +133,7 @@ def mean_information_coefficient(
         ic = ic.mean()
 
     else:
-        ic = ic.reset_index().set_index("date").groupby(grouper).mean()
+        ic = ic.reset_index().set_index("date").groupby(grouper, observed=False).mean()
 
     return ic
 
@@ -260,7 +270,9 @@ def factor_returns(
     else:
         # requires at least one weighted return
         # otherwise returns np.nan
-        returns = weighted_returns.groupby(level="date").sum(min_count=1).asfreq(freq)
+        returns = _reindex_to_freq(
+            weighted_returns.groupby(level="date").sum(min_count=1), freq
+        )
 
     return returns
 
@@ -428,7 +440,9 @@ def positions(weights, period, freq=None):
     #
     # Compute portfolio weights for each point in time contained in the index
     #
-    portfolio_weights = pd.DataFrame(index=weights_idx, columns=weights.columns)
+    portfolio_weights = pd.DataFrame(
+        index=weights_idx, columns=weights.columns, dtype=float
+    )
     active_weights = []
 
     for curr_time in weights_idx:
@@ -525,7 +539,9 @@ def mean_return_by_quantile(
         grouper = [mean_ret.index.get_level_values("factor_quantile")]
         if by_group:
             grouper.append(mean_ret.index.get_level_values("group"))
-        group_stats = mean_ret.groupby(grouper).agg(["mean", "std", "count"])
+        group_stats = mean_ret.groupby(grouper, observed=False).agg(
+            ["mean", "std", "count"]
+        )
         mean_ret = group_stats.T.xs("mean", level=1).T
 
     std_error_ret = group_stats.T.xs("std", level=1).T / np.sqrt(
@@ -602,7 +618,8 @@ def quantile_turnover(quantile_factor, quantile, period=1):
     quantile : int
         Quantile on which to perform turnover analysis.
     period: int, optional
-        Number of days over which to calculate the turnover.
+        Lag on the index frequency grid, or in observed timestamps when the
+        index has no frequency.
 
     Returns
     -------
@@ -615,11 +632,10 @@ def quantile_turnover(quantile_factor, quantile, period=1):
     freq = quantile_factor.index.levels[date_idx].freq
 
     quant_names = quantile_factor[quantile_factor == quantile]
-    quant_name_sets = (
-        quant_names.groupby(level=["date"])
-        .apply(lambda x: set(x.index.get_level_values("asset")))
-        .asfreq(freq)
+    quant_name_sets = quant_names.groupby(level=["date"]).apply(
+        lambda x: set(x.index.get_level_values("asset"))
     )
+    quant_name_sets = _reindex_to_freq(quant_name_sets, freq)
 
     name_shifted = quant_name_sets.shift(periods=period)
 
@@ -653,7 +669,8 @@ def factor_rank_autocorrelation(factor_data, period=1):
         (optionally) the group the asset belongs to.
         - See full explanation in utils.get_clean_factor_and_forward_returns
     period: int, optional
-        Number of days over which to calculate the turnover.
+        Lag on the index frequency grid, or in observed timestamps when the
+        index has no frequency.
 
     Returns
     -------
@@ -671,16 +688,15 @@ def factor_rank_autocorrelation(factor_data, period=1):
         .rank()
         .reset_index()
         .pivot(index="date", columns="asset", values="factor")
-        .asfreq(freq)
     )
+    asset_ranks_by_day = _reindex_to_freq(asset_ranks_by_day, freq)
 
     # asset_factor_rank = ranks
 
     asset_shifted = asset_ranks_by_day.shift(period)
 
-    return (
-        asset_ranks_by_day.corrwith(asset_shifted, axis=1).rename(period).asfreq(freq)
-    )
+    autocorr = asset_ranks_by_day.corrwith(asset_shifted, axis=1).rename(period)
+    return _reindex_to_freq(autocorr, freq)
 
 
 def common_start_returns(
@@ -1185,7 +1201,7 @@ def create_pyfolio_input(
         quantiles,
         groups,
     )
-    cumrets = cumrets.resample("1D").last().fillna(method="ffill")
+    cumrets = cumrets.resample("1D").last().ffill()
     returns = cumrets.pct_change().fillna(0)
 
     #
@@ -1202,7 +1218,7 @@ def create_pyfolio_input(
         quantiles,
         groups,
     )
-    positions = positions.resample("1D").sum().fillna(method="ffill")
+    positions = positions.resample("1D").sum().ffill()
     positions = positions.div(positions.abs().sum(axis=1), axis=0).fillna(0)
     positions["cash"] = 1.0 - positions.sum(axis=1)
 
@@ -1228,7 +1244,7 @@ def create_pyfolio_input(
             group_neutral=False,
             equal_weight=True,
         )
-        benchmark_rets = benchmark_rets.resample("1D").last().fillna(method="ffill")
+        benchmark_rets = benchmark_rets.resample("1D").last().ffill()
         benchmark_rets = benchmark_rets.pct_change().fillna(0)
         benchmark_rets.name = "benchmark"
     else:

@@ -171,9 +171,9 @@ def quantize_factor(
     if by_group:
         grouper.append("group")
 
-    factor_quantile = factor_data.groupby(grouper, group_keys=False)["factor"].apply(
-        quantile_calc, quantiles, bins, zero_aware, no_raise
-    )
+    factor_quantile = factor_data.groupby(grouper, group_keys=False, observed=False)[
+        "factor"
+    ].apply(quantile_calc, quantiles, bins, zero_aware, no_raise)
     factor_quantile.name = "factor_quantile"
 
     return factor_quantile.dropna()
@@ -267,9 +267,9 @@ def compute_forward_returns(
         (level 1), containing the forward returns for assets.
         Forward returns column names follow the format accepted by
         pd.Timedelta (e.g. '1D', '30m', '3h15m', '1D1h', etc).
-        'date' index freq property (forward_returns.index.levels[0].freq)
-        will be set to a trading calendar (pandas DateOffset) inferred
-        from the input data (see infer_trading_calendar for more details).
+        Where factor dates conform, the 'date' index frequency is set to
+        the inferred trading calendar (see infer_trading_calendar). Otherwise
+        the observed timestamp frequency is retained and a warning is emitted.
     """
 
     factor_dateindex = factor.index.levels[0]
@@ -281,7 +281,7 @@ def compute_forward_returns(
             "tz_convert."
         )
 
-    if factor_dateindex.freq:
+    if isinstance(factor_dateindex.freq, (Day, BusinessDay, CustomBusinessDay)):
         freq = factor_dateindex.freq
     else:
         freq = infer_trading_calendar(factor_dateindex, prices.index)
@@ -305,9 +305,10 @@ def compute_forward_returns(
 
     for period in sorted(periods):
         if cumulative_returns:
-            returns = prices.pct_change(period)
+            # Keep legacy pct_change behavior across pandas versions.
+            returns = prices.ffill().pct_change(periods=period)
         else:
-            returns = prices.pct_change()
+            returns = prices.ffill().pct_change(periods=1)
 
         forward_returns = returns.shift(-period).reindex(factor_dateindex)
 
@@ -320,7 +321,7 @@ def compute_forward_returns(
         #
         # Find the period length, which will be the column name. We'll test
         # several entries in order to find out the most likely period length
-        # (in case the user passed inconsinstent data)
+        # (in case the user passed inconsistent data).
         #
         days_diffs = []
         for i in range(30):
@@ -333,6 +334,13 @@ def compute_forward_returns(
             end = prices.index[p_idx + period]
             period_len = diff_custom_calendar_timedeltas(start, end, freq)
             days_diffs.append(period_len.components.days)
+
+        if not days_diffs:
+            raise ValueError(
+                "Not enough price data to compute %s-period forward "
+                "returns. Prices must extend past the factor dates by "
+                "at least that many observations." % period
+            )
 
         delta_days = (
             period_len.components.days - mode(days_diffs, keepdims=True).mode[0]
@@ -355,7 +363,17 @@ def compute_forward_returns(
 
     # now set the columns correctly
     df = df[column_list]
-    df.index.levels[0].freq = freq
+    try:
+        df.index.levels[0].freq = freq
+    except ValueError:
+        # A daily trading calendar does not conform to an index with more
+        # than one timestamp per day. Preserve the observed frequency;
+        # downstream code must not resample a missing frequency as daily.
+        warnings.warn(
+            "Factor dates do not conform to the inferred trading calendar "
+            "(%s); retaining their observed frequency." % freq,
+            UserWarning,
+        )
     df.index.set_names(["date", "asset"], inplace=True)
 
     return df
@@ -370,7 +388,7 @@ def backshift_returns_series(series, N):
     """
     ix = series.index
     dates, sids = ix.levels
-    date_labels, sid_labels = map(np.array, ix.labels)
+    date_labels, sid_labels = map(np.array, ix.codes)
 
     # Output date labels will contain the all but the last N dates.
     new_dates = dates[:-N]
@@ -428,7 +446,7 @@ def demean_forward_returns(factor_data, grouper=None):
         grouper = factor_data.index.get_level_values("date")
 
     cols = get_forward_returns_columns(factor_data.columns)
-    factor_data[cols] = factor_data.groupby(grouper)[cols].transform(
+    factor_data[cols] = factor_data.groupby(grouper, observed=False)[cols].transform(
         lambda x: x - x.mean()
     )
 
@@ -942,7 +960,7 @@ def get_forward_returns_columns(columns, require_exact_day_multiple=False):
                 "Skipping return periods that aren't exact multiples" + " of days."
             )
     else:
-        pattern = re.compile(r"^(\d+([Dhms]|ms|us|ns]))+$", re.IGNORECASE)
+        pattern = re.compile(r"^(\d+([Dhms]|ms|us|ns))+$", re.IGNORECASE)
         valid_columns = [(pattern.match(col) is not None) for col in columns]
 
     return columns[valid_columns]
@@ -996,6 +1014,18 @@ def timedelta_strings_to_integers(sequence):
         Integer days corresponding to the input sequence, e.g. [1, 5].
     """
     return list(map(lambda x: pd.Timedelta(x).days, sequence))
+
+
+def turnover_periods_from_columns(columns):
+    """
+    Index shifts for turnover analysis.
+
+    Only exact day-multiple horizons are returned. Sub-day labels such as
+    ``30m`` have ``Timedelta.days == 0``, and shifting the factor by 0
+    reports zero turnover and perfect rank autocorrelation.
+    """
+    day_columns = get_forward_returns_columns(columns, require_exact_day_multiple=True)
+    return timedelta_strings_to_integers(day_columns)
 
 
 def add_custom_calendar_timedelta(input, timedelta, freq):
