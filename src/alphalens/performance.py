@@ -566,6 +566,10 @@ def compute_mean_returns_spread(mean_returns, upper_quant, lower_quant, std_err=
     The quantile portfolio is equally weighted within each leg; it is not
     the factor-weighted portfolio used for the alpha and beta rows.
 
+    Gross leverage describes the quantile legs before any demeaning or group
+    adjustment already applied to mean_returns. This function scales those
+    supplied means; it does not reconstruct or renormalize hedge positions.
+
     Parameters
     ----------
     mean_returns : pd.DataFrame
