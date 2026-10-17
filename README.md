@@ -51,9 +51,9 @@ for more on how to read and use the factor tear sheet.
 # Installation
 
 The next release supports Python 3.11-3.14. Python 3.10 and older are no longer
-supported; previous release artifacts remain available. Python 3.15 is blocked
-by a reproduced crash in the declared pandas 2.3.3 dependency and is excluded
-until dependency installation and public API tests pass.
+supported; previous release artifacts remain available. Python 3.15 remains
+outside this branch's declared support until its platform and artifact
+qualification is complete.
 
 Install with pip:
 
