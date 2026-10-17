@@ -942,7 +942,7 @@ def get_forward_returns_columns(columns, require_exact_day_multiple=False):
                 "Skipping return periods that aren't exact multiples" + " of days."
             )
     else:
-        pattern = re.compile(r"^(\d+([Dhms]|ms|us|ns]))+$", re.IGNORECASE)
+        pattern = re.compile(r"^(\d+([Dhms]|ms|us|ns))+$", re.IGNORECASE)
         valid_columns = [(pattern.match(col) is not None) for col in columns]
 
     return columns[valid_columns]
