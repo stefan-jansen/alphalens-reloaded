@@ -144,7 +144,7 @@ def plot_returns_table(
     returns_table.loc["Mean Period Wise Return Bottom Quantile (bps)"] = (
         mean_ret_quantile.iloc[0] * DECIMAL_TO_BPS
     )
-    returns_table.loc["Mean Period Wise Spread (bps)"] = (
+    returns_table.loc["Mean Period Wise Spread (bps, 100% gross)"] = (
         mean_ret_spread_quantile.mean() * DECIMAL_TO_BPS
     )
 
@@ -578,10 +578,10 @@ def plot_mean_quantile_returns_spread_time_series(
     Parameters
     ----------
     mean_returns_spread : pd.Series
-        Series with difference between quantile mean returns by period.
+        Series with 50% long / 50% short quantile returns by period.
     std_err : pd.Series
-        Series with standard error of difference between quantile
-        mean returns each period.
+        Series with standard error of the 100% gross quantile
+        return each period.
     bandwidth : float
         Width of displayed error bands in standard deviations.
     ax : matplotlib.Axes, optional
@@ -620,7 +620,7 @@ def plot_mean_quantile_returns_spread_time_series(
 
     periods = mean_returns_spread.name
     title = (
-        "Top Minus Bottom Quantile Mean Return "
+        "Long-Short Quantile Return (100% gross) "
         "({} Period Forward Return)".format(periods if periods is not None else "")
     )
 
@@ -649,7 +649,7 @@ def plot_mean_quantile_returns_spread_time_series(
 
     ylim = np.nanpercentile(abs(mean_returns_spread_bps.values), 95)
     ax.set(
-        ylabel="Difference In Quantile Mean Return (bps)",
+        ylabel="Long-Short Return (bps, 100% gross)",
         xlabel="",
         title=title,
         ylim=(-ylim, ylim),

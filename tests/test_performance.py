@@ -33,6 +33,7 @@ from pandas.tseries.offsets import BDay, Day, CDay
 from parameterized import parameterized
 
 from alphalens.performance import (
+    compute_mean_returns_spread,
     factor_information_coefficient,
     mean_information_coefficient,
     mean_return_by_quantile,
@@ -1702,3 +1703,32 @@ class PerformanceTestCase(TestCase):
 
         matplotlib.use("Agg")
         create_summary_tear_sheet(factor_data, long_short=True)
+
+
+def test_mean_returns_spread_unit_gross_leverage():
+    """A long/short spread is 50% long and 50% short, not 100% and 100%."""
+    index = MultiIndex.from_product(
+        [date_range("2020-01-02", periods=2, freq="D"), [1, 2]],
+        names=["date", "factor_quantile"],
+    )
+    mean_returns = DataFrame({"1D": [0.01, 0.03, 0.02, 0.04]}, index=index)
+    std_err = DataFrame({"1D": [0.002, 0.004, 0.002, 0.004]}, index=index)
+
+    difference, joint_std = compute_mean_returns_spread(
+        mean_returns, upper_quant=2, lower_quant=1, std_err=std_err
+    )
+
+    # Raw differences are 0.02. Half of that is one unit of gross leverage.
+    assert_series_equal(
+        difference["1D"],
+        Series([0.01, 0.01], index=difference.index, name="1D"),
+    )
+    raw_std = (0.002**2 + 0.004**2) ** 0.5
+    assert_series_equal(
+        joint_std["1D"],
+        Series([raw_std / 2, raw_std / 2], index=joint_std.index, name="1D"),
+    )
+
+    difference_only, no_err = compute_mean_returns_spread(mean_returns, 2, 1)
+    assert no_err is None
+    assert_series_equal(difference_only["1D"], difference["1D"])
