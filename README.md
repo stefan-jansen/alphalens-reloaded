@@ -60,10 +60,11 @@ for more on how to read and use the factor tear sheet.
 
 # Installation
 
-The next release supports Python 3.11-3.14. Python 3.10 and older are no longer
-supported; previous release artifacts remain available. Python 3.15 remains
-outside this branch's declared support until its platform and artifact
-qualification is complete.
+The next release supports Python 3.11-3.15. Python 3.10 and older are no longer
+supported; previous release artifacts remain available. Python 3.15 requires
+pandas 3; earlier supported Python versions also support pandas 1.5 and 2.x.
+Native tests, built wheels and Conda packages have been qualified on Linux, macOS
+and Windows. These source changes do not alter previously published releases.
 
 Install with pip:
 
