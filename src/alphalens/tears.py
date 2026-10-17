@@ -377,7 +377,7 @@ def create_information_tear_sheet(factor_data, group_neutral=False, by_group=Fal
             factor_data,
             group_adjust=group_neutral,
             by_group=False,
-            by_time="M",
+            by_time=pd.offsets.MonthEnd(),
         )
         ax_monthly_ic_heatmap = [gf.next_cell() for x in range(fr_cols)]
         plotting.plot_monthly_ic_heatmap(mean_monthly_ic, ax=ax_monthly_ic_heatmap)

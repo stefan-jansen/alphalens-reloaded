@@ -49,9 +49,11 @@ class UtilsTestCase(TestCase):
     dr.name = "date"
     tickers = ["A", "B", "C", "D"]
 
-    factor = DataFrame(
-        index=dr, columns=tickers, data=[[1, 2, 3, 4], [4, 3, 2, 1]]
-    ).stack()
+    factor = (
+        DataFrame(index=dr, columns=tickers, data=[[1, 2, 3, 4], [4, 3, 2, 1]])
+        .stack()
+        .dropna()
+    )
     factor.index = factor.index.set_names(["date", "asset"])
     factor.name = "factor"
     factor_data = DataFrame()
@@ -60,11 +62,15 @@ class UtilsTestCase(TestCase):
         index=factor.index, data=[1, 1, 2, 2, 1, 1, 2, 2], dtype="category"
     )
 
-    biased_factor = DataFrame(
-        index=dr,
-        columns=tickers.extend(["E", "F", "G", "H"]),
-        data=[[-1, 3, -2, 4, -5, 7, -6, 8], [-4, 2, -3, 1, -8, 6, -7, 5]],
-    ).stack()
+    biased_factor = (
+        DataFrame(
+            index=dr,
+            columns=tickers.extend(["E", "F", "G", "H"]),
+            data=[[-1, 3, -2, 4, -5, 7, -6, 8], [-4, 2, -3, 1, -8, 6, -7, 5]],
+        )
+        .stack()
+        .dropna()
+    )
     biased_factor.index = biased_factor.index.set_names(["date", "asset"])
     biased_factor.name = "factor"
     biased_factor_data = DataFrame()
@@ -78,7 +84,7 @@ class UtilsTestCase(TestCase):
     def test_compute_forward_returns(self):
         dr = date_range(start="2015-1-1", end="2015-1-3")
         prices = DataFrame(index=dr, columns=["A", "B"], data=[[1, 1], [1, 2], [2, 1]])
-        factor = prices.stack()
+        factor = prices.stack().dropna()
 
         fp = compute_forward_returns(factor, prices, periods=[1, 2])
 
@@ -99,7 +105,7 @@ class UtilsTestCase(TestCase):
 
         dr = date_range(start="2015-1-1", end="2015-1-3")
         factor = DataFrame(index=dr, columns=["A", "B"], data=[[1, 1], [1, 2], [2, 1]])
-        factor = factor.stack()
+        factor = factor.stack().dropna()
 
         fp = compute_forward_returns(factor, prices, periods=[1, 2])
 
@@ -113,7 +119,7 @@ class UtilsTestCase(TestCase):
     def test_compute_forward_returns_non_cum(self):
         dr = date_range(start="2015-1-1", end="2015-1-3")
         prices = DataFrame(index=dr, columns=["A", "B"], data=[[1, 1], [1, 2], [2, 1]])
-        factor = prices.stack()
+        factor = prices.stack().dropna()
 
         fp = compute_forward_returns(
             factor, prices, periods=[1, 2], cumulative_returns=False
@@ -388,9 +394,11 @@ class UtilsTestCase(TestCase):
 
         factor_index = date_range(start=start, end=factor_end)
         factor_index.name = "date"
-        factor = DataFrame(
-            index=factor_index, columns=tickers, data=factor_data
-        ).stack()
+        factor = (
+            DataFrame(index=factor_index, columns=tickers, data=factor_data)
+            .stack()
+            .dropna()
+        )
 
         factor_data = get_clean_factor_and_forward_returns(
             factor,
@@ -459,9 +467,11 @@ class UtilsTestCase(TestCase):
 
         factor_index = date_range(start=start, end=factor_end, freq="B")
         factor_index.name = "date"
-        factor = DataFrame(
-            index=factor_index, columns=tickers, data=factor_data
-        ).stack()
+        factor = (
+            DataFrame(index=factor_index, columns=tickers, data=factor_data)
+            .stack()
+            .dropna()
+        )
 
         factor_data = get_clean_factor_and_forward_returns(
             factor,
@@ -546,11 +556,15 @@ class UtilsTestCase(TestCase):
 
         factor_index = date_range(start=start, end=factor_end, freq="B")
         factor_index.name = "date"
-        factor = DataFrame(
-            index=factor_index + Timedelta("9h30m"),
-            columns=tickers,
-            data=factor_data,
-        ).stack()
+        factor = (
+            DataFrame(
+                index=factor_index + Timedelta("9h30m"),
+                columns=tickers,
+                data=factor_data,
+            )
+            .stack()
+            .dropna()
+        )
 
         factor_data = get_clean_factor_and_forward_returns(
             factor,
@@ -616,9 +630,11 @@ class UtilsTestCase(TestCase):
 
         factor_index = date_range(start="2017-1-12", end="2017-1-18", freq="B")
         factor_index.name = "date"
-        factor = DataFrame(
-            index=factor_index, columns=tickers, data=factor_data
-        ).stack()
+        factor = (
+            DataFrame(index=factor_index, columns=tickers, data=factor_data)
+            .stack()
+            .dropna()
+        )
 
         factor_data = get_clean_factor_and_forward_returns(
             factor,
@@ -706,11 +722,15 @@ class UtilsTestCase(TestCase):
 
         factor_index = date_range(start=start, end=factor_end, freq="B", name="date")
         factor_index = factor_index.drop(holidays)
-        factor = DataFrame(
-            index=factor_index + Timedelta("9h30m"),
-            columns=tickers,
-            data=factor_data,
-        ).stack()
+        factor = (
+            DataFrame(
+                index=factor_index + Timedelta("9h30m"),
+                columns=tickers,
+                data=factor_data,
+            )
+            .stack()
+            .dropna()
+        )
 
         factor_data = get_clean_factor_and_forward_returns(
             factor,
@@ -791,9 +811,11 @@ class UtilsTestCase(TestCase):
         factor_index = date_range(start=start, end=factor_end, freq="B")
         factor_index.name = "date"
         factor_index = factor_index.drop(holidays)
-        factor = DataFrame(
-            index=factor_index, columns=tickers, data=factor_data
-        ).stack()
+        factor = (
+            DataFrame(index=factor_index, columns=tickers, data=factor_data)
+            .stack()
+            .dropna()
+        )
 
         factor_data = get_clean_factor_and_forward_returns(
             factor,

@@ -13,6 +13,7 @@ def test_cleaned_subsecond_returns_are_retained_in_quantile_analysis(period):
         prices.pct_change(fill_method=None)
         .shift(-1)
         .stack()
+        .dropna()
         .to_frame(utils.timedelta_to_string(horizon))
     )
     forward.index.names = ["date", "asset"]
