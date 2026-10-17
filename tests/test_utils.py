@@ -30,10 +30,13 @@ from pandas import (
 from pandas.testing import assert_frame_equal, assert_series_equal
 from parameterized import parameterized
 
+from alphalens.performance import factor_information_coefficient, factor_returns
 from alphalens.utils import (
     get_clean_factor_and_forward_returns,
     compute_forward_returns,
+    get_forward_returns_columns,
     quantize_factor,
+    turnover_periods_from_columns,
 )
 
 pandas_version = Version(pd.__version__)
@@ -128,6 +131,61 @@ class UtilsTestCase(TestCase):
         expected["2D"] = [1.0, -0.5, nan, nan, nan, nan]
 
         assert_frame_equal(fp, expected)
+
+    def test_compute_forward_returns_intraday_multiple_obs(self):
+        """
+        Preserve the one-bar return and every intraday IC/return observation.
+        """
+        hours = []
+        for day in date_range("2017-01-12", periods=3, freq="B"):
+            for hour in (9, 10, 11, 12):
+                hours.append(day + Timedelta(hours=hour, minutes=30))
+        idx = pd.DatetimeIndex(hours, name="date")
+        prices = DataFrame(
+            {
+                "A": [float(i) for i in range(1, len(idx) + 1)],
+                "B": [float(i) for i in range(1, len(idx) + 1)],
+            },
+            index=idx,
+        )
+        factor = prices.iloc[:-2].stack()
+        factor.index = factor.index.set_names(["date", "asset"])
+
+        fp = compute_forward_returns(factor, prices, periods=(1,), filter_zscore=None)
+
+        self.assertEqual(list(fp.columns), ["1h"])
+        self.assertIsNone(fp.index.levels[0].freq)
+        # 12:30 (price 4) to next day's 09:30 (price 5) is a 1-bar return.
+        overnight = fp.xs(idx[3], level="date")
+        self.assertAlmostEqual(overnight.loc["A", "1h"], 0.25)
+
+        factor_data = fp.copy()
+        factor_data["factor"] = factor.reindex(fp.index)
+        returns = factor_returns(factor_data, demeaned=False)
+        self.assertEqual(len(returns), fp.index.get_level_values("date").nunique())
+
+        ic = factor_information_coefficient(factor_data)
+        self.assertEqual(len(ic), fp.index.get_level_values("date").nunique())
+
+    def test_compute_forward_returns_requires_future_prices(self):
+        dr = date_range(start="2020-01-01", periods=2, freq="D")
+        prices = DataFrame({"A": [1.0, 2.0]}, index=dr)
+        factor = prices.iloc[:1].stack()
+        factor.index = factor.index.set_names(["date", "asset"])
+
+        with self.assertRaises(ValueError):
+            compute_forward_returns(factor, prices, periods=(5,), filter_zscore=None)
+
+    def test_turnover_periods_from_columns_skips_subday(self):
+        columns = pd.Index(["1h", "3h", "1D", "5D", "factor"])
+        self.assertEqual(turnover_periods_from_columns(columns), [1, 5])
+
+    def test_get_forward_returns_columns_accepts_nanoseconds(self):
+        columns = pd.Index(["1D", "1ns", "1us", "1ms", "30m", "factor"])
+        self.assertEqual(
+            list(get_forward_returns_columns(columns)),
+            ["1D", "1ns", "1us", "1ms", "30m"],
+        )
 
     @parameterized.expand(
         [
