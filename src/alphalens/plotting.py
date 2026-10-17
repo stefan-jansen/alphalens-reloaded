@@ -598,7 +598,7 @@ def plot_mean_quantile_returns_spread_time_series(
         ):
             stdn = None if std_err is None else std_err[name]
             a = plot_mean_quantile_returns_spread_time_series(
-                fr_column, std_err=stdn, ax=a
+                fr_column, std_err=stdn, bandwidth=bandwidth, ax=a
             )
             ax[i] = a
             curr_ymin, curr_ymax = a.get_ylim()
