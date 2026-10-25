@@ -57,17 +57,36 @@ def test_cleaner_preserves_holiday_frequency_without_mutating_inputs(clock, time
 
 
 @pytest.mark.parametrize("clock", ["0h", "9h30min"])
-def test_holiday_cleaner_positions_do_not_expire_on_closed_dates(clock):
+@pytest.mark.parametrize("group_neutral", [False, True])
+@pytest.mark.parametrize("sparse", [False, True])
+def test_holiday_cleaner_positions_do_not_expire_on_closed_dates(
+    clock, group_neutral, sparse
+):
     factor, prices, holidays = _holiday_inputs(clock, None)
+    missing_date = pd.Timestamp("2017-01-17") + pd.Timedelta(clock)
+    if sparse:
+        factor = factor.drop(index=missing_date, level="date")
     panel = utils.get_clean_factor_and_forward_returns(
-        factor, prices, periods=(1,), quantiles=2, filter_zscore=None
+        factor,
+        prices,
+        periods=(1,),
+        quantiles=2,
+        groupby={"a": "sector", "b": "sector"},
+        filter_zscore=None,
     )
-    positions = performance.factor_positions(panel, "1D")
+    positions = performance.factor_positions(panel, "1D", group_neutral=group_neutral)
+    weights = performance.factor_weights(panel, group_adjust=group_neutral)
+    pd.testing.assert_frame_equal(
+        positions,
+        performance.positions(weights, "1D", freq=panel.index.levels[0].freq),
+    )
     assert not positions.index.normalize().isin(holidays).any()
-    factor_dates = factor.index.levels[0]
+    factor_dates = factor.index.get_level_values("date").unique()
     np.testing.assert_allclose(
         positions.loc[factor_dates], np.tile([-0.5, 0.5], (len(factor_dates), 1))
     )
     expiry = pd.Timestamp("2017-02-13") + pd.Timedelta(clock)
+    if sparse:
+        np.testing.assert_array_equal(positions.loc[missing_date], [0.0, 0.0])
     assert positions.index[-1] == expiry
     np.testing.assert_array_equal(positions.loc[expiry], [0.0, 0.0])
