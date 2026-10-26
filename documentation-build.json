@@ -1,0 +1,8 @@
+{
+  "repository": "stefan-jansen/alphalens-reloaded",
+  "source_revision": "60755d1cc7d9d36a4c70c8344cbdb168fe99df24",
+  "intended_release_tag": "0.5.1",
+  "documentation_version": "0.5.1",
+  "build_context": "Pre-tag build from qualified commit and provisional stable-version package. Deploy only after actual approved tag/package inputs match.",
+  "historical_pages_revision": "84e5dd210de2745c964addc4ec31471115e5aac6"
+}

@@ -1,0 +1,1356 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Intraday Factor &#8212; Alphalens 0.4.1post1+8.g3348e92 documentation</title>
+
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+
+
+
+
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Event Study" href="event_study.html" />
+    <link rel="prev" title="Overview" href="overview.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+      <link rel="icon" sizes="16x16" href="../_static/assets/favicon16x16.ico">
+
+
+
+      <link rel="icon" sizes="32x32" href="../_static/assets/favicon32x32.ico">
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+
+    <div class="container-fluid" id="banner"></div>
+
+
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+
+
+<a class="navbar-brand" href="../index.html">
+<p class="title">Alphalens</p>
+</a>
+
+
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="overview.html">
+  Overview
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="current reference internal nav-link" href="#">
+  Intraday Factor
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="event_study.html">
+  Event Study
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="pyfolio_integration.html">
+  Pyfolio Integration
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../api-reference.html">
+  API
+ </a>
+</li>
+
+
+    <li class="nav-item">
+        <a class="nav-link nav-external" href="https://ml4trading.io">ML for Trading<i class="fas fa-external-link-alt"></i></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link nav-external" href="https://exchange.ml4trading.io">Community<i class="fas fa-external-link-alt"></i></a>
+    </li>
+
+</ul>
+      </div>
+
+    </div>
+
+    <div id="navbar-end">
+
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/stefan-jansen/alphalens-reloaded" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://twitter.com/ml4trading" rel="noopener" target="_blank" title="Twitter">
+            <span><i class="fab fa-twitter-square"></i></span>
+            <label class="sr-only">Twitter</label>
+          </a>
+        </li>
+      </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+    </nav>
+
+
+    <div class="container-xl">
+      <div class="row">
+
+
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+
+  </div>
+</nav>
+            </div>
+
+
+
+
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+
+
+              <div class="toc-item">
+
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Intraday Factor
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#Imports-&amp;-Settings">
+   Imports &amp; Settings
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#Loading-Data">
+   Loading Data
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#YFinance-Download">
+     YFinance Download
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#Factor-Computation">
+   Factor Computation
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#Data-Formatting">
+     Data Formatting
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#Time-Adjustments">
+       Time Adjustments
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#Align-Factor-&amp;-Price">
+       Align Factor &amp; Price
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#Run-Alphalens">
+   Run Alphalens
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#Get-Alphalens-Input">
+     Get Alphalens Input
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#Returns-Tear-Sheet">
+     Returns Tear Sheet
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+              </div>
+
+              <div class="toc-item">
+
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/stefan-jansen/alphalens-reloaded/edit/main/docs/source/notebooks/intraday_factor.ipynb">
+        <i class="fas fa-pencil-alt"></i> Edit this page
+    </a>
+</div>
+
+              </div>
+
+
+          </div>
+
+
+
+
+
+
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+
+              <div>
+
+
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="Intraday-Factor">
+<h1>Intraday Factor<a class="headerlink" href="#Intraday-Factor" title="Permalink to this headline">¶</a></h1>
+<p>In this notebook we use Alphalens to analyse the performance of an intraday factor, which is computed daily but the stocks are bought at marker open and sold at market close with no overnight positions.</p>
+</div>
+<div class="section" id="Imports-&amp;-Settings">
+<h1>Imports &amp; Settings<a class="headerlink" href="#Imports-&-Settings" title="Permalink to this headline">¶</a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">alphalens</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Loading-Data">
+<h1>Loading Data<a class="headerlink" href="#Loading-Data" title="Permalink to this headline">¶</a></h1>
+<p>Below is a simple mapping of tickers to sectors for a small universe of large cap stocks.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sector_names</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">0</span> <span class="p">:</span> <span class="s2">&quot;information_technology&quot;</span><span class="p">,</span>
+    <span class="mi">1</span> <span class="p">:</span> <span class="s2">&quot;financials&quot;</span><span class="p">,</span>
+    <span class="mi">2</span> <span class="p">:</span> <span class="s2">&quot;health_care&quot;</span><span class="p">,</span>
+    <span class="mi">3</span> <span class="p">:</span> <span class="s2">&quot;industrials&quot;</span><span class="p">,</span>
+    <span class="mi">4</span> <span class="p">:</span> <span class="s2">&quot;utilities&quot;</span><span class="p">,</span>
+    <span class="mi">5</span> <span class="p">:</span> <span class="s2">&quot;real_estate&quot;</span><span class="p">,</span>
+    <span class="mi">6</span> <span class="p">:</span> <span class="s2">&quot;materials&quot;</span><span class="p">,</span>
+    <span class="mi">7</span> <span class="p">:</span> <span class="s2">&quot;telecommunication_services&quot;</span><span class="p">,</span>
+    <span class="mi">8</span> <span class="p">:</span> <span class="s2">&quot;consumer_staples&quot;</span><span class="p">,</span>
+    <span class="mi">9</span> <span class="p">:</span> <span class="s2">&quot;consumer_discretionary&quot;</span><span class="p">,</span>
+    <span class="mi">10</span> <span class="p">:</span> <span class="s2">&quot;energy&quot;</span>
+<span class="p">}</span>
+
+<span class="n">ticker_sector</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;ACN&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;ATVI&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;ADBE&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;AMD&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;AKAM&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;ADS&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;GOOGL&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;GOOG&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;APH&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;ADI&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;ANSS&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;AAPL&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;AMAT&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;ADSK&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;ADP&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;AVGO&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;AMG&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;AFL&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;ALL&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;AXP&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;AIG&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;AMP&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;AON&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;AJG&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;AIZ&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;BAC&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;BK&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;BBT&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;BRK.B&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;BLK&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;HRB&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;BHF&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;COF&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;CBOE&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;SCHW&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;CB&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;ABT&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;ABBV&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;AET&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;ALXN&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;ALGN&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;AGN&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;ABC&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;AMGN&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;ANTM&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;BCR&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;BAX&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;BDX&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;BIIB&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;BSX&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;BMY&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;CAH&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;CELG&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;CNC&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;CERN&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;MMM&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;AYI&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;ALK&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;ALLE&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;AAL&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;AME&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;AOS&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;ARNC&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;BA&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;CHRW&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s2">&quot;CAT&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;CTAS&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;CSX&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;CMI&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;DE&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;DAL&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;DOV&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;ETN&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;EMR&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;EFX&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s2">&quot;AES&quot;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;LNT&quot;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;AEE&quot;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;AEP&quot;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;AWK&quot;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;CNP&quot;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;CMS&quot;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;ED&quot;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;DTE&quot;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s2">&quot;DUK&quot;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;EIX&quot;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;ETR&quot;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;ES&quot;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;EXC&quot;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;FE&quot;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;NEE&quot;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;NI&quot;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;NRG&quot;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;PCG&quot;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s2">&quot;ARE&quot;</span> <span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;AMT&quot;</span> <span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;AIV&quot;</span> <span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;AVB&quot;</span> <span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;BXP&quot;</span> <span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;CBG&quot;</span> <span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;CCI&quot;</span> <span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;DLR&quot;</span> <span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;DRE&quot;</span> <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="s2">&quot;EQIX&quot;</span> <span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;EQR&quot;</span> <span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;ESS&quot;</span> <span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;EXR&quot;</span> <span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;FRT&quot;</span> <span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;GGP&quot;</span> <span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;HCP&quot;</span> <span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;HST&quot;</span> <span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;IRM&quot;</span> <span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;KIM&quot;</span> <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="s2">&quot;APD&quot;</span> <span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;ALB&quot;</span> <span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;AVY&quot;</span> <span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;BLL&quot;</span> <span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;CF&quot;</span> <span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;DWDP&quot;</span> <span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;EMN&quot;</span> <span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;ECL&quot;</span> <span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;FMC&quot;</span> <span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;FCX&quot;</span> <span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+    <span class="s2">&quot;IP&quot;</span> <span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;IFF&quot;</span> <span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;LYB&quot;</span> <span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;MLM&quot;</span> <span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;MON&quot;</span> <span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;MOS&quot;</span> <span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;NEM&quot;</span> <span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;NUE&quot;</span> <span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;PKG&quot;</span> <span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;PPG&quot;</span> <span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+    <span class="s2">&quot;T&quot;</span> <span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;CTL&quot;</span> <span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;VZ&quot;</span> <span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+    <span class="s2">&quot;MO&quot;</span> <span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;ADM&quot;</span> <span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;BF.B&quot;</span> <span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;CPB&quot;</span> <span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;CHD&quot;</span> <span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;CLX&quot;</span> <span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;KO&quot;</span> <span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;CL&quot;</span> <span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;CAG&quot;</span> <span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="s2">&quot;STZ&quot;</span> <span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;COST&quot;</span> <span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;COTY&quot;</span> <span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;CVS&quot;</span> <span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;DPS&quot;</span> <span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;EL&quot;</span> <span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;GIS&quot;</span> <span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;HSY&quot;</span> <span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;HRL&quot;</span> <span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="s2">&quot;AAP&quot;</span> <span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;AMZN&quot;</span> <span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;APTV&quot;</span> <span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;AZO&quot;</span> <span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;BBY&quot;</span> <span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;BWA&quot;</span> <span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;KMX&quot;</span> <span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;CCL&quot;</span> <span class="p">:</span> <span class="mi">9</span><span class="p">,</span>
+    <span class="s2">&quot;APC&quot;</span> <span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;ANDV&quot;</span> <span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;APA&quot;</span> <span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;BHGE&quot;</span> <span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;COG&quot;</span> <span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;CHK&quot;</span> <span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;CVX&quot;</span> <span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;XEC&quot;</span> <span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;CXO&quot;</span> <span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="s2">&quot;COP&quot;</span> <span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;DVN&quot;</span> <span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;EOG&quot;</span> <span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;EQT&quot;</span> <span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;XOM&quot;</span> <span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;HAL&quot;</span> <span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;HP&quot;</span> <span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;HES&quot;</span> <span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;KMI&quot;</span> <span class="p">:</span> <span class="mi">10</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="YFinance-Download">
+<h2>YFinance Download<a class="headerlink" href="#YFinance-Download" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
+<span class="kn">import</span> <span class="nn">pandas_datareader.data</span> <span class="k">as</span> <span class="nn">web</span>
+<span class="n">yf</span><span class="o">.</span><span class="n">pdr_override</span><span class="p">()</span>
+
+<span class="n">tickers</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ticker_sector</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">web</span><span class="o">.</span><span class="n">get_data_yahoo</span><span class="p">(</span><span class="n">tickers</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;2017-01-01&#39;</span><span class="p">,</span>  <span class="n">end</span><span class="o">=</span><span class="s1">&#39;2017-06-01&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">utc</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[*********************100%***********************]  182 of 182 completed
+
+19 Failed downloads:
+- CHK: Data doesn&#39;t exist for startDate = 1483250400, endDate = 1496293200
+- BF.B: No data found for this date range, symbol may be delisted
+- BRK.B: No data found, symbol may be delisted
+- MON: Data doesn&#39;t exist for startDate = 1483250400, endDate = 1496293200
+- CELG: No data found, symbol may be delisted
+- APC: No data found, symbol may be delisted
+- ARNC: Data doesn&#39;t exist for startDate = 1483250400, endDate = 1496293200
+- CBG: No data found for this date range, symbol may be delisted
+- CTL: No data found, symbol may be delisted
+- BCR: No data found for this date range, symbol may be delisted
+- DWDP: No data found, symbol may be delisted
+- BHF: Data doesn&#39;t exist for startDate = 1483250400, endDate = 1496293200
+- GGP: No data found for this date range, symbol may be delisted
+- CXO: No data found, symbol may be delisted
+- HCP: No data found, symbol may be delisted
+- DPS: No data found for this date range, symbol may be delisted
+- AGN: No data found, symbol may be delisted
+- BBT: No data found, symbol may be delisted
+- BHGE: No data found, symbol may be delisted
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">stack</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="s1">&#39;asset&#39;</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+MultiIndex: 16789 entries, (Timestamp(&#39;2017-01-03 00:00:00+0000&#39;, tz=&#39;UTC&#39;), &#39;A&#39;) to (Timestamp(&#39;2017-05-31 00:00:00+0000&#39;, tz=&#39;UTC&#39;), &#39;XOM&#39;)
+Data columns (total 6 columns):
+ #   Column     Non-Null Count  Dtype
+---  ------     --------------  -----
+ 0   Adj Close  16789 non-null  float64
+ 1   Close      16789 non-null  float64
+ 2   High       16789 non-null  float64
+ 3   Low        16789 non-null  float64
+ 4   Open       16789 non-null  float64
+ 5   Volume     16789 non-null  float64
+dtypes: float64(6)
+memory usage: 842.6+ KB
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Factor-Computation">
+<h1>Factor Computation<a class="headerlink" href="#Factor-Computation" title="Permalink to this headline">¶</a></h1>
+<p>Our example factor ranks the stocks based on their overnight price gap (yesterday close to today open price). We’ll see if the factor has some alpha or if it is pure noise.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">available_tickers</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="s1">&#39;asset&#39;</span><span class="p">)</span>
+<span class="n">ticker_sector</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">ticker_sector</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">available_tickers</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">today_open</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Open&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="s1">&#39;asset&#39;</span><span class="p">)</span>
+<span class="n">today_close</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Close&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="s1">&#39;asset&#39;</span><span class="p">)</span>
+<span class="n">yesterday_close</span> <span class="o">=</span> <span class="n">today_close</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">factor</span> <span class="o">=</span> <span class="p">(</span><span class="n">today_open</span> <span class="o">-</span> <span class="n">yesterday_close</span><span class="p">)</span> <span class="o">/</span> <span class="n">yesterday_close</span>
+</pre></div>
+</div>
+</div>
+<p>The pricing data passed to alphalens should contain the entry price for the assets so it must reflect the next available price after a factor value was observed at a given timestamp. Those prices must not be used in the calculation of the factor values for that time. Always double check to ensure you are not introducing lookahead bias to your study.</p>
+<p>The pricing data must also contain the exit price for the assets, for period 1 the price at the next timestamp will be used, for period 2 the price after 2 timestamps will be used and so on.</p>
+<p>There are no restrinctions/assumptions on the time frequencies a factor should be computed at and neither on the specific time a factor should be traded (trading at the open vs trading at the close vs intraday trading), it is only required that factor and price DataFrames are properly aligned given the rules above.</p>
+<p>In our example, we want to buy the stocks at marker open, so the need the open price at the exact timestamps as the factor valules, and we want to sell the stocks at market close so we will add the close prices too, which will be used to compute period 1 forward returns as they appear just after the factor values timestamps. The returns computed by Alphalens will therefore be based on the difference between open to close assets prices.</p>
+<p>If we had other prices we could compute other period returns, for example one hour after market open and 2 hours and so on. We could have added those prices right after the open prices and instruct Alphalens to compute 1, 2, 3… periods too and not only period 1 like in this example.</p>
+<div class="section" id="Data-Formatting">
+<h2>Data Formatting<a class="headerlink" href="#Data-Formatting" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Time-Adjustments">
+<h3>Time Adjustments<a class="headerlink" href="#Time-Adjustments" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Fix time as Yahoo doesn&#39;t set it</span>
+<span class="n">today_open</span><span class="o">.</span><span class="n">index</span> <span class="o">+=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="s1">&#39;9h30m&#39;</span><span class="p">)</span>
+<span class="n">today_close</span><span class="o">.</span><span class="n">index</span> <span class="o">+=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="s1">&#39;16h&#39;</span><span class="p">)</span>
+<span class="c1"># pricing will contain both open and close</span>
+<span class="n">pricing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">today_open</span><span class="p">,</span> <span class="n">today_close</span><span class="p">])</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pricing</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>asset</th>
+      <th>A</th>
+      <th>AAL</th>
+      <th>AAP</th>
+      <th>AAPL</th>
+      <th>ABBV</th>
+      <th>ABC</th>
+      <th>ABT</th>
+      <th>ACN</th>
+      <th>ADBE</th>
+      <th>ADI</th>
+      <th>...</th>
+      <th>NUE</th>
+      <th>PCG</th>
+      <th>PKG</th>
+      <th>PPG</th>
+      <th>SCHW</th>
+      <th>STZ</th>
+      <th>T</th>
+      <th>VZ</th>
+      <th>XEC</th>
+      <th>XOM</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2017-01-03 09:30:00+00:00</th>
+      <td>45.930000</td>
+      <td>47.279999</td>
+      <td>170.779999</td>
+      <td>28.950001</td>
+      <td>62.919998</td>
+      <td>78.510002</td>
+      <td>38.630001</td>
+      <td>117.379997</td>
+      <td>103.430000</td>
+      <td>72.599998</td>
+      <td>...</td>
+      <td>59.740002</td>
+      <td>60.810001</td>
+      <td>85.160004</td>
+      <td>95.430000</td>
+      <td>40.049999</td>
+      <td>155.009995</td>
+      <td>42.689999</td>
+      <td>53.959999</td>
+      <td>137.529999</td>
+      <td>90.940002</td>
+    </tr>
+    <tr>
+      <th>2017-01-03 16:00:00+00:00</th>
+      <td>46.490002</td>
+      <td>46.299999</td>
+      <td>170.600006</td>
+      <td>29.037500</td>
+      <td>62.410000</td>
+      <td>82.610001</td>
+      <td>39.049999</td>
+      <td>116.459999</td>
+      <td>103.480003</td>
+      <td>72.510002</td>
+      <td>...</td>
+      <td>59.610001</td>
+      <td>60.369999</td>
+      <td>85.000000</td>
+      <td>95.250000</td>
+      <td>40.200001</td>
+      <td>154.750000</td>
+      <td>43.020000</td>
+      <td>54.580002</td>
+      <td>138.789993</td>
+      <td>90.889999</td>
+    </tr>
+    <tr>
+      <th>2017-01-04 09:30:00+00:00</th>
+      <td>46.930000</td>
+      <td>46.630001</td>
+      <td>170.369995</td>
+      <td>28.962500</td>
+      <td>62.639999</td>
+      <td>82.599998</td>
+      <td>39.060001</td>
+      <td>116.910004</td>
+      <td>103.739998</td>
+      <td>72.769997</td>
+      <td>...</td>
+      <td>59.759998</td>
+      <td>60.610001</td>
+      <td>85.440002</td>
+      <td>95.709999</td>
+      <td>40.400002</td>
+      <td>157.149994</td>
+      <td>42.939999</td>
+      <td>54.549999</td>
+      <td>138.479996</td>
+      <td>91.120003</td>
+    </tr>
+    <tr>
+      <th>2017-01-04 16:00:00+00:00</th>
+      <td>47.099998</td>
+      <td>46.700001</td>
+      <td>172.000000</td>
+      <td>29.004999</td>
+      <td>63.290001</td>
+      <td>84.660004</td>
+      <td>39.360001</td>
+      <td>116.739998</td>
+      <td>104.139999</td>
+      <td>72.360001</td>
+      <td>...</td>
+      <td>61.250000</td>
+      <td>60.590000</td>
+      <td>86.370003</td>
+      <td>97.269997</td>
+      <td>41.220001</td>
+      <td>157.990005</td>
+      <td>42.770000</td>
+      <td>54.520000</td>
+      <td>138.500000</td>
+      <td>89.889999</td>
+    </tr>
+    <tr>
+      <th>2017-01-05 09:30:00+00:00</th>
+      <td>47.049999</td>
+      <td>46.520000</td>
+      <td>170.869995</td>
+      <td>28.980000</td>
+      <td>63.380001</td>
+      <td>84.379997</td>
+      <td>39.240002</td>
+      <td>116.980003</td>
+      <td>104.129997</td>
+      <td>72.410004</td>
+      <td>...</td>
+      <td>61.119999</td>
+      <td>60.660000</td>
+      <td>86.370003</td>
+      <td>96.459999</td>
+      <td>40.970001</td>
+      <td>150.550003</td>
+      <td>42.849998</td>
+      <td>54.779999</td>
+      <td>138.500000</td>
+      <td>90.190002</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 163 columns</p>
+</div></div>
+</div>
+</div>
+<div class="section" id="Align-Factor-&amp;-Price">
+<h3>Align Factor &amp; Price<a class="headerlink" href="#Align-Factor-&-Price" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Align factor to open price</span>
+<span class="n">factor</span><span class="o">.</span><span class="n">index</span> <span class="o">+=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="s1">&#39;9h30m&#39;</span><span class="p">)</span>
+<span class="n">factor</span> <span class="o">=</span> <span class="n">factor</span><span class="o">.</span><span class="n">stack</span><span class="p">()</span>
+<span class="n">factor</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">factor</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">set_names</span><span class="p">([</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="s1">&#39;asset&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">factor</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>asset</th>
+      <th>A</th>
+      <th>AAL</th>
+      <th>AAP</th>
+      <th>AAPL</th>
+      <th>ABBV</th>
+      <th>ABC</th>
+      <th>ABT</th>
+      <th>ACN</th>
+      <th>ADBE</th>
+      <th>ADI</th>
+      <th>...</th>
+      <th>NUE</th>
+      <th>PCG</th>
+      <th>PKG</th>
+      <th>PPG</th>
+      <th>SCHW</th>
+      <th>STZ</th>
+      <th>T</th>
+      <th>VZ</th>
+      <th>XEC</th>
+      <th>XOM</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2017-01-04 09:30:00+00:00</th>
+      <td>0.009464</td>
+      <td>0.007127</td>
+      <td>-0.001348</td>
+      <td>-0.002583</td>
+      <td>0.003685</td>
+      <td>-0.000121</td>
+      <td>0.000256</td>
+      <td>0.003864</td>
+      <td>0.002513</td>
+      <td>0.003586</td>
+      <td>...</td>
+      <td>0.002516</td>
+      <td>0.003976</td>
+      <td>0.005176</td>
+      <td>0.004829</td>
+      <td>0.004975</td>
+      <td>0.015509</td>
+      <td>-0.001860</td>
+      <td>-0.000550</td>
+      <td>-0.002234</td>
+      <td>0.002531</td>
+    </tr>
+    <tr>
+      <th>2017-01-05 09:30:00+00:00</th>
+      <td>-0.001062</td>
+      <td>-0.003854</td>
+      <td>-0.006570</td>
+      <td>-0.000862</td>
+      <td>0.001422</td>
+      <td>-0.003307</td>
+      <td>-0.003049</td>
+      <td>0.002056</td>
+      <td>-0.000096</td>
+      <td>0.000691</td>
+      <td>...</td>
+      <td>-0.002122</td>
+      <td>0.001155</td>
+      <td>0.000000</td>
+      <td>-0.008327</td>
+      <td>-0.006065</td>
+      <td>-0.047092</td>
+      <td>0.001870</td>
+      <td>0.004769</td>
+      <td>0.000000</td>
+      <td>0.003337</td>
+    </tr>
+    <tr>
+      <th>2017-01-06 09:30:00+00:00</th>
+      <td>0.001934</td>
+      <td>-0.000872</td>
+      <td>-0.003258</td>
+      <td>0.001458</td>
+      <td>0.001725</td>
+      <td>-0.001793</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000661</td>
+      <td>0.003646</td>
+      <td>...</td>
+      <td>-0.000328</td>
+      <td>-0.003304</td>
+      <td>0.000469</td>
+      <td>0.001569</td>
+      <td>0.008055</td>
+      <td>0.001635</td>
+      <td>-0.015709</td>
+      <td>-0.017753</td>
+      <td>0.001784</td>
+      <td>0.002710</td>
+    </tr>
+    <tr>
+      <th>2017-01-09 09:30:00+00:00</th>
+      <td>0.000417</td>
+      <td>-0.004328</td>
+      <td>0.002535</td>
+      <td>0.000339</td>
+      <td>0.000157</td>
+      <td>-0.002359</td>
+      <td>0.000245</td>
+      <td>-0.001376</td>
+      <td>-0.003139</td>
+      <td>0.000559</td>
+      <td>...</td>
+      <td>0.009786</td>
+      <td>-0.000327</td>
+      <td>-0.003440</td>
+      <td>-0.005649</td>
+      <td>-0.005578</td>
+      <td>0.003747</td>
+      <td>-0.000726</td>
+      <td>-0.000751</td>
+      <td>-0.011285</td>
+      <td>-0.003164</td>
+    </tr>
+    <tr>
+      <th>2017-01-10 09:30:00+00:00</th>
+      <td>0.004155</td>
+      <td>-0.001699</td>
+      <td>-0.004896</td>
+      <td>-0.001849</td>
+      <td>-0.002492</td>
+      <td>-0.004446</td>
+      <td>0.001718</td>
+      <td>-0.000522</td>
+      <td>0.000000</td>
+      <td>-0.000973</td>
+      <td>...</td>
+      <td>0.012743</td>
+      <td>0.000498</td>
+      <td>-0.000798</td>
+      <td>-0.002906</td>
+      <td>0.001702</td>
+      <td>-0.001797</td>
+      <td>-0.003431</td>
+      <td>0.000190</td>
+      <td>0.004664</td>
+      <td>0.001494</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 163 columns</p>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="Run-Alphalens">
+<h1>Run Alphalens<a class="headerlink" href="#Run-Alphalens" title="Permalink to this headline">¶</a></h1>
+<p>Period 1 will show returns from market open to market close while period 2 will show returns from today open to tomorrow open</p>
+<div class="section" id="Get-Alphalens-Input">
+<h2>Get Alphalens Input<a class="headerlink" href="#Get-Alphalens-Input" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">non_predictive_factor_data</span> <span class="o">=</span> <span class="n">alphalens</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">get_clean_factor_and_forward_returns</span><span class="p">(</span><span class="n">factor</span><span class="p">,</span>
+                                                                                  <span class="n">pricing</span><span class="p">,</span>
+                                                                                  <span class="n">periods</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span>
+                                                                                  <span class="n">groupby</span><span class="o">=</span><span class="n">ticker_sector</span><span class="p">,</span>
+                                                                                  <span class="n">groupby_labels</span><span class="o">=</span><span class="n">sector_names</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Dropped 2.9% entries from factor data: 1.0% in forward returns computation and 2.0% in binning phase (set max_loss=0 to see potentially suppressed Exceptions).
+max_loss is 35.0%, not exceeded: OK!
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Returns-Tear-Sheet">
+<h2>Returns Tear Sheet<a class="headerlink" href="#Returns-Tear-Sheet" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">alphalens</span><span class="o">.</span><span class="n">tears</span><span class="o">.</span><span class="n">create_returns_tear_sheet</span><span class="p">(</span><span class="n">non_predictive_factor_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Returns Analysis
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>6h30m</th>
+      <th>1D</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Ann. alpha</th>
+      <td>0.324</td>
+      <td>-0.046</td>
+    </tr>
+    <tr>
+      <th>beta</th>
+      <td>0.177</td>
+      <td>0.179</td>
+    </tr>
+    <tr>
+      <th>Mean Period Wise Return Top Quantile (bps)</th>
+      <td>-7.776</td>
+      <td>-2.096</td>
+    </tr>
+    <tr>
+      <th>Mean Period Wise Return Bottom Quantile (bps)</th>
+      <td>-0.445</td>
+      <td>0.697</td>
+    </tr>
+    <tr>
+      <th>Mean Period Wise Spread (bps)</th>
+      <td>-7.331</td>
+      <td>-2.795</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Figure size 432x288 with 0 Axes&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_intraday_factor_30_3.png" src="../_images/notebooks_intraday_factor_30_3.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">alphalens</span><span class="o">.</span><span class="n">tears</span><span class="o">.</span><span class="n">create_event_returns_tear_sheet</span><span class="p">(</span><span class="n">non_predictive_factor_data</span><span class="p">,</span> <span class="n">pricing</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Figure size 432x288 with 0 Axes&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_intraday_factor_31_1.png" src="../_images/notebooks_intraday_factor_31_1.png" />
+</div>
+</div>
+</div>
+</div>
+
+
+              </div>
+
+
+              <div class='prev-next-bottom'>
+
+    <a class='left-prev' id="prev-link" href="overview.html" title="previous page">Overview</a>
+    <a class='right-next' id="next-link" href="event_study.html" title="next page">Event Study</a>
+
+              </div>
+
+          </main>
+
+
+      </div>
+    </div>
+
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+
+
+    <!-- Google Analytics -->
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-74956955-3', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2016, Quantopian, Inc..<br/>
+</p>
+    </div>
+
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+</p>
+    </div>
+
+  </div>
+</footer>
+  </body>
+</html>

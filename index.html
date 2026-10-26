@@ -1,276 +1,481 @@
-
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" data-content_root="./" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Alphalens &#8212; Alphalens 0.4.1post1+8.g3348e92 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <link href="_static/css/theme.css" rel="stylesheet" />
-  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+    <title>Alphalens &#8212; Alphalens 0.5.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
 
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=18bd87630a240e9c25be" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=18bd87630a240e9c25be" rel="stylesheet" />
 
-  <link rel="stylesheet"
-    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=18bd87630a240e9c25be"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=18bd87630a240e9c25be" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=18bd87630a240e9c25be" />
 
-
-
-
-
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-
-  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
-
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
+    <script src="_static/documentation_options.js?v=b9afe91b"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('consent', 'default', {
+                    'ad_storage': 'denied',
+                    'ad_user_data': 'denied',
+                    'ad_personalization': 'denied',
+                    'analytics_storage': 'denied'
+                });
+            </script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-74956955-3"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'UA-74956955-3');
+            </script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="canonical" href="https://alphalens.ml4trading.io/index.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Overview" href="notebooks/overview.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
-
-
-      <link rel="icon" sizes="16x16" href="_static/assets/favicon16x16.ico">
-
-
-
-      <link rel="icon" sizes="32x32" href="_static/assets/favicon32x32.ico">
-
-
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.5.1" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
 
-    <div class="container-fluid" id="banner"></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
 
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
 
-    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
-
-  <div id="navbar-start">
-
-
-<a class="navbar-brand" href="#">
-<p class="title">Alphalens</p>
-</a>
-
-
-  </div>
-
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
   </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
 
+  
+    
+  
 
-  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
-    <div id="navbar-center" class="mr-auto">
-
-      <div class="navbar-center-item">
-        <ul id="navbar-main-elements" class="navbar-nav">
-    <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="notebooks/overview.html">
-  Overview
- </a>
-</li>
-
-<li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="notebooks/intraday_factor.html">
-  Intraday Factor
- </a>
-</li>
-
-<li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="notebooks/event_study.html">
-  Event Study
- </a>
-</li>
-
-<li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="notebooks/pyfolio_integration.html">
-  Pyfolio Integration
- </a>
-</li>
-
-<li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="api-reference.html">
-  API
- </a>
-</li>
-
-
-    <li class="nav-item">
-        <a class="nav-link nav-external" href="https://ml4trading.io">ML for Trading<i class="fas fa-external-link-alt"></i></a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link nav-external" href="https://exchange.ml4trading.io">Community<i class="fas fa-external-link-alt"></i></a>
-    </li>
-
-</ul>
-      </div>
-
-    </div>
-
-    <div id="navbar-end">
-
-      <div class="navbar-end-item">
-        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
-        <li class="nav-item">
-          <a class="nav-link" href="https://github.com/stefan-jansen/alphalens-reloaded" rel="noopener" target="_blank" title="GitHub">
-            <span><i class="fab fa-github-square"></i></span>
-            <label class="sr-only">GitHub</label>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="https://twitter.com/ml4trading" rel="noopener" target="_blank" title="Twitter">
-            <span><i class="fab fa-twitter-square"></i></span>
-            <label class="sr-only">Twitter</label>
-          </a>
-        </li>
-      </ul>
-      </div>
-
-    </div>
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Alphalens 0.5.1 documentation</p>
+  
+</a></div>
+    
   </div>
-</div>
-    </nav>
-
-
-    <div class="container-xl">
-      <div class="row">
-
-
-            <!-- Only show if we have sidebars configured, else just a small margin  -->
-            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  <div class="bd-toc-item active">
-
-  </div>
-</nav>
-            </div>
-
-
-
-
-          <div class="d-none d-xl-block col-xl-2 bd-toc">
-
-
-              <div class="toc-item">
-
-<div class="tocsection onthispage pt-5 pb-3">
-    <i class="fas fa-list"></i> On this page
-</div>
-
-<nav id="bd-toc-nav">
-    <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Getting started
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="notebooks/overview.html">
+    Overview
   </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#learn-more">
-   Learn more
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="notebooks/intraday_factor.html">
+    Intraday Factor
   </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#installation">
-   Installation
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="notebooks/event_study.html">
+    Event Study
   </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#usage">
-   Usage
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="notebooks/pyfolio_integration.html">
+    Pyfolio Integration
   </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#questions">
-   Questions?
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api-reference.html">
+    API
   </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#contribute">
-   Contribute
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://www.ml4trading.io/docs/diagnostic/user-guide/migration/#alphalens-factor-analysis">
+    Migrating factor analysis
   </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#credits">
-   Credits
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://ml4trading.io">
+    ML for Trading
   </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-tear-sheets">
-   Example Tear Sheets
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://exchange.ml4trading.io">
+    Community
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#peformance-metrics-tables">
-     Peformance Metrics Tables
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#returns-tear-sheet">
-     Returns Tear Sheet
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#information-coefficient-tear-sheet">
-     Information Coefficient Tear Sheet
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#sector-tear-sheet">
-     Sector Tear Sheet
-    </a>
-   </li>
+</li>
+
+                </ul>
+            </li>
+            
   </ul>
- </li>
-</ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
 
-</nav>
-              </div>
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
 
-              <div class="toc-item">
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/stefan-jansen/alphalens-reloaded" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/ml4trading" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i><span class="visually-hidden">Twitter</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
 
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
 
-<div class="tocsection editthispage">
-    <a href="https://github.com/stefan-jansen/alphalens-reloaded/edit/main/docs/source/index.rst">
-        <i class="fas fa-pencil-alt"></i> Edit this page
-    </a>
+  
+    <button type="button" class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
 </div>
 
-              </div>
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="notebooks/overview.html">
+    Overview
+  </a>
+</li>
 
 
-          </div>
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="notebooks/intraday_factor.html">
+    Intraday Factor
+  </a>
+</li>
 
 
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="notebooks/event_study.html">
+    Event Study
+  </a>
+</li>
 
 
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="notebooks/pyfolio_integration.html">
+    Pyfolio Integration
+  </a>
+</li>
 
 
-          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api-reference.html">
+    API
+  </a>
+</li>
 
-              <div>
 
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://www.ml4trading.io/docs/diagnostic/user-guide/migration/#alphalens-factor-analysis">
+    Migrating factor analysis
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://ml4trading.io">
+    ML for Trading
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://exchange.ml4trading.io">
+    Community
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/stefan-jansen/alphalens-reloaded" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/ml4trading" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i><span class="visually-hidden">Twitter</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none"></div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
   <p align="center">
 <a href="https://alphalens.ml4trading.io">
-<img src="https://i.imgur.com/uf8PmQO.png" width="35%">
+<img src="_static/readme/uf8PmQO.png" width="35%">
 </a>
-</p><a class="reference external image-reference" href="https://github.com/stefan-jansen/alphalens-reloaded/actions/workflows/unit_tests.yml"><img alt="CI Tests" src="https://github.com/stefan-jansen/alphalens-reloaded/actions/workflows/unit_tests.yml/badge.svg" /></a>
-<a class="reference external image-reference" href="https://github.com/stefan-jansen/alphalens-reloaded/actions/workflows/distribution.yml"><img alt="PyPI Wheels" src="https://github.com/stefan-jansen/alphalens-reloaded/actions/workflows/distribution.yml/badge.svg" /></a>
+</p><p><a class="reference external" href="https://img.shields.io/pypi/v/alphalens-reloaded"><img alt="PyPI" src="https://img.shields.io/pypi/v/alphalens-reloaded" /></a>
+<a class="reference external" href="https://github.com/stefan-jansen/alphalens-reloaded/actions/workflows/conda_package.yml"><img alt="Anaconda" src="https://github.com/stefan-jansen/alphalens-reloaded/actions/workflows/conda_package.yml/badge.svg" /></a>
+<a class="reference external" href="https://github.com/stefan-jansen/alphalens-reloaded/actions/workflows/unit_tests.yml"><img alt="Tests" src="https://github.com/stefan-jansen/alphalens-reloaded/actions/workflows/unit_tests.yml/badge.svg" /></a>
+<a class="reference external" href="https://github.com/stefan-jansen/alphalens-reloaded/actions/workflows/build_wheels.yml"><img alt="PyPI" src="https://github.com/stefan-jansen/alphalens-reloaded/actions/workflows/build_wheels.yml/badge.svg" /></a>
+<a class="reference external" href="https://coveralls.io/github/stefan-jansen/alphalens-reloaded?branch=main"><img alt="Coverage Status" src="https://coveralls.io/repos/github/stefan-jansen/alphalens-reloaded/badge.svg?branch=main" /></a>
+<a class="reference external" href="https://img.shields.io/github/issues/stefan-jansen/alphalens-reloaded"><img alt="GitHub issues" src="https://img.shields.io/github/issues/stefan-jansen/alphalens-reloaded" /></a>
+<a class="reference external" href="https://img.shields.io/pypi/l/alphalens-reloaded"><img alt="PyPI - License" src="https://img.shields.io/pypi/l/alphalens-reloaded" /></a>
+<a class="reference external" href="https://img.shields.io/discourse/users?server=https%3A%2F%2Fexchange.ml4trading.io%2F"></a>
+<a class="reference external" href="https://img.shields.io/twitter/follow/ml4trading?style=social"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/ml4trading?style=social" /></a></p>
 <p>Alphalens is a Python library for performance analysis of predictive
 (alpha) stock factors. Alphalens works great with the
 <a class="reference external" href="https://www.zipline.ml4trading.io/">Zipline</a> open source backtesting library, and <a class="reference external" href="https://github.com/quantopian/pyfolio">Pyfolio</a> which provides performance and risk analysis of financial portfolios.</p>
@@ -281,10 +486,20 @@
 <li><p>Turnover Analysis</p></li>
 <li><p>Grouped Analysis</p></li>
 </ul>
-<div class="section" id="getting-started">
-<h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
-<p>With a signal and pricing data creating a factor &quot;tear sheet&quot; is a two step process:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">alphalens</span>
+<section id="maintenance-and-new-projects">
+<h1>Maintenance and new projects<a class="headerlink" href="#maintenance-and-new-projects" title="Link to this heading">#</a></h1>
+<p>We continue to maintain Alphalens Reloaded for bug, security and compatibility fixes.
+Our new development focuses on <a class="reference external" href="https://github.com/ml4t/diagnostic">ML4T Diagnostic</a>.
+For new projects, evaluate it through the
+<a class="reference external" href="https://www.ml4trading.io/docs/diagnostic/user-guide/migration/#alphalens-factor-analysis">factor-analysis migration guide</a>,
+which includes a runnable example and explains the differences between the workflows.
+See the <a class="reference external" href="https://www.ml4trading.io/docs/diagnostic/">Diagnostic documentation</a> and the
+<a class="reference external" href="https://www.ml4trading.io/">ML4T website</a> for the current libraries and their workflows.</p>
+</section>
+<section id="getting-started">
+<h1>Getting started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h1>
+<p>With a signal and pricing data creating a factor “tear sheet” is a two step process:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">alphalens</span>
 
 <span class="c1"># Ingest and format data</span>
 <span class="n">factor_data</span> <span class="o">=</span> <span class="n">alphalens</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">get_clean_factor_and_forward_returns</span><span class="p">(</span><span class="n">my_factor</span><span class="p">,</span>
@@ -297,14 +512,19 @@
 <span class="n">alphalens</span><span class="o">.</span><span class="n">tears</span><span class="o">.</span><span class="n">create_full_tear_sheet</span><span class="p">(</span><span class="n">factor_data</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="learn-more">
-<h1>Learn more<a class="headerlink" href="#learn-more" title="Permalink to this headline">¶</a></h1>
-<p>Check out the <a class="reference external" href="https://github.com/stefan-jansen/alphalens-reloaded/tree/master/alphalens/examples">example notebooks</a>
+</section>
+<section id="learn-more">
+<h1>Learn more<a class="headerlink" href="#learn-more" title="Link to this heading">#</a></h1>
+<p>Check out the <a class="reference external" href="https://github.com/stefan-jansen/alphalens-reloaded/tree/main/src/alphalens/examples">example notebooks</a>
 for more on how to read and use the factor tear sheet.</p>
-</div>
-<div class="section" id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+</section>
+<section id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h1>
+<p>The next release supports Python 3.11-3.15. Python 3.10 and older are no longer
+supported; previous release artifacts remain available. Python 3.15 requires
+pandas 3; earlier supported Python versions also support pandas 1.5 and 2.x.
+Native tests, built wheels and Conda packages have been qualified on Linux, macOS
+and Windows. These source changes do not alter previously published releases.</p>
 <p>Install with pip:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">alphalens</span><span class="o">-</span><span class="n">reloaded</span>
 </pre></div>
@@ -326,29 +546,33 @@ for more on how to read and use the factor tear sheet.</p>
 <li><p><a class="reference external" href="https://github.com/mwaskom/seaborn">seaborn</a></p></li>
 <li><p><a class="reference external" href="https://github.com/statsmodels/statsmodels">statsmodels</a></p></li>
 </ul>
-</div>
-<div class="section" id="usage">
-<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<p>NumPy &gt;=2.0 requires pandas &gt;=2.2.2. Upgrade older pandas versions before using
+NumPy 2 to avoid compatibility issues.</p>
+</section>
+<section id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Link to this heading">#</a></h1>
 <p>A good way to get started is to run the examples in a <a class="reference external" href="https://jupyter.org/">Jupyter notebook</a>.</p>
 <p>To get set up with an example, you can:</p>
 <p>Run a Jupyter notebook server via:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>jupyter notebook
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>jupyter<span class="w"> </span>notebook
 </pre></div>
 </div>
 <p>From the notebook list page(usually found at <code class="docutils literal notranslate"><span class="pre">http://localhost:8888/</span></code>), navigate over to the examples directory, and open any file with a .ipynb extension.</p>
 <p>Execute the code in a notebook cell by clicking on it and hitting Shift+Enter.</p>
-</div>
-<div class="section" id="questions">
-<h1>Questions?<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h1>
+</section>
+<section id="questions">
+<h1>Questions?<a class="headerlink" href="#questions" title="Link to this heading">#</a></h1>
 <p>If you find a bug, feel free to open an issue on our <a class="reference external" href="https://github.com/stefan-jansen/alphalens-reloaded/issues">github tracker</a>.</p>
-</div>
-<div class="section" id="contribute">
-<h1>Contribute<a class="headerlink" href="#contribute" title="Permalink to this headline">¶</a></h1>
+</section>
+<section id="contribute">
+<h1>Contribute<a class="headerlink" href="#contribute" title="Link to this heading">#</a></h1>
+<p>Read the <a class="reference external" href="https://github.com/stefan-jansen/alphalens-reloaded/blob/main/CONTRIBUTING.md">contribution guide</a>
+for maintenance scope, review requirements and local checks.</p>
 <p>If you want to contribute, a great place to start would be the
 <a class="reference external" href="https://github.com/stefan-jansen/alphalens-reloaded/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22">help-wanted issues</a>.</p>
-</div>
-<div class="section" id="credits">
-<h1>Credits<a class="headerlink" href="#credits" title="Permalink to this headline">¶</a></h1>
+</section>
+<section id="credits">
+<h1>Credits<a class="headerlink" href="#credits" title="Link to this heading">#</a></h1>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/a-campbell">Andrew Campbell</a></p></li>
 <li><p><a class="reference external" href="https://github.com/jameschristopher">James Christopher</a></p></li>
@@ -358,25 +582,29 @@ for more on how to read and use the factor tear sheet.</p>
 <li><p><a class="reference external" href="https://github.com/tasopetridis">Taso Petridis</a></p></li>
 </ul>
 <p>For a full list of contributors see the <a class="reference external" href="https://github.com/stefan-jansen/alphalens-reloaded/graphs/contributors">contributors page.</a></p>
-</div>
-<div class="section" id="example-tear-sheets">
-<h1>Example Tear Sheets<a class="headerlink" href="#example-tear-sheets" title="Permalink to this headline">¶</a></h1>
+</section>
+<section id="example-tear-sheets">
+<h1>Example Tear Sheets<a class="headerlink" href="#example-tear-sheets" title="Link to this heading">#</a></h1>
 <p>Example factor courtesy of <a class="reference external" href="https://extractalpha.com/">ExtractAlpha</a></p>
-<div class="section" id="peformance-metrics-tables">
-<h2>Peformance Metrics Tables<a class="headerlink" href="#peformance-metrics-tables" title="Permalink to this headline">¶</a></h2>
-<a class="reference external image-reference" href="https://i.imgur.com/4T8cziG.png"><img alt="image" src="https://i.imgur.com/4T8cziG.png" /></a>
-</div>
-<div class="section" id="returns-tear-sheet">
-<h2>Returns Tear Sheet<a class="headerlink" href="#returns-tear-sheet" title="Permalink to this headline">¶</a></h2>
-<a class="reference external image-reference" href="https://i.imgur.com/aVs3KiM.png"><img alt="image" src="https://i.imgur.com/aVs3KiM.png" /></a>
-</div>
-<div class="section" id="information-coefficient-tear-sheet">
-<h2>Information Coefficient Tear Sheet<a class="headerlink" href="#information-coefficient-tear-sheet" title="Permalink to this headline">¶</a></h2>
-<a class="reference external image-reference" href="https://i.imgur.com/vAm8okb.png"><img alt="image" src="https://i.imgur.com/vAm8okb.png" /></a>
-</div>
-<div class="section" id="sector-tear-sheet">
-<h2>Sector Tear Sheet<a class="headerlink" href="#sector-tear-sheet" title="Permalink to this headline">¶</a></h2>
-<a class="reference external image-reference" href="https://i.imgur.com/pnBs0ta.png"><img alt="image" src="https://i.imgur.com/pnBs0ta.png" /></a>
+<section id="peformance-metrics-tables">
+<h2>Peformance Metrics Tables<a class="headerlink" href="#peformance-metrics-tables" title="Link to this heading">#</a></h2>
+<a class="reference external image-reference" href="https://i.imgur.com/4T8cziG.png"><img alt="image" src="_static/readme/4T8cziG.png" />
+</a>
+</section>
+<section id="returns-tear-sheet">
+<h2>Returns Tear Sheet<a class="headerlink" href="#returns-tear-sheet" title="Link to this heading">#</a></h2>
+<a class="reference external image-reference" href="https://i.imgur.com/aVs3KiM.png"><img alt="image" src="_static/readme/aVs3KiM.png" />
+</a>
+</section>
+<section id="information-coefficient-tear-sheet">
+<h2>Information Coefficient Tear Sheet<a class="headerlink" href="#information-coefficient-tear-sheet" title="Link to this heading">#</a></h2>
+<a class="reference external image-reference" href="https://i.imgur.com/vAm8okb.png"><img alt="image" src="_static/readme/vAm8okb.png" />
+</a>
+</section>
+<section id="sector-tear-sheet">
+<h2>Sector Tear Sheet<a class="headerlink" href="#sector-tear-sheet" title="Link to this heading">#</a></h2>
+<a class="reference external image-reference" href="https://i.imgur.com/pnBs0ta.png"><img alt="image" src="_static/readme/pnBs0ta.png" />
+</a>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="notebooks/overview.html">Overview</a><ul>
@@ -466,62 +694,233 @@ for more on how to read and use the factor tear sheet.</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api-reference.html">API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api-reference.html#tear-sheets">Tear Sheets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-reference.html#performance-metrics">Performance Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-reference.html#plotting-functions">Plotting Functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-reference.html#utilities">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-reference.html#tear-sheets">Tear Sheets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.tears.GridFigure"><code class="docutils literal notranslate"><span class="pre">GridFigure</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api-reference.html#alphalens.tears.GridFigure.close"><code class="docutils literal notranslate"><span class="pre">GridFigure.close()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api-reference.html#alphalens.tears.GridFigure.next_cell"><code class="docutils literal notranslate"><span class="pre">GridFigure.next_cell()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api-reference.html#alphalens.tears.GridFigure.next_row"><code class="docutils literal notranslate"><span class="pre">GridFigure.next_row()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.tears.create_event_returns_tear_sheet"><code class="docutils literal notranslate"><span class="pre">create_event_returns_tear_sheet()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.tears.create_event_study_tear_sheet"><code class="docutils literal notranslate"><span class="pre">create_event_study_tear_sheet()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.tears.create_full_tear_sheet"><code class="docutils literal notranslate"><span class="pre">create_full_tear_sheet()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.tears.create_information_tear_sheet"><code class="docutils literal notranslate"><span class="pre">create_information_tear_sheet()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.tears.create_returns_tear_sheet"><code class="docutils literal notranslate"><span class="pre">create_returns_tear_sheet()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.tears.create_summary_tear_sheet"><code class="docutils literal notranslate"><span class="pre">create_summary_tear_sheet()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.tears.create_turnover_tear_sheet"><code class="docutils literal notranslate"><span class="pre">create_turnover_tear_sheet()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api-reference.html#performance-metrics">Performance Metrics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.performance.average_cumulative_return_by_quantile"><code class="docutils literal notranslate"><span class="pre">average_cumulative_return_by_quantile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.performance.common_start_returns"><code class="docutils literal notranslate"><span class="pre">common_start_returns()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.performance.compute_mean_returns_spread"><code class="docutils literal notranslate"><span class="pre">compute_mean_returns_spread()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.performance.create_pyfolio_input"><code class="docutils literal notranslate"><span class="pre">create_pyfolio_input()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.performance.cumulative_returns"><code class="docutils literal notranslate"><span class="pre">cumulative_returns()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.performance.factor_alpha_beta"><code class="docutils literal notranslate"><span class="pre">factor_alpha_beta()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.performance.factor_cumulative_returns"><code class="docutils literal notranslate"><span class="pre">factor_cumulative_returns()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.performance.factor_information_coefficient"><code class="docutils literal notranslate"><span class="pre">factor_information_coefficient()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.performance.factor_positions"><code class="docutils literal notranslate"><span class="pre">factor_positions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.performance.factor_rank_autocorrelation"><code class="docutils literal notranslate"><span class="pre">factor_rank_autocorrelation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.performance.factor_returns"><code class="docutils literal notranslate"><span class="pre">factor_returns()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.performance.factor_weights"><code class="docutils literal notranslate"><span class="pre">factor_weights()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.performance.mean_information_coefficient"><code class="docutils literal notranslate"><span class="pre">mean_information_coefficient()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.performance.mean_return_by_quantile"><code class="docutils literal notranslate"><span class="pre">mean_return_by_quantile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.performance.positions"><code class="docutils literal notranslate"><span class="pre">positions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.performance.quantile_turnover"><code class="docutils literal notranslate"><span class="pre">quantile_turnover()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api-reference.html#plotting-functions">Plotting Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.plotting.axes_style"><code class="docutils literal notranslate"><span class="pre">axes_style()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.plotting.customize"><code class="docutils literal notranslate"><span class="pre">customize()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.plotting.plot_cumulative_returns"><code class="docutils literal notranslate"><span class="pre">plot_cumulative_returns()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.plotting.plot_cumulative_returns_by_quantile"><code class="docutils literal notranslate"><span class="pre">plot_cumulative_returns_by_quantile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.plotting.plot_events_distribution"><code class="docutils literal notranslate"><span class="pre">plot_events_distribution()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.plotting.plot_factor_rank_auto_correlation"><code class="docutils literal notranslate"><span class="pre">plot_factor_rank_auto_correlation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.plotting.plot_ic_by_group"><code class="docutils literal notranslate"><span class="pre">plot_ic_by_group()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.plotting.plot_ic_hist"><code class="docutils literal notranslate"><span class="pre">plot_ic_hist()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.plotting.plot_ic_qq"><code class="docutils literal notranslate"><span class="pre">plot_ic_qq()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.plotting.plot_ic_ts"><code class="docutils literal notranslate"><span class="pre">plot_ic_ts()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.plotting.plot_information_table"><code class="docutils literal notranslate"><span class="pre">plot_information_table()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.plotting.plot_mean_quantile_returns_spread_time_series"><code class="docutils literal notranslate"><span class="pre">plot_mean_quantile_returns_spread_time_series()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.plotting.plot_monthly_ic_heatmap"><code class="docutils literal notranslate"><span class="pre">plot_monthly_ic_heatmap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.plotting.plot_quantile_average_cumulative_return"><code class="docutils literal notranslate"><span class="pre">plot_quantile_average_cumulative_return()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.plotting.plot_quantile_returns_bar"><code class="docutils literal notranslate"><span class="pre">plot_quantile_returns_bar()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.plotting.plot_quantile_returns_violin"><code class="docutils literal notranslate"><span class="pre">plot_quantile_returns_violin()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.plotting.plot_quantile_statistics_table"><code class="docutils literal notranslate"><span class="pre">plot_quantile_statistics_table()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.plotting.plot_returns_table"><code class="docutils literal notranslate"><span class="pre">plot_returns_table()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.plotting.plot_top_bottom_quantile_turnover"><code class="docutils literal notranslate"><span class="pre">plot_top_bottom_quantile_turnover()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.plotting.plot_turnover_table"><code class="docutils literal notranslate"><span class="pre">plot_turnover_table()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.plotting.plotting_context"><code class="docutils literal notranslate"><span class="pre">plotting_context()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api-reference.html#utilities">Utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.utils.MaxLossExceededError"><code class="docutils literal notranslate"><span class="pre">MaxLossExceededError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.utils.NonMatchingTimezoneError"><code class="docutils literal notranslate"><span class="pre">NonMatchingTimezoneError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.utils.add_custom_calendar_timedelta"><code class="docutils literal notranslate"><span class="pre">add_custom_calendar_timedelta()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.utils.backshift_returns_series"><code class="docutils literal notranslate"><span class="pre">backshift_returns_series()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.utils.compute_forward_returns"><code class="docutils literal notranslate"><span class="pre">compute_forward_returns()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.utils.demean_forward_returns"><code class="docutils literal notranslate"><span class="pre">demean_forward_returns()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.utils.diff_custom_calendar_timedeltas"><code class="docutils literal notranslate"><span class="pre">diff_custom_calendar_timedeltas()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.utils.get_clean_factor"><code class="docutils literal notranslate"><span class="pre">get_clean_factor()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.utils.get_clean_factor_and_forward_returns"><code class="docutils literal notranslate"><span class="pre">get_clean_factor_and_forward_returns()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.utils.get_forward_returns_columns"><code class="docutils literal notranslate"><span class="pre">get_forward_returns_columns()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.utils.infer_trading_calendar"><code class="docutils literal notranslate"><span class="pre">infer_trading_calendar()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.utils.make_naive_ts"><code class="docutils literal notranslate"><span class="pre">make_naive_ts()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.utils.non_unique_bin_edges_error"><code class="docutils literal notranslate"><span class="pre">non_unique_bin_edges_error()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.utils.print_table"><code class="docutils literal notranslate"><span class="pre">print_table()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.utils.quantize_factor"><code class="docutils literal notranslate"><span class="pre">quantize_factor()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.utils.rate_of_return"><code class="docutils literal notranslate"><span class="pre">rate_of_return()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.utils.rethrow"><code class="docutils literal notranslate"><span class="pre">rethrow()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.utils.std_conversion"><code class="docutils literal notranslate"><span class="pre">std_conversion()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.utils.timedelta_strings_to_integers"><code class="docutils literal notranslate"><span class="pre">timedelta_strings_to_integers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.utils.timedelta_to_string"><code class="docutils literal notranslate"><span class="pre">timedelta_to_string()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-reference.html#alphalens.utils.turnover_periods_from_columns"><code class="docutils literal notranslate"><span class="pre">turnover_periods_from_columns()</span></code></a></li>
 </ul>
 </li>
 </ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="https://www.ml4trading.io/docs/diagnostic/user-guide/migration/#alphalens-factor-analysis">Migrating factor analysis</a></li>
+</ul>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
-              </div>
-
-
-              <div class='prev-next-bottom'>
-
-    <a class='right-next' id="next-link" href="notebooks/overview.html" title="next page">Overview</a>
-
-              </div>
-
-          </main>
-
-
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="right-next"
+       href="notebooks/overview.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Overview</p>
       </div>
-    </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
-  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
 
-
-
-    <!-- Google Analytics -->
-    <script>
-      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-      ga('create', 'UA-74956955-3', 'auto');
-      ga('set', 'anonymizeIp', true);
-      ga('send', 'pageview');
-    </script>
-    <script async src='https://www.google-analytics.com/analytics.js'></script>
-    <!-- End Google Analytics -->
-    <footer class="footer mt-5 mt-md-0">
-  <div class="container">
-
-    <div class="footer-item">
-      <p class="copyright">
-    &copy; Copyright 2016, Quantopian, Inc..<br/>
-</p>
-    </div>
-
-    <div class="footer-item">
-      <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
-</p>
-    </div>
-
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
   </div>
-</footer>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Maintenance and new projects</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting started</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#learn-more">Learn more</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#usage">Usage</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#questions">Questions?</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#contribute">Contribute</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#credits">Credits</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-tear-sheets">Example Tear Sheets</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#peformance-metrics-tables">Peformance Metrics Tables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#returns-tear-sheet">Returns Tear Sheet</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#information-coefficient-tear-sheet">Information Coefficient Tear Sheet</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sector-tear-sheet">Sector Tear Sheet</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/stefan-jansen/alphalens-reloaded/edit/0.5.1/docs/source/index.rst">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/index.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=18bd87630a240e9c25be"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=18bd87630a240e9c25be"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2016, Quantopian, Inc..
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.1.
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.23.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
   </body>
 </html>
