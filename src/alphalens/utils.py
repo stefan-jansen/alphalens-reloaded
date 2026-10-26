@@ -364,7 +364,8 @@ def compute_forward_returns(
     # now set the columns correctly
     df = df[column_list]
     try:
-        df.index.levels[0].freq = freq
+        date_index = pd.DatetimeIndex(df.index.levels[0], freq=freq, copy=True)
+        df.index = df.index.set_levels(date_index, level=0)
     except ValueError:
         # A daily trading calendar does not conform to an index with more
         # than one timestamp per day. Preserve the observed frequency;

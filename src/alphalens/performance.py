@@ -1082,7 +1082,7 @@ def factor_positions(
 
     weights = factor_weights(portfolio_data, long_short, group_neutral, equal_weight)
 
-    return positions(weights, period)
+    return positions(weights, period, freq=portfolio_data.index.levels[0].freq)
 
 
 def create_pyfolio_input(
