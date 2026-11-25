@@ -425,6 +425,12 @@ def create_turnover_tear_sheet(factor_data, turnover_periods=None):
 
     quantile_factor = factor_data["factor_quantile"]
 
+    if len(turnover_periods) == 0:
+        quantile_turnover = {}
+        autocorrelation = pd.DataFrame()
+        plotting.plot_turnover_table(autocorrelation, quantile_turnover)
+        return
+
     quantile_turnover = {
         p: pd.concat(
             [

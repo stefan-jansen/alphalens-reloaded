@@ -57,3 +57,42 @@ def test_intraday_cleaner_and_summary_preserve_observations_without_zero_day_tur
         assert "0D" not in capsys.readouterr().out
     finally:
         plt.close("all")
+
+
+def test_intraday_turnover_and_full_tear_sheets_handle_subday_panels(capsys):
+    dates = pd.date_range("2025-01-06 09:30", periods=12, freq="h")
+    rates = np.array([0.001, 0.003, 0.006, 0.010])
+    prices = pd.DataFrame(
+        100 * (1 + rates)[None, :] ** np.arange(12)[:, None],
+        index=dates,
+        columns=list("abcd"),
+    )
+    factor = pd.Series(
+        np.tile([1.0, 2.0, 3.0, 4.0], 6),
+        index=pd.MultiIndex.from_product(
+            [dates[:6], list("abcd")], names=["date", "asset"]
+        ),
+    )
+    panel = utils.get_clean_factor_and_forward_returns(
+        factor, prices, periods=(1, 2), quantiles=2, filter_zscore=None
+    )
+
+    try:
+        with pytest.warns(
+            UserWarning,
+            match="Skipping return periods that aren't exact multiples of days",
+        ):
+            tears.create_turnover_tear_sheet(panel)
+        assert "Turnover Analysis" in capsys.readouterr().out
+
+        tears.create_turnover_tear_sheet(panel, turnover_periods=[])
+        assert "Turnover Analysis" in capsys.readouterr().out
+
+        with pytest.warns(
+            UserWarning,
+            match="Skipping return periods that aren't exact multiples of days",
+        ):
+            tears.create_full_tear_sheet(panel)
+        assert "Turnover Analysis" in capsys.readouterr().out
+    finally:
+        plt.close("all")
